@@ -1,0 +1,100 @@
+package cn.com.isurpass.iremotemessager.methoddecision;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.com.isurpass.iremotemessager.domain.NotificationSetting;
+import cn.com.isurpass.iremotemessager.framework.IMessageMethodDecision;
+import cn.com.isurpass.iremotemessager.vo.EventData;
+import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
+import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
+import cn.com.isurpass.iremotemessager.vo.MsgUser;
+
+public abstract class MethodDecisionBase implements IMessageMethodDecision 
+{
+	protected EventData data ;
+	protected List<MsgUser> msguser;
+	
+	@Override
+	public void setMsgInfo(EventData data, List<MsgUser> msguser) 
+	{
+		this.data = data ;
+		this.msguser = msguser;
+	}
+	
+	protected JPushMessageData createJPushMessageData(List<MsgUser> mulst)
+	{
+		JPushMessageData pmd = new JPushMessageData();
+		pmd.setPhoneusers(new ArrayList<>());
+		pmd.setAliases(new String[mulst.size()]);
+		
+		int i = 0 ;
+		for ( MsgUser mu : mulst)
+		{
+			pmd.getPhoneusers().add(mu.getPhoneuser());
+			pmd.getAliases()[i++] = mu.getAlias();
+		}
+		
+		return pmd;
+	}
+	
+	protected void appendJPushNotificationData(List<JPushNotificationData> lst , MsgUser mu,NotificationSetting ns)
+	{
+		JPushNotificationData pnd = null ;
+		for (  JPushNotificationData n : lst)
+		{
+			if ( isNotificationStyleEqual(n , ns) )
+			{
+				pnd = n;
+				break;
+			}
+		}
+		
+		if ( pnd == null )
+		{
+			pnd = new JPushNotificationData();
+			pnd.setPhoneusers(new ArrayList<>());
+			pnd.setAliaseslist(new ArrayList<>());
+			pnd.setAndroidbundlerid(ns.getBuilder_id());
+			pnd.setIossound(ns.getSound());
+			lst.add(pnd);
+		}
+		
+		pnd.getPhoneusers().add(mu.getPhoneuser());
+		pnd.getAliaseslist().add(mu.getAlias());
+		
+	}
+	
+	protected JPushMessageData createJPushNotificationData(List<MsgUser> mulst)
+	{
+		JPushMessageData pmd = new JPushMessageData();
+		pmd.setPhoneusers(new ArrayList<>());
+		pmd.setAliases(new String[mulst.size()]);
+		
+		int i = 0 ;
+		for ( MsgUser mu : mulst)
+		{
+			pmd.getPhoneusers().add(mu.getPhoneuser());
+			pmd.getAliases()[i++] = mu.getAlias();
+		}
+		
+		return pmd;
+	}
+	
+	protected boolean isNotificationStyleEqual(JPushNotificationData n , NotificationSetting ns)
+	{
+		if ( isObjectEqual(ns.getBuilder_id() ,  n.getAndroidbundlerid()) == false   )
+			return false ;
+		
+		return isObjectEqual(ns.getSound() ,  n.getIossound()) ;
+	}
+	
+	protected boolean isObjectEqual(Object o1 , Object o2)
+	{
+		if ( o1 != null )
+			return o1.equals(o2);
+		else if ( o2 != null )  // o1 != null && o2 == null , not equal 
+			return false ;
+		return true;  // both o1 and o2 are null , equal ;
+	}
+}
