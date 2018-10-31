@@ -9,7 +9,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
-@Component
+/**
+ * 家庭成员
+ * @author jwzh
+ */
+@Component("cn.com.isurpass.iremotemessager.targetdecision.FamilyMemeberTargetDecision")
 public class FamilyMemeberTargetDecision extends OwnerTargetDecision
 {
 	private static Log log = LogFactory.getLog(FamilyMemeberTargetDecision.class);
@@ -18,17 +22,17 @@ public class FamilyMemeberTargetDecision extends OwnerTargetDecision
 	protected List<User> descision()
 	{
 		List<User> lst = super.descision();
-		
-		if (check()) {
+
+		/*if (!check()) {
 			log.info("push fail, can't find decision by this parameter");
+			return lst;
+		}*/
+
+		if (IRemoteUtils.isNotBlank(super.phoneuser.getFamilyid())) {
 			return lst;
 		}
 		
-		if ( super.phoneuser.getFamilyid() == null
-			|| super.phoneuser.getFamilyid() == 0 )
-			return lst;
-		
-		List<cn.com.isurpass.iremotemessager.domain.User> ul = super.userservice.findByFamilyid(super.phoneuser.getFamilyid());
+		List<User> ul = super.userservice.findByFamilyid(super.phoneuser.getFamilyid());
 
 		lst = addFamilyUser(lst, ul);
 		return lst;

@@ -10,7 +10,11 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Component
+/**
+ * 有指定设备操作权限的人
+ * @author jwzh
+ */
+@Component("cn.com.isurpass.iremotemessager.targetdecision.CanOperatePeopleTargetDecision")
 public class CanOperatePeopleTargetDecision extends FamilyandFriendsTargetDecision {
     @Resource
     protected ZwaveDeviceShareService zwaveDeviceShareService;

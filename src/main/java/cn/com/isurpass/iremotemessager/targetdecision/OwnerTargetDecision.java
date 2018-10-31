@@ -8,7 +8,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
-@Component
+/**
+ * 主人
+ * @author jwzh
+ */
+@Component("cn.com.isurpass.iremotemessager.targetdecision.OwnerTargetDecision")
 public class OwnerTargetDecision extends TargetDecisionBase 
 {
 	private static Log log = LogFactory.getLog(OwnerTargetDecision.class);

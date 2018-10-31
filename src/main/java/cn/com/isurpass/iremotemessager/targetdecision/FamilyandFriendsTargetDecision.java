@@ -6,6 +6,10 @@ import cn.com.isurpass.iremotemessager.domain.User;
 import cn.com.isurpass.iremotemessager.util.IRemoteUtils;
 import org.springframework.stereotype.Component;
 
+/**
+ * 家庭成员和朋友
+ * @author jwzh
+ */
 @Component("cn.com.isurpass.iremotemessager.targetdecision.FamilyandFriendsTargetDecision")
 public class FamilyandFriendsTargetDecision extends FamilyMemeberTargetDecision
 {
