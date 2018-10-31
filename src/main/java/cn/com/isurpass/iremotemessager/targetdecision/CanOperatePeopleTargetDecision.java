@@ -4,6 +4,7 @@ import cn.com.isurpass.iremotemessager.constant.IRemoteConstantDefine;
 import cn.com.isurpass.iremotemessager.domain.*;
 import cn.com.isurpass.iremotemessager.service.UserShareDeviceService;
 import cn.com.isurpass.iremotemessager.service.UserShareService;
+import cn.com.isurpass.iremotemessager.service.ZwaveDeviceShareService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -12,9 +13,7 @@ import java.util.List;
 @Component
 public class CanOperatePeopleTargetDecision extends FamilyandFriendsTargetDecision {
     @Resource
-    protected UserShareDeviceService userShareDeviceService;
-    @Resource
-    protected UserShareService userShareService;
+    protected ZwaveDeviceShareService zwaveDeviceShareService;
 
     @Override
     protected List<User> descision()
@@ -52,7 +51,7 @@ public class CanOperatePeopleTargetDecision extends FamilyandFriendsTargetDecisi
             return lst;
         }
 
-        List<Integer> userId = userShareService.findSpecifyUseridsByDeivceid(user.getPhoneuserid(), eventparameters.getString("deviceid"));
+        List<Integer> userId = zwaveDeviceShareService.findSpecifyUserIdsByDeivceid(eventparameters.getString("deviceid"));
         return userservice.findByPhoneuseridIn(userId);
     }
 
@@ -61,7 +60,7 @@ public class CanOperatePeopleTargetDecision extends FamilyandFriendsTargetDecisi
         if (user == null) {
             return lst;
         }
-        List<Integer> specifyUserIds = userShareDeviceService.findSpecifyUserIds(user.getPhoneuserid(), id, type);
+        List<Integer> specifyUserIds = zwaveDeviceShareService.findToUserIdListById(id, type);
         List<User> userList = userservice.findByPhoneuseridIn(specifyUserIds);
         lst.addAll(userList);
         return lst;

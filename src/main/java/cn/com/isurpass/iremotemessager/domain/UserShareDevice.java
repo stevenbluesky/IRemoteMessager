@@ -14,7 +14,7 @@ public class UserShareDevice {
     private Integer zwavedeviceid;
     private Integer infrareddeviceid;
     private Integer cameraid;
-//    private ZWaveDeviceShare zwavedeviceshare;
+    private ZWaveDeviceShare zwavedeviceshare;
 
     public UserShareDevice() {
     }
@@ -38,7 +38,6 @@ public class UserShareDevice {
         this.usersharedeviceid = usersharedeviceid;
     }
 
-//    @JSON(serialize=false)
     @JSONField(serialize = false)
     @ManyToOne(targetEntity= UserShare.class,cascade={CascadeType.DETACH})
     @JoinColumn(name="usershareid",referencedColumnName="shareid",nullable=false)
@@ -66,7 +65,6 @@ public class UserShareDevice {
         this.infrareddeviceid = infrareddeviceid;
     }
 
-    /*@JSON(serialize=false)
     @JSONField(serialize = false)
     @OneToOne(fetch = FetchType.LAZY,cascade={CascadeType.ALL})
     @JoinColumn(name = "zwavedeviceshareid")
@@ -78,7 +76,7 @@ public class UserShareDevice {
     public void setZwavedeviceshare(ZWaveDeviceShare zwavedeviceshare)
     {
         this.zwavedeviceshare = zwavedeviceshare;
-    }*/
+    }
 
     public Integer getCameraid()
     {

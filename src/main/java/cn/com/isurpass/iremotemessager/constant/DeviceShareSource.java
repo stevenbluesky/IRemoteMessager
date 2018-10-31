@@ -6,7 +6,7 @@ public enum DeviceShareSource
 	phoneuser(1),
 	phoneusertemp(2);
 	
-	private DeviceShareSource(int source)
+	DeviceShareSource(int source)
 	{
 		this.source = source;
 	}
