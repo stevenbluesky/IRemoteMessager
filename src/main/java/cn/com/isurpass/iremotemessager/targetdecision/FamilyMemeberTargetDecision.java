@@ -1,39 +1,57 @@
 package cn.com.isurpass.iremotemessager.targetdecision;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.isurpass.iremotemessager.domain.User;
+import cn.com.isurpass.iremotemessager.util.IRemoteUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
-import cn.com.isurpass.iremotemessager.domain.User;
-import cn.com.isurpass.iremotemessager.vo.MsgUser;
-
 @Component
-public class FamilyMemeberTargetDecision extends OwnerTargetDecision 
+public class FamilyMemeberTargetDecision extends OwnerTargetDecision
 {
+	private static Log log = LogFactory.getLog(FamilyMemeberTargetDecision.class);
 
 	@Override
-	protected List<MsgUser> descision()
+	protected List<User> descision()
 	{
-		List<MsgUser> lst = super.descision();
+		List<User> lst = super.descision();
+		
+		if (check()) {
+			log.info("push fail, can't find decision by this parameter");
+			return lst;
+		}
 		
 		if ( super.phoneuser.getFamilyid() == null
 			|| super.phoneuser.getFamilyid() == 0 )
 			return lst;
 		
-		List<User> ul = super.userservice.findByFamilyid(super.phoneuser.getFamilyid());
-		
-		if ( ul == null || ul.size() == 0 )
-			return lst ;
-		
-		for ( User u : ul )
-		{
-			if ( u.getPhoneuserid() == super.phoneuser.getPhoneuserid())
-				continue;
-			MsgUser mu = super.createMsgUser(u);
-			lst.add(mu);
-		}
-		
+		List<cn.com.isurpass.iremotemessager.domain.User> ul = super.userservice.findByFamilyid(super.phoneuser.getFamilyid());
+
+		lst = addFamilyUser(lst, ul);
 		return lst;
 	}
 
+	private boolean check() {
+		return eventparameters.containsKey("zwavedeviceid")
+				|| eventparameters.containsKey("zwavesubdeviceid")
+				|| eventparameters.containsKey("infrareddeviceid")
+				|| eventparameters.containsKey("cameraid")
+				|| eventparameters.containsKey("deviceid")
+				|| eventparameters.containsKey("partitionid");
+	}
+
+	protected List<User> addFamilyUser(List<User> userList, List<User> ul) {
+		if (IRemoteUtils.isBlank(userList)) {
+			userList = new ArrayList<>();
+		}
+
+		if (IRemoteUtils.isNotBlank(ul)) {
+			userList.addAll(ul);
+		}
+
+		return userList;
+	}
 }

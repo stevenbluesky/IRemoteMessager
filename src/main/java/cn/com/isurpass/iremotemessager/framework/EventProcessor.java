@@ -2,6 +2,7 @@ package cn.com.isurpass.iremotemessager.framework;
 
 import java.util.List;
 
+import cn.com.isurpass.iremotemessager.domain.User;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,7 +15,6 @@ import cn.com.isurpass.iremotemessager.targetdecision.OwnerTargetDecision;
 import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
-import cn.com.isurpass.iremotemessager.vo.MsgUser;
 import cn.com.isurpass.iremotemessager.vo.ProcessClass;
 
 @Component
@@ -48,7 +48,7 @@ public class EventProcessor implements Runnable
 
 		IMessageTargetDecision td = createTargetDecision();
 
-		List<MsgUser> lmu = td.messageTarget(eventdata);
+		List<User> lmu = td.messageTarget(eventdata);
 
 		IMessageMethodDecision mmd = createMethodDecision();
 		mmd.setMsgInfo(eventdata, lmu);
@@ -138,7 +138,7 @@ public class EventProcessor implements Runnable
 
 		try
 		{
-			return SpringUtil.getBean(Class.forName(classname));
+			return SpringUtil.getBean(classname,Class.forName(classname));
 			//return Class.forName(classname).newInstance();
 		}
 		catch (Throwable t)

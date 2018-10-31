@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import cn.com.isurpass.iremotemessager.domain.User;
 import org.springframework.stereotype.Component;
 
 import cn.com.isurpass.iremotemessager.domain.NotificationSetting;
@@ -13,7 +14,6 @@ import cn.com.isurpass.iremotemessager.service.NotificationSettingService;
 import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
-import cn.com.isurpass.iremotemessager.vo.MsgUser;
 
 @Component
 public class NotificationTimeWindownSettingMethodDecision extends MethodDecisionBase
@@ -30,7 +30,7 @@ public class NotificationTimeWindownSettingMethodDecision extends MethodDecision
 	private NotificationSettingService service ;
 	
 	@Override
-	public void setMsgInfo(EventData data, List<MsgUser> msguser)
+	public void setMsgInfo(EventData data, List<User> msguser)
 	{
 		super.setMsgInfo(data, msguser);
 		
@@ -40,14 +40,14 @@ public class NotificationTimeWindownSettingMethodDecision extends MethodDecision
 	private void queryUserNotificationSetting()
 	{
 		List<Integer> pidl = new ArrayList<>();
-		for ( MsgUser mu : super.msguser)
+		for ( User mu : super.msguser)
 			pidl.add(mu.getPhoneuserid());
 		
 		notificationsettings = service.findByPhoneuserid(pidl);
 		
-		List<MsgUser> msglst = new ArrayList<>();
+		List<User> msglst = new ArrayList<>();
 		
-		for ( MsgUser mu : msguser)
+		for ( User mu : msguser)
 		{
 			NotificationSetting ns = findNotificationSetting( mu.getPhoneuserid() ,NOTIFICATION_SETTING_TYPE_NOTIFICATION );
 			if ( issettingvalid(ns) )

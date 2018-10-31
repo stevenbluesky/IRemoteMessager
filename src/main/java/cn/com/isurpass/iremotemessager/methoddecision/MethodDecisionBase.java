@@ -4,41 +4,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.isurpass.iremotemessager.domain.NotificationSetting;
+import cn.com.isurpass.iremotemessager.domain.User;
 import cn.com.isurpass.iremotemessager.framework.IMessageMethodDecision;
 import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
-import cn.com.isurpass.iremotemessager.vo.MsgUser;
 
 public abstract class MethodDecisionBase implements IMessageMethodDecision 
 {
 	protected EventData data ;
-	protected List<MsgUser> msguser;
+	protected List<User> msguser;
 	
 	@Override
-	public void setMsgInfo(EventData data, List<MsgUser> msguser) 
+	public void setMsgInfo(EventData data, List<User> msguser)
 	{
 		this.data = data ;
 		this.msguser = msguser;
 	}
 	
-	protected JPushMessageData createJPushMessageData(List<MsgUser> mulst)
+	protected JPushMessageData createJPushMessageData(List<User> mulst)
 	{
 		JPushMessageData pmd = new JPushMessageData();
 		pmd.setPhoneusers(new ArrayList<>());
 		pmd.setAliases(new String[mulst.size()]);
 		
 		int i = 0 ;
-		for ( MsgUser mu : mulst)
+		for ( User mu : mulst)
 		{
-			pmd.getPhoneusers().add(mu.getPhoneuser());
+			pmd.getPhoneusers().add(mu);
 			pmd.getAliases()[i++] = mu.getAlias();
 		}
 		
 		return pmd;
 	}
 	
-	protected void appendJPushNotificationData(List<JPushNotificationData> lst , MsgUser mu,NotificationSetting ns)
+	protected void appendJPushNotificationData(List<JPushNotificationData> lst , User mu, NotificationSetting ns)
 	{
 		JPushNotificationData pnd = null ;
 		for (  JPushNotificationData n : lst)
@@ -60,21 +60,21 @@ public abstract class MethodDecisionBase implements IMessageMethodDecision
 			lst.add(pnd);
 		}
 		
-		pnd.getPhoneusers().add(mu.getPhoneuser());
+		pnd.getPhoneusers().add(mu);
 		pnd.getAliaseslist().add(mu.getAlias());
 		
 	}
 	
-	protected JPushMessageData createJPushNotificationData(List<MsgUser> mulst)
+	protected JPushMessageData createJPushNotificationData(List<User> mulst)
 	{
 		JPushMessageData pmd = new JPushMessageData();
 		pmd.setPhoneusers(new ArrayList<>());
 		pmd.setAliases(new String[mulst.size()]);
 		
 		int i = 0 ;
-		for ( MsgUser mu : mulst)
+		for ( User mu : mulst)
 		{
-			pmd.getPhoneusers().add(mu.getPhoneuser());
+			pmd.getPhoneusers().add(mu);
 			pmd.getAliases()[i++] = mu.getAlias();
 		}
 		

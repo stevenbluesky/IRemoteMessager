@@ -2,23 +2,25 @@ package cn.com.isurpass.iremotemessager.targetdecision;
 
 import java.util.List;
 
+import cn.com.isurpass.iremotemessager.domain.User;
+import cn.com.isurpass.iremotemessager.util.IRemoteUtils;
 import org.springframework.stereotype.Component;
 
-import cn.com.isurpass.iremotemessager.domain.User;
-import cn.com.isurpass.iremotemessager.vo.MsgUser;
-
-@Component
-public class FamilyandFriendsTargetDecision extends OwnerTargetDecision 
+@Component("cn.com.isurpass.iremotemessager.targetdecision.FamilyandFriendsTargetDecision")
+public class FamilyandFriendsTargetDecision extends FamilyMemeberTargetDecision
 {
 
 	@Override
-	protected List<MsgUser> descision()
+	protected List<User> descision()
 	{
-		List<MsgUser> lst = super.descision();
-		
-		//TODO: 
-		
+		List<User> lst = super.descision();
+
+		List<User> friends = super.userservice.findFriends(super.phoneuser.getPhoneuserid());
+
+		if (IRemoteUtils.isNotBlank(friends)) {
+			lst.addAll(friends);
+		}
+
 		return lst;
 	}
-
 }

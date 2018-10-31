@@ -4,21 +4,19 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.beanutils.PropertyUtils;
+import cn.com.isurpass.iremotemessager.domain.User;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.alibaba.fastjson.JSONObject;
 
 import cn.com.isurpass.iremotemessager.domain.Gateway;
-import cn.com.isurpass.iremotemessager.domain.User;
 import cn.com.isurpass.iremotemessager.domain.ZWaveDevice;
 import cn.com.isurpass.iremotemessager.framework.IMessageTargetDecision;
 import cn.com.isurpass.iremotemessager.service.GatewayService;
 import cn.com.isurpass.iremotemessager.service.UserService;
 import cn.com.isurpass.iremotemessager.service.ZWaveDeviceService;
 import cn.com.isurpass.iremotemessager.vo.EventData;
-import cn.com.isurpass.iremotemessager.vo.MsgUser;
 
 public abstract class TargetDecisionBase implements IMessageTargetDecision 
 {
@@ -39,18 +37,18 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 	protected ZWaveDevice zwavedevice ;
 	
 	@Override
-	public List<MsgUser> messageTarget(EventData data) 
+	public List<User> messageTarget(EventData data)
 	{
 		this.data = data;
 		this.eventparameters = data.getEventparameters();
 		data.setDomainobjects(domainobjects);;
 		
 		initDomainObject();
-		
+
 		return descision();
 	}
-	
-	protected abstract List<MsgUser> descision();
+
+	protected abstract List<User> descision();
 	
 	protected void initDomainObject()
 	{
@@ -75,24 +73,4 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 		if ( gateway != null )
 			domainobjects.put("gateway", gateway);
 	}
-	
-
-	protected MsgUser createMsgUser(User pu)
-	{
-		MsgUser mu = new MsgUser();
-		
-		mu.setPhoneuser(pu);
-		try 
-		{
-			PropertyUtils.copyProperties(mu, pu);
-		} 
-		catch (Throwable t) 
-		{
-			log.error(t.getMessage() ,t);
-			return null ;
-		}
-		return mu ;
-	}
-	
-	
 }
