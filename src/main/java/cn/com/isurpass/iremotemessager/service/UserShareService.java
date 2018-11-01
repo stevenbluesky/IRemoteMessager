@@ -21,4 +21,8 @@ public class UserShareService {
                 IRemoteConstantDefine.USER_SHARE_TYPE_NORMAL,
                 IRemoteConstantDefine.USER_SHARE_STATUS_NORMAL);
     }
+
+    public UserShare find(Integer userShareId) {
+        return userShareDao.findById(userShareId).orElse(null);
+    }
 }

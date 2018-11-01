@@ -50,4 +50,19 @@ public class UserService
 
 		return new ArrayList<>();
 	}
+
+	public List<User> find(Integer... userIds) {
+		ArrayList<Integer> ids = new ArrayList<>();
+		if (userIds == null || userIds.length == 0) {
+			return null;
+		}
+
+		for (Integer userId : userIds) {
+			if (userId != null) {
+				ids.add(userId);
+			}
+		}
+
+		return findByPhoneuseridIn(ids);
+	}
 }

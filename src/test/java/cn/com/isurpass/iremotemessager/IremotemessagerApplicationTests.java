@@ -1,19 +1,16 @@
 package cn.com.isurpass.iremotemessager;
 
-import cn.com.isurpass.iremotemessager.domain.UserShare;
-import cn.com.isurpass.iremotemessager.domain.UserShareDevice;
 import cn.com.isurpass.iremotemessager.service.UserShareDeviceService;
 import cn.com.isurpass.iremotemessager.service.UserShareService;
-import cn.com.isurpass.iremotemessager.util.IRemoteUtils;
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import javax.imageio.event.IIOReadProgressListener;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -27,9 +24,26 @@ public class IremotemessagerApplicationTests {
 	@Transactional
 	@Test
 	public void contextLoads() {
-		int[] ints = {1, 2, 3};
-		Integer[] add = IRemoteUtils.add(ints, 5);
-		System.out.println(add);
+		JSONObject json = new JSONObject();
+		ArrayList<String> s = new ArrayList<>();
+		s.add("86");
+		s.add("123123");
+		ArrayList<String> s1 = new ArrayList<>();
+		s1.add("86");
+		s1.add("123123");
+		ArrayList<List> lists = new ArrayList<>();
+		lists.add(s);
+		lists.add(s1);
+		json.put("phone", lists);
+		System.out.println(json.toJSONString());
+
+		String[][] phones = json.getObject("phone", String[][].class);
+
+		for (int i = 0; i < phones.length; i++) {
+			for (int j = 0; j < phones[i].length; j++) {
+				System.out.println(phones[i][j]);
+			}
+		}
 	}
 
 }
