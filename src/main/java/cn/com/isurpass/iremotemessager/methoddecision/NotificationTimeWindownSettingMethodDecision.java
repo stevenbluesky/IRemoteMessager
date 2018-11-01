@@ -1,108 +1,68 @@
 package cn.com.isurpass.iremotemessager.methoddecision;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import cn.com.isurpass.iremotemessager.constant.IRemoteConstantDefine;
-import cn.com.isurpass.iremotemessager.domain.User;
-import org.springframework.stereotype.Component;
-
 import cn.com.isurpass.iremotemessager.domain.NotificationSetting;
-import cn.com.isurpass.iremotemessager.service.NotificationSettingService;
+import cn.com.isurpass.iremotemessager.domain.User;
 import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
+import org.springframework.stereotype.Component;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.Calendar;
+import java.util.List;
+
+/**
+ * 按时间设置 推送
+ * @author jwzh
+ */
 @Component("cn.com.isurpass.iremotemessager.methoddecision.NotificationTimeWindownSettingMethodDecision")
 public class NotificationTimeWindownSettingMethodDecision extends MethodDecisionBase
 {
-	private List<NotificationSetting> notificationsettings ;
-	private List<JPushMessageData> jpushmessagedata ;
-	private List<JPushNotificationData> jpushnotificationdata = new ArrayList<>();
-	private Integer currenttime; 
-	
-	@Resource
-	private NotificationSettingService service ;
-	
+	private InnerNotification innerNotification = new InnerNotification();
+
 	@Override
-	public void setMsgInfo(EventData data, List<User> msguser)
-	{
+	public void setMsgInfo(EventData data, List<User> msguser) {
 		super.setMsgInfo(data, msguser);
-		
-		queryUserNotificationSetting();
-	}
-	
-	private void queryUserNotificationSetting()
-	{
-		List<Integer> pidl = new ArrayList<>();
-		for ( User mu : super.msguser)
-			pidl.add(mu.getPhoneuserid());
-		
-		notificationsettings = service.findByPhoneuserid(pidl);
-		
-		List<User> msglst = new ArrayList<>();
-		
-		for ( User mu : msguser)
-		{
-			NotificationSetting ns = findNotificationSetting( mu.getPhoneuserid() , IRemoteConstantDefine.NOTIFICATION_SETTING_TYPE_NOTIFICATION );
-			if ( issettingvalid(ns) )
-				appendJPushNotificationData(jpushnotificationdata , mu , ns);
-			else 
-				msglst.add(mu);
-		}
 
-		if ( msglst.size() > 0 )
-		{
-			jpushmessagedata = new ArrayList<>();
-			jpushmessagedata.add(super.createJPushMessageData(msglst));
-		}
+		innerNotification.setMsgInfo(data, msguser);
 	}
 
-	
 	@Override
 	public List<JPushMessageData> getJPushMessageData()
 	{
-		return jpushmessagedata;
+		return innerNotification.getJPushMessageData();
 	}
 
 	@Override
 	public List<JPushNotificationData> getJPushNotificationData()
 	{
-		return jpushnotificationdata;
+		return innerNotification.getJPushNotificationData();
 	}
 
+	private class InnerNotification extends JPushNotificationMethodDecision{
+		private Integer currenttime;
 
-	private NotificationSetting findNotificationSetting(int phoneuserid,int type)
-	{
-		for ( NotificationSetting ns : notificationsettings)
+		@Override
+		protected boolean issettingvalid(NotificationSetting ns)
 		{
-			if ( ns.getPhoneuserid() == phoneuserid 
-				&&  ns.getNotificationtype() == type )
-				return ns ;
-		}
-		return null ;
-	}
-	
-	private boolean issettingvalid(NotificationSetting ns)
-	{
-		if (ns == null || ns.getAthome() == 1 )
+			if (ns == null || ns.getAthome() == 1) {
+				return false;
+			}
+
+			if ( currenttime == null )			{
+				Calendar d = Calendar.getInstance();
+
+				currenttime = d.get(Calendar.HOUR_OF_DAY) * 3600 + d.get(Calendar.MINUTE) * 60 + d.get(Calendar.SECOND);
+			}
+
+			if (ns.getStartsecond() < ns.getEndsecond() && ns.getStartsecond() <= currenttime && currenttime <= ns.getEndsecond()) {
+				return true;
+			}
+			if (ns.getEndsecond() < ns.getStartsecond() && (ns.getStartsecond() <= currenttime || ns.getEndsecond() >= currenttime)) {
+				return true;
+			}
+
 			return false ;
-		
-		if ( currenttime == null )
-		{
-			Calendar d = Calendar.getInstance();
-			
-			currenttime = d.get(Calendar.HOUR_OF_DAY) * 3600 + d.get(Calendar.MINUTE) * 60 + d.get(Calendar.SECOND);
 		}
-		
-		if ( ns.getStartsecond() < ns.getEndsecond() && ns.getStartsecond() <= currenttime && currenttime <= ns.getEndsecond() )
-			return true ;
-		if ( ns.getEndsecond() < ns.getStartsecond() && ( ns.getStartsecond() <= currenttime || ns.getEndsecond() >= currenttime))
-			return true;
-		
-		return false ;
 	}
 }

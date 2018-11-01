@@ -7,8 +7,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
-import cn.com.isurpass.iremotemessager.constant.MsgMethodType;
-import cn.com.isurpass.iremotemessager.constant.MsgTemplateType;
+import cn.com.isurpass.iremotemessager.common.constant.MsgMethodType;
+import cn.com.isurpass.iremotemessager.common.constant.MsgTemplateType;
 import cn.com.isurpass.iremotemessager.dao.MsgContentTemplateDao;
 import cn.com.isurpass.iremotemessager.domain.MsgContentTemplate;
 

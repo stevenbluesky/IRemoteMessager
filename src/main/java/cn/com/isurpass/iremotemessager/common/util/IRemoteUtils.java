@@ -1,11 +1,7 @@
-package cn.com.isurpass.iremotemessager.util;
+package cn.com.isurpass.iremotemessager.common.util;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;

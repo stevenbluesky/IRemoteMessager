@@ -1,4 +1,4 @@
-package cn.com.isurpass.iremotemessager.util;
+package cn.com.isurpass.iremotemessager.common.util;
 
 import java.security.SecureRandom;
 

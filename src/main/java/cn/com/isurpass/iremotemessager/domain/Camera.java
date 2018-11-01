@@ -1,6 +1,6 @@
 package cn.com.isurpass.iremotemessager.domain;
 
-import cn.com.isurpass.iremotemessager.constant.IRemoteConstantDefine;
+import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

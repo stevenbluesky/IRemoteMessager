@@ -1,9 +1,8 @@
 package cn.com.isurpass.iremotemessager.service;
 
-import cn.com.isurpass.iremotemessager.constant.IRemoteConstantDefine;
+import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
 import cn.com.isurpass.iremotemessager.dao.UserShareDao;
 import cn.com.isurpass.iremotemessager.domain.*;
-import cn.com.isurpass.iremotemessager.util.IRemoteUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

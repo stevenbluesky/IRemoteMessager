@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.isurpass.iremotemessager.domain.User;
-import cn.com.isurpass.iremotemessager.util.IRemoteUtils;
+import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;

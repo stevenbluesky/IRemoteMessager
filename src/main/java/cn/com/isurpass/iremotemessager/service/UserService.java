@@ -7,7 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import cn.com.isurpass.iremotemessager.domain.UserShare;
-import cn.com.isurpass.iremotemessager.util.IRemoteUtils;
+import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import org.springframework.stereotype.Component;
 
 import cn.com.isurpass.iremotemessager.dao.UserDao;

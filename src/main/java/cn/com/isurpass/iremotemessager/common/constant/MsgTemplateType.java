@@ -1,4 +1,4 @@
-package cn.com.isurpass.iremotemessager.constant;
+package cn.com.isurpass.iremotemessager.common.constant;
 
 public enum MsgTemplateType
 {

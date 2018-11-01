@@ -1,4 +1,4 @@
-package cn.com.isurpass.iremotemessager.constant;
+package cn.com.isurpass.iremotemessager.common.constant;
 
 import java.util.ArrayList;
 import java.util.List;

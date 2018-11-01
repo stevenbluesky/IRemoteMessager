@@ -9,4 +9,6 @@ import cn.com.isurpass.iremotemessager.domain.NotificationSetting;
 public interface NotificationSettingDao extends CrudRepository<NotificationSetting, Integer> 
 {
 	List<NotificationSetting> findByPhoneuseridIn(List<Integer> phoneuserid);
+
+	NotificationSetting findByPhoneuseridAndNotificationtype(Integer phoneuserid, int notificationtype);
 }

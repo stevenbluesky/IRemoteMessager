@@ -17,9 +17,10 @@ public class JPushMessageMethodDecision extends MethodDecisionBase
 	public List<JPushMessageData> getJPushMessageData() 
 	{
 		List<JPushMessageData> lst = new ArrayList<>();
-		
-		if ( msguser == null || msguser.size() == 0 )
-			return lst ;
+
+		if (msguser == null || msguser.size() == 0) {
+			return lst;
+		}
 		
 		JPushMessageData pmd = super.createJPushMessageData(msguser); 
 		lst.add(pmd);

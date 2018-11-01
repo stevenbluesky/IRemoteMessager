@@ -1,9 +1,7 @@
 package cn.com.isurpass.iremotemessager.targetdecision;
 
-import cn.com.isurpass.iremotemessager.constant.IRemoteConstantDefine;
+import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
 import cn.com.isurpass.iremotemessager.domain.*;
-import cn.com.isurpass.iremotemessager.service.UserShareDeviceService;
-import cn.com.isurpass.iremotemessager.service.UserShareService;
 import cn.com.isurpass.iremotemessager.service.ZwaveDeviceShareService;
 import org.springframework.stereotype.Component;
 

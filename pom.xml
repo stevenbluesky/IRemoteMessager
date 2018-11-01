@@ -68,6 +68,13 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.plivo/plivo-java -->
+		<dependency>
+			<groupId>com.plivo</groupId>
+			<artifactId>plivo-java</artifactId>
+			<version>3.0.9</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

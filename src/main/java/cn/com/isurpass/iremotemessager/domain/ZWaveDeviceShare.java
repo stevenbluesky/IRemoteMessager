@@ -1,7 +1,7 @@
 package cn.com.isurpass.iremotemessager.domain;
 
-import cn.com.isurpass.iremotemessager.constant.DeviceShareSource;
-import cn.com.isurpass.iremotemessager.util.IRemoteUtils;
+import cn.com.isurpass.iremotemessager.common.constant.DeviceShareSource;
+import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.annotations.GenericGenerator;
 
