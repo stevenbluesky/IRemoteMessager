@@ -27,6 +27,9 @@ public class CanOperatePeopleTargetDecision extends FamilyandFriendsTargetDecisi
         if (eventparameters.containsKey("phoneuserid")) {
             return lst;
         }
+        if (eventparameters.containsKey("deviceid")) {
+            return getDeviceUsers(lst);
+        }
         if (eventparameters.containsKey("zwavedeviceid") || eventparameters.containsKey("zwavesubdeviceid")) {
             ZWaveDevice zwavedevice = (ZWaveDevice) domainobjects.get("zwavedevice");
 
@@ -41,9 +44,6 @@ public class CanOperatePeopleTargetDecision extends FamilyandFriendsTargetDecisi
             Camera camera = (Camera) domainobjects.get("cameraid");
 
             return getDeviceUsersByIdAndType(lst, camera.getCameraid(), IRemoteConstantDefine.DEVICE_TYPE_CAMERA);
-        }
-        if (eventparameters.containsKey("deviceid")) {
-            return getDeviceUsers(lst);
         }
 
         return lst;

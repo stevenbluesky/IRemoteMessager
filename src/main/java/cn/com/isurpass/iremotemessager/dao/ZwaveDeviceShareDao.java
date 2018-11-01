@@ -12,5 +12,5 @@ public interface ZwaveDeviceShareDao extends CrudRepository<ZWaveDeviceShare, In
 
     List<ZWaveDeviceShare> findByAndCameraidAndShareowntypeIn(Integer cameraid, List<Integer> shareowntypeList);
 
-    List<ZWaveDeviceShare> findByDeivceidAndShareowntypeIn(String deviceid, List<Integer> shareowntypeList);
+    List<ZWaveDeviceShare> findByDeviceidAndShareowntypeIn(String deviceid, List<Integer> shareowntypeList);
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import cn.com.isurpass.iremotemessager.constant.IRemoteConstantDefine;
 import cn.com.isurpass.iremotemessager.domain.User;
 import org.springframework.stereotype.Component;
 
@@ -15,15 +16,12 @@ import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
 
-@Component
+@Component("cn.com.isurpass.iremotemessager.methoddecision.NotificationTimeWindownSettingMethodDecision")
 public class NotificationTimeWindownSettingMethodDecision extends MethodDecisionBase
 {
-	private final static int NOTIFICATION_SETTING_TYPE_NOTIFICATION = 4 ;
-	
-	
 	private List<NotificationSetting> notificationsettings ;
 	private List<JPushMessageData> jpushmessagedata ;
-	private List<JPushNotificationData> jpushnotificationdata = new ArrayList<>();;
+	private List<JPushNotificationData> jpushnotificationdata = new ArrayList<>();
 	private Integer currenttime; 
 	
 	@Resource
@@ -49,7 +47,7 @@ public class NotificationTimeWindownSettingMethodDecision extends MethodDecision
 		
 		for ( User mu : msguser)
 		{
-			NotificationSetting ns = findNotificationSetting( mu.getPhoneuserid() ,NOTIFICATION_SETTING_TYPE_NOTIFICATION );
+			NotificationSetting ns = findNotificationSetting( mu.getPhoneuserid() , IRemoteConstantDefine.NOTIFICATION_SETTING_TYPE_NOTIFICATION );
 			if ( issettingvalid(ns) )
 				appendJPushNotificationData(jpushnotificationdata , mu , ns);
 			else 

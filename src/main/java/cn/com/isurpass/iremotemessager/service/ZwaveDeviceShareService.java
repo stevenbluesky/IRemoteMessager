@@ -19,7 +19,7 @@ public class ZwaveDeviceShareService {
     public List<Integer> findSpecifyUserIdsByDeivceid(String deviceid) {
         List<Integer> typeList = Arrays.asList(DeviceShareSource.thirdpart.getSource(), DeviceShareSource.phoneuser.getSource());
 
-        List<ZWaveDeviceShare> zWaveDeviceShareList = zwaveDeviceShareDao.findByDeivceidAndShareowntypeIn(deviceid, typeList);
+        List<ZWaveDeviceShare> zWaveDeviceShareList = zwaveDeviceShareDao.findByDeviceidAndShareowntypeIn(deviceid, typeList);
 
         ArrayList<Integer> userIds = new ArrayList<>();
         for (ZWaveDeviceShare zWaveDeviceShare : zWaveDeviceShareList) {

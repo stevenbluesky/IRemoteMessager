@@ -16,7 +16,7 @@ public class InfraredDevice {
 	private String name ;
 	private String productorid;
 	private String statuses;
-	private String majortype = IRemoteConstantDefine.DEVICE_MAJORTYPE_INFRARED;
+//	private String majortype = IRemoteConstantDefine.DEVICE_MAJORTYPE_INFRARED;
 
 	@Id    
 	@GeneratedValue(strategy = GenerationType.IDENTITY)   
@@ -71,12 +71,12 @@ public class InfraredDevice {
 	public void setStatuses(String statuses) {
 		this.statuses = statuses;
 	}
-
+/*
 	public String getMajortype() {
 		return majortype;
 	}
 
 	public void setMajortype(String majortype) {
 		this.majortype = majortype;
-	}
+	}*/
 }

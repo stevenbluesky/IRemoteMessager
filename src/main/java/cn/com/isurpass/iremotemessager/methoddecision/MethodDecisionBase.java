@@ -6,9 +6,7 @@ import java.util.List;
 import cn.com.isurpass.iremotemessager.domain.NotificationSetting;
 import cn.com.isurpass.iremotemessager.domain.User;
 import cn.com.isurpass.iremotemessager.framework.IMessageMethodDecision;
-import cn.com.isurpass.iremotemessager.vo.EventData;
-import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
-import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
+import cn.com.isurpass.iremotemessager.vo.*;
 
 public abstract class MethodDecisionBase implements IMessageMethodDecision 
 {
@@ -96,5 +94,25 @@ public abstract class MethodDecisionBase implements IMessageMethodDecision
 		else if ( o2 != null )  // o1 != null && o2 == null , not equal 
 			return false ;
 		return true;  // both o1 and o2 are null , equal ;
+	}
+
+	@Override
+	public List<JPushMessageData> getJPushMessageData() {
+		return new ArrayList<>();
+	}
+
+	@Override
+	public List<JPushNotificationData> getJPushNotificationData() {
+		return new ArrayList<>();
+	}
+
+	@Override
+	public List<MailData> getMailData() {
+		return new ArrayList<>();
+	}
+
+	@Override
+	public List<SmsData> getSmsData() {
+		return new ArrayList<>();
 	}
 }

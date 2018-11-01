@@ -3,12 +3,14 @@ package cn.com.isurpass.iremotemessager.methoddecision;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.isurpass.iremotemessager.vo.MailData;
+import cn.com.isurpass.iremotemessager.vo.SmsData;
 import org.springframework.stereotype.Component;
 
 import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
 
-@Component
+@Component("cn.com.isurpass.iremotemessager.methoddecision.JPushMessageMethodDecision")
 public class JPushMessageMethodDecision extends MethodDecisionBase
 {
 	@Override
@@ -24,11 +26,4 @@ public class JPushMessageMethodDecision extends MethodDecisionBase
 				
 		return lst;
 	}
-
-	@Override
-	public List<JPushNotificationData> getJPushNotificationData() 
-	{
-		return new ArrayList<>();
-	}
-
 }

@@ -19,4 +19,6 @@ public class IRemoteConstantDefine {
     public static final String DEVICE_MAJORTYPE_ZWAVE = "zWave";
     public static final String DEVICE_MAJORTYPE_INFRARED = "infrared";
     public static final String DEVICE_MAJORTYPE_CAMERA = "camera";
+
+    public final static int NOTIFICATION_SETTING_TYPE_NOTIFICATION = 4 ;
 }
