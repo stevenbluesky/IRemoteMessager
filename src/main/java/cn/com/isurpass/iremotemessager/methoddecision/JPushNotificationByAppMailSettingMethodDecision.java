@@ -21,13 +21,17 @@ import java.util.List;
  */
 @Component("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationByAppMailSettingMethodDecision")
 public class JPushNotificationByAppMailSettingMethodDecision extends MethodDecisionBase {
-    private InnerNotification innerNotification = new InnerNotification();
+    @Resource
+    private InnerNotification innerNotification;
+    @Resource
+    private InnerMail innerMail;
 
     @Override
     public void setMsgInfo(EventData data, List<User> msguser) {
         super.setMsgInfo(data, msguser);
 
         innerNotification.setMsgInfo(data, msguser);
+        innerMail.setMsgInfo(data, msguser);
     }
 
     @Override
@@ -42,7 +46,6 @@ public class JPushNotificationByAppMailSettingMethodDecision extends MethodDecis
 
     @Override
     public List<MailData> getMailData() {
-        InnerMail innerMail = new InnerMail();
         return innerMail.getMailData();
     }
 

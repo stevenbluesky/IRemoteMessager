@@ -26,6 +26,9 @@ public class IRemoteUtils {
         return !isNotBlank(map);
     }
 
+    public static boolean isBlank(Integer values){
+        return !isNotBlank(values);
+    }
     public static Date parseTime(String time)
     {
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

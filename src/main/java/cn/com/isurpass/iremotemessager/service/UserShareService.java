@@ -14,6 +14,10 @@ public class UserShareService {
     private UserShareDao userShareDao;
 
     public List<UserShare> findFriends(Integer phoneuserid) {
+        if (phoneuserid == null) {
+            return new ArrayList<>();
+        }
+
         return userShareDao.findByShareuseridAndSharedevicetypeAndSharetypeAndStatus(
                 phoneuserid,
                 IRemoteConstantDefine.USER_SHARE_DEVICE_TYPE_ALL,

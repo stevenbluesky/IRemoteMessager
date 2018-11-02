@@ -23,7 +23,7 @@ public class Scene {
     private int enablestatus = IRemoteConstantDefine.SCENE_ENABLESTATUS_YES;
     private Integer thirdpartid;
     private Integer scenetype;
-    private List<Command> commandlist;
+//    private List<Command> commandlist;
 //    private List<Associationscene> associationscenelist;
 //    private List<Timer> timerlist;
 //    private List<Conditions> conditionlist;
@@ -65,13 +65,13 @@ public class Scene {
     public void setAssociationscenelist(List<Associationscene> associationscenelist) {
         this.associationscenelist = associationscenelist;
     }*/
-    @OneToMany(targetEntity=Command.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,mappedBy="scene")
+  /*  @OneToMany(targetEntity=Command.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,mappedBy="scene")
     public List<Command> getCommandlist() {
         return commandlist;
     }
     public void setCommandlist(List<Command> commandlist) {
         this.commandlist = commandlist;
-    }
+    }*/
   /*  @OneToMany(targetEntity=Timer.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,mappedBy="scene")
     public List<Timer> getTimerlist() {
         return timerlist;

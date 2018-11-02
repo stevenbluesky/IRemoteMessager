@@ -46,4 +46,20 @@ public class IRemoteConstantDefine {
     public static final int PLATFORM_SINGAPORE = 7;
     public static final int PLATFORM_KEEMPLE = 8;
     public static final int PLATFORM_AMETA = 9;
+
+    public static final String SYSTEMPARAMETER_USER_MAIL_SERVER_HOST = "user_mail_server_host";
+    public static final String SYSTEMPARAMETER_USER_MAIL_SERVER_POST = "user_mail_server_post";
+    public static final String SYSTEMPARAMETER_USER_MAIL_USERNAME = "user_mail_username";
+    public static final String SYSTEMPARAMETER_USER_MAIL_PASSWORD = "user_mail_password";
+    public static final String SYSTEMPARAMETER_USER_MAIL_FROMADDRESS = "user_mail_fromaddress";
+    public static final String SYSTEMPARAMETER_USER_MAIL_VALIDATE = "user_mail_validate";
+
+    public static final String SYSTEMPARAMETER_SUPPORT_MAIL_SERVER_HOST = "support_mail_server_host";
+    public static final String SYSTEMPARAMETER_SUPPORT_MAIL_SERVER_POST = "support_mail_server_post";
+    public static final String SYSTEMPARAMETER_SUPPORT_MAIL_USERNAME = "support_mail_username";
+    public static final String SYSTEMPARAMETER_SUPPORT_MAIL_PASSWORD = "support_mail_password";
+    public static final String SYSTEMPARAMETER_SUPPORT_MAIL_FROMADDRESS = "support_mail_fromaddress";
+    public static final String SYSTEMPARAMETER_SUPPORT_MAIL_VALIDATE = "support_mail_validate";
+    public static final String SYSTEMPARAMETER_SUPPORT_MAIL_TOADDRESS = "support_mail_toaddress";
+
 }

@@ -17,6 +17,7 @@ public class User
 	private String language;
 	private String name;
 	private Integer familyid;
+	private Integer smscount;
 	
 	public int getPhoneuserid() {
 		return phoneuserid;
@@ -70,6 +71,12 @@ public class User
 	{
 		this.familyid = familyid;
 	}
-	
-	
+
+	public Integer getSmscount() {
+		return smscount;
+	}
+
+	public void setSmscount(Integer smscount) {
+		this.smscount = smscount;
+	}
 }

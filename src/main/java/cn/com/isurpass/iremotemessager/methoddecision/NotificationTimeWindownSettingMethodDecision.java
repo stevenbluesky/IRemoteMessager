@@ -7,6 +7,7 @@ import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Calendar;
 import java.util.List;
@@ -18,7 +19,8 @@ import java.util.List;
 @Component("cn.com.isurpass.iremotemessager.methoddecision.NotificationTimeWindownSettingMethodDecision")
 public class NotificationTimeWindownSettingMethodDecision extends MethodDecisionBase
 {
-	private InnerNotification innerNotification = new InnerNotification();
+	@Resource
+	private InnerNotification innerNotification;
 
 	@Override
 	public void setMsgInfo(EventData data, List<User> msguser) {

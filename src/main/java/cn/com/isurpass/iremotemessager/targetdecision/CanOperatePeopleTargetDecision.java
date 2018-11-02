@@ -54,7 +54,9 @@ public class CanOperatePeopleTargetDecision extends FamilyandFriendsTargetDecisi
         }
 
         List<Integer> userId = zwaveDeviceShareService.findSpecifyUserIdsByDeivceid(eventparameters.getString("deviceid"));
-        return userservice.findByPhoneuseridIn(userId);
+        List<User> userList = userservice.findByPhoneuseridIn(userId);
+        lst.addAll(userList);
+        return lst;
     }
 
     private List<User> getDeviceUsersByIdAndType(List<User> lst, Integer id, int type) {

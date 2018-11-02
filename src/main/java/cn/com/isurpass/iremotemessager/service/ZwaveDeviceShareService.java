@@ -17,6 +17,10 @@ public class ZwaveDeviceShareService {
     private ZwaveDeviceShareDao zwaveDeviceShareDao;
 
     public List<Integer> findSpecifyUserIdsByDeivceid(String deviceid) {
+        if (deviceid == null) {
+            return new ArrayList<>();
+        }
+
         List<Integer> typeList = Arrays.asList(DeviceShareSource.thirdpart.getSource(), DeviceShareSource.phoneuser.getSource());
 
         List<ZWaveDeviceShare> zWaveDeviceShareList = zwaveDeviceShareDao.findByDeviceidAndShareowntypeIn(deviceid, typeList);
@@ -30,6 +34,10 @@ public class ZwaveDeviceShareService {
     }
 
     public List<Integer> findToUserIdListById(Integer id, Integer type) {
+        if (id == null) {
+            return new ArrayList<>();
+        }
+
         List<Integer> typeList = Arrays.asList(DeviceShareSource.thirdpart.getSource(), DeviceShareSource.phoneuser.getSource());
         List<ZWaveDeviceShare> zWaveDeviceShareList;
 

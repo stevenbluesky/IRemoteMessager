@@ -20,7 +20,8 @@ import java.util.List;
 @Component("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationByPowerStatusMethodDecision")
 public class JPushNotificationByPowerStatusMethodDecision extends MethodDecisionBase {
     private String deviceid;
-    private InnerNotification innerNotification = new InnerNotification();
+    @Resource
+    private InnerNotification innerNotification;
 
     @Override
     public void setMsgInfo(EventData data, List<User> msguser) {

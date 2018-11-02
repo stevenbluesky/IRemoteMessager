@@ -69,8 +69,12 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 		
 		if (phoneuser != null )
 			domainobjects.put("user", phoneuser);
-		
+
 		if ( gateway != null )
 			domainobjects.put("gateway", gateway);
+
+		if (zwavedevice != null) {
+			domainobjects.put("zwavedevice", zwavedevice);
+		}
 	}
 }

@@ -21,6 +21,9 @@ public class NotificationSettingService
 	}
 
 	public NotificationSetting findByPhoneuseridAndType(Integer phoneuserid, int notificationType) {
+		if (phoneuserid == null) {
+			return null;
+		}
 		return dao.findByPhoneuseridAndNotificationtype(phoneuserid, notificationType);
 	}
 }

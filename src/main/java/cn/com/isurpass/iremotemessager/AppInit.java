@@ -25,9 +25,10 @@ public class AppInit implements ApplicationRunner, Runnable
 		data.setPlatform(0);
 		data.setEventtype("devicestatus");
 		data.setEventparameters(new JSONObject());
-		data.getEventparameters().put("zwavedeviceid", 7956);
+		data.getEventparameters().put("zwavedeviceid", 15951);
+		data.getEventparameters().put("deviceid", "iRemote8005000000006");
 		data.getEventparameters().put("reporttime", Calendar.getInstance().getTimeInMillis());
-		data.getEventparameters().put("operator", "13502876070");
+		data.getEventparameters().put("operator", "18071272118");
 		
 		EventProcessor ep = SpringUtil.getBean(EventProcessor.class);
 		ep.setEventdata(data);

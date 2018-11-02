@@ -22,8 +22,11 @@ import java.util.List;
 @Component("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationBySceneSettingMethodDecision")
 public class JPushNotificationBySceneSettingMethodDecision extends MethodDecisionBase {
     private Integer scenedbid;
-    private InnerNotification innerNotification = new InnerNotification();
     private Scene scene;
+    @Resource
+    private InnerNotification innerNotification;
+    @Resource
+    private InnerMail innerMail;
 
     @Override
     public void setMsgInfo(EventData data, List<User> msguser) {
@@ -31,6 +34,7 @@ public class JPushNotificationBySceneSettingMethodDecision extends MethodDecisio
         super.setMsgInfo(data, msguser);
 
         innerNotification.setMsgInfo(data, msguser);
+        innerMail.setMsgInfo(data, msguser);
     }
 
     @Override
@@ -45,8 +49,6 @@ public class JPushNotificationBySceneSettingMethodDecision extends MethodDecisio
 
     @Override
     public List<MailData> getMailData() {
-        InnerMail innerMail = new InnerMail();
-
         if (scene != null && scene.getScenenotification() != null) {
             if (StringUtils.isNotBlank(scene.getScenenotification().getMail())) {
                 innerMail.setGlobalCheck(true);

@@ -21,13 +21,14 @@ public class UserService
 	@Resource
 	protected UserShareService userShareService;
 	
-	public User findById(Integer phoneuserid)
-	{
+	public User findById(Integer phoneuserid){
 		return userdao.findById(phoneuserid).orElse(null);
 	}
 	
-	public List<User> findByFamilyid(Integer familyid)
-	{
+	public List<User> findByFamilyid(Integer familyid){
+		if (familyid == null) {
+			return new ArrayList<>();
+		}
 		return userdao.findByFamilyid(familyid);
 	}
 
