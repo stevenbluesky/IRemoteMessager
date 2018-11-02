@@ -15,8 +15,8 @@ import java.util.List;
 
 @Component("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationMethodDecision")
 public class JPushNotificationMethodDecision extends MethodDecisionBase {
-    private List<NotificationSetting> notificationsettings ;
-    private List<JPushMessageData> jpushmessagedata ;
+    private List<NotificationSetting> notificationsettings = new ArrayList<>();
+    private List<JPushMessageData> jpushmessagedata = new ArrayList<>();
     private List<JPushNotificationData> jpushnotificationdata = new ArrayList<>();
 
     @Resource
@@ -53,7 +53,6 @@ public class JPushNotificationMethodDecision extends MethodDecisionBase {
 
         if ( msglst.size() > 0 )
         {
-            jpushmessagedata = new ArrayList<>();
             jpushmessagedata.add(super.createJPushMessageData(msglst));
         }
     }

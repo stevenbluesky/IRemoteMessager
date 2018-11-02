@@ -40,6 +40,10 @@ public class SmsMethodDecision extends MethodDecisionBase{
     }
 
     private boolean checkUserSmsCount(User user) {
-        return (user.getSmscount() != null && user.getSmscount() != 0);
+        if ((user.getSmscount() == null || user.getSmscount() == 0)) {
+            log.warn(user.getPhoneuserid() +": sms count is exhausted");
+            return false;
+        }
+        return true;
     }
 }
