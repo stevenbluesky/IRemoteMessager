@@ -49,6 +49,7 @@ public class JPushNotificationByAppMailSettingMethodDecision extends MethodDecis
         return innerMail.getMailData();
     }
 
+    @Component
     private class InnerNotification extends JPushNotificationMethodDecision {
         @Override
         protected boolean issettingvalid(NotificationSetting ns) {
@@ -56,6 +57,7 @@ public class JPushNotificationByAppMailSettingMethodDecision extends MethodDecis
         }
     }
 
+    @Component
     private class InnerMail extends MailMethodDecision {
         @Resource
         private NotificationSettingService notificationSettingService;

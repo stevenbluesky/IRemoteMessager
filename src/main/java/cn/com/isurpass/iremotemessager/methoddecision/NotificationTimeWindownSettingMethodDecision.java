@@ -41,6 +41,7 @@ public class NotificationTimeWindownSettingMethodDecision extends MethodDecision
 		return innerNotification.getJPushNotificationData();
 	}
 
+	@Component
 	private class InnerNotification extends JPushNotificationMethodDecision{
 		private Integer currenttime;
 

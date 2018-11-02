@@ -38,6 +38,7 @@ public class JPushNotificationByWarningStatusMethodDecision extends MethodDecisi
         return innerNotification.getJPushNotificationData();
     }
 
+    @Component
     private class InnerNotification extends JPushNotificationMethodDecision {
         @Override
         protected boolean issettingvalid(NotificationSetting ns) {

@@ -20,7 +20,7 @@ public class JPushNotificationMailMethodDecision extends MethodDecisionBase {
     public void setMsgInfo(EventData data, List<User> msguser) {
         super.setMsgInfo(data, msguser);
         innerMail.setMsgInfo(data, msguser);
-        innerMail.setMsgInfo(data, msguser);
+        innerNotification.setMsgInfo(data, msguser);
     }
 
     @Override
@@ -33,9 +33,11 @@ public class JPushNotificationMailMethodDecision extends MethodDecisionBase {
         return innerMail.getMailData();
     }
 
+    @Component
     private class InnerNotification extends JPushNotificationMethodDecision {
     }
 
+    @Component
     private class InnerMail extends MailMethodDecision {
     }
 }

@@ -57,6 +57,7 @@ public class JPushNotificationBySceneSettingMethodDecision extends MethodDecisio
         return innerMail.getMailData();
     }
 
+    @Component
     private class InnerNotification extends JPushNotificationMethodDecision {
         @Resource
         private SceneService sceneService;
@@ -77,6 +78,7 @@ public class JPushNotificationBySceneSettingMethodDecision extends MethodDecisio
         }
     }
 
+    @Component
     private class InnerMail extends MailMethodDecision {
     }
 }

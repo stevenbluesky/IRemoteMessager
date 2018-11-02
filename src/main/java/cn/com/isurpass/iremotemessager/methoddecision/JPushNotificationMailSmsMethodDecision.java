@@ -9,14 +9,21 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Component("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationMailSmsMethodDecision")
-public class JPushNotificationMailSmsMethodDecision extends JPushNotificationMailMethodDecision {
+public class JPushNotificationMailSmsMethodDecision extends MethodDecisionBase {
     @Resource
     private InnerSms innerSms;
+    @Resource
+    private InnerMail innerMail;
+    @Resource
+    private InnerNotification innerNotification;
+
 
     @Override
     public void setMsgInfo(EventData data, List<User> msguser) {
         super.setMsgInfo(data, msguser);
         innerSms.setMsgInfo(data, msguser);
+        innerMail.setMsgInfo(data, msguser);
+        innerNotification.setMsgInfo(data, msguser);
     }
 
     @Override
@@ -25,8 +32,15 @@ public class JPushNotificationMailSmsMethodDecision extends JPushNotificationMai
         return innerSms.getSmsData();
     }
 
+    @Component
     private class InnerSms extends SmsMethodDecision{
-
     }
 
+    @Component
+    private class InnerNotification extends JPushNotificationMethodDecision {
+    }
+
+    @Component
+    private class InnerMail extends MailMethodDecision {
+    }
 }

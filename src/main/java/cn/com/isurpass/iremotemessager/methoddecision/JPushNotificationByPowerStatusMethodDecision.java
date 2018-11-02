@@ -41,6 +41,7 @@ public class JPushNotificationByPowerStatusMethodDecision extends MethodDecision
         return innerNotification.getJPushNotificationData();
     }
 
+    @Component
     private class InnerNotification extends JPushNotificationMethodDecision {
         @Resource
         private GatewayService gatewayService;
