@@ -1,27 +1,30 @@
 package cn.com.isurpass.iremotemessager.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.alibaba.fastjson.annotation.JSONField;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "msg_contenttemplate")
 public class MsgContentTemplate 
 {
-	@Id
-	private int msgcontenttemplateid;
-	private int platform;
-	private int msgeventtypeid;
+	private Integer msgcontenttemplateid;
+	private Integer platform;
 	private String eventcode;
 	private String language;
-	private int type;
+	private Integer type;
 	private String contenttemplate;
-	
-	public int getMsgcontenttemplateid()
+	private MsgEventType msgEventType;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GenericGenerator(name = "generator", strategy = "increment")
+	public Integer getMsgcontenttemplateid()
 	{
 		return msgcontenttemplateid;
 	}
-	public void setMsgcontenttemplateid(int msgcontenttemplateid)
+	public void setMsgcontenttemplateid(Integer msgcontenttemplateid)
 	{
 		this.msgcontenttemplateid = msgcontenttemplateid;
 	}
@@ -32,14 +35,6 @@ public class MsgContentTemplate
 	public void setPlatform(int platform)
 	{
 		this.platform = platform;
-	}
-	public int getMsgeventtypeid()
-	{
-		return msgeventtypeid;
-	}
-	public void setMsgeventtypeid(int msgeventtypeid)
-	{
-		this.msgeventtypeid = msgeventtypeid;
 	}
 	public String getEventcode()
 	{
@@ -74,4 +69,14 @@ public class MsgContentTemplate
 		this.contenttemplate = contenttemplate;
 	}
 
+	@JSONField(serialize = false)
+	@OneToOne(targetEntity = MsgEventType.class,cascade = {CascadeType.REMOVE})
+	@JoinColumn(name = "msgeventtypeid",referencedColumnName = "msgeventtypeid")
+	public MsgEventType getMsgEventType() {
+		return msgEventType;
+	}
+
+	public void setMsgEventType(MsgEventType msgEventType) {
+		this.msgEventType = msgEventType;
+	}
 }
