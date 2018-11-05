@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 public class EventData 
 {
 	private String eventtype;
-	private int platform ;
+	private Integer platform ;
 	private JSONObject eventparameters;
 	private JSONObject domainobjects;
 	
@@ -15,10 +15,10 @@ public class EventData
 	public void setEventtype(String eventtype) {
 		this.eventtype = eventtype;
 	}
-	public int getPlatform() {
+	public Integer getPlatform() {
 		return platform;
 	}
-	public void setPlatform(int platform) {
+	public void setPlatform(Integer platform) {
 		this.platform = platform;
 	}
 	public JSONObject getEventparameters() {

@@ -41,6 +41,7 @@ CREATE TABLE `msg_defaultprocessclass` (
   `type` int(9) NOT NULL,
   `subtype` int(9) DEFAULT NULL,
   `msgprocessclassid` int(9) NOT NULL,
+  `eventcode` varchar(128) NOT NULL,
   PRIMARY KEY (`msgdefaultprocessclassid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

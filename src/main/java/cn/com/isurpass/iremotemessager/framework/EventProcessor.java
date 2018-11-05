@@ -2,7 +2,11 @@ package cn.com.isurpass.iremotemessager.framework;
 
 import java.util.List;
 
+import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
+import cn.com.isurpass.iremotemessager.domain.MsgEventGroupEvent;
+import cn.com.isurpass.iremotemessager.domain.MsgProcessClass;
 import cn.com.isurpass.iremotemessager.domain.User;
+import cn.com.isurpass.iremotemessager.service.MsgEventGroupeventService;
 import cn.com.isurpass.iremotemessager.vo.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -13,6 +17,8 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.com.isurpass.iremotemessager.SpringUtil;
 import cn.com.isurpass.iremotemessager.targetdecision.OwnerTargetDecision;
+
+import javax.annotation.Resource;
 
 @Component
 public class EventProcessor implements Runnable
@@ -31,6 +37,9 @@ public class EventProcessor implements Runnable
 	private EventData eventdata;
 	private ProcessClass processclass;
 
+	@Resource
+	private MsgEventGroupeventService msgEventGroupeventService;
+
 	public EventProcessor()
 	{
 		super();
@@ -45,7 +54,9 @@ public class EventProcessor implements Runnable
 	@Override
 	public void run()
 	{
-		initProcessclass();
+		if (!initProcessclass()) {
+			return;
+		}
 
 		IMessageTargetDecision td = createTargetDecision();
 
@@ -81,9 +92,30 @@ public class EventProcessor implements Runnable
 		}
 	}
 
-	private void initProcessclass()
+	private boolean initProcessclass()
 	{
 		processclass = new ProcessClass();
+
+		if (StringUtils.isBlank(eventdata.getEventtype()) || IRemoteUtils.isBlank(eventdata.getPlatform())) {
+			log.warn("push fail, can't find even type or platform");
+			return false;
+		}
+
+		String targetDecisionClassName = msgEventGroupeventService.findMsgPushTargetDecisionClassName(eventdata.getEventtype(), eventdata.getPlatform());
+		if (StringUtils.isBlank(targetDecisionClassName)) {
+			log.warn("can't find targetDecisionClass Define");
+			return false;
+		}
+
+		String msgPushMethodClassName = msgEventGroupeventService.findMsgPushMethodClassName(eventdata.getEventtype(), eventdata.getPlatform());
+		if (StringUtils.isBlank(targetDecisionClassName)) {
+			log.warn("can't find push method Define");
+			return false;
+		}
+
+		processclass.setTargetdecisionclass(targetDecisionClassName);
+		processclass.setMethoddecisionclass(msgPushMethodClassName);
+
 //		processclass.setTargetdecisionclass("cn.com.isurpass.iremotemessager.targetdecision.OwnerTargetDecision");
 //		processclass.setMethoddecisionclass("cn.com.isurpass.iremotemessager.methoddecision.JPushMessageMethodDecision");
 //		processclass.getParseclass()[MESSAGE_PARSE_TYPE_JPUSHMESSAGE] = "cn.com.isurpass.iremotemessager.messageparser.JPushMessageParser";
@@ -103,6 +135,7 @@ public class EventProcessor implements Runnable
 		json.put("key", "a test message");
 		processclass.getMessagetemplate()[MESSAGE_PARSE_TYPE_JPUSHMESSAGE] = new String[] {json.toJSONString()};
 		processclass.getMessagetemplate()[MESSAGE_PARSE_TYPE_JPUSHNOTIFICATION] = new String[] {"A test notification" , json.toJSONString()};
+		return true;
 	}
 
 	private IMessageMethodDecision createMethodDecision()

@@ -1,5 +1,7 @@
 package cn.com.isurpass.iremotemessager;
 
+import cn.com.isurpass.iremotemessager.domain.MsgProcessClass;
+import cn.com.isurpass.iremotemessager.service.MsgEventGroupeventService;
 import cn.com.isurpass.iremotemessager.service.UserShareDeviceService;
 import cn.com.isurpass.iremotemessager.service.UserShareService;
 import com.alibaba.fastjson.JSONObject;
@@ -20,6 +22,8 @@ public class IremotemessagerApplicationTests {
 	private UserShareService userShareService;
 	@Resource
 	private UserShareDeviceService userShareDeviceService;
+	@Resource
+	private MsgEventGroupeventService msgEventGroupeventService;
 
 	@Transactional
 	@Test
@@ -44,6 +48,12 @@ public class IremotemessagerApplicationTests {
 				System.out.println(phones[i][j]);
 			}
 		}
+	}
+
+	@Test
+	public void testNativeQuerySentence() {
+		String devicestatus = msgEventGroupeventService.findMsgPushTargetDecisionClassName("devicestatus", 9);
+		System.out.println(devicestatus);
 	}
 
 }

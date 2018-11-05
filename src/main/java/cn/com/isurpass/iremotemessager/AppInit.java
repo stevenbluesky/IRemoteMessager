@@ -13,7 +13,7 @@ import cn.com.isurpass.iremotemessager.sender.PushMessage;
 import cn.com.isurpass.iremotemessager.vo.EventData;
 
 @Component
-public class AppInit implements ApplicationRunner, Runnable
+public class AppInit implements /*ApplicationRunner,*/ Runnable
 {
 	private static Thread thread;
 	
@@ -35,7 +35,7 @@ public class AppInit implements ApplicationRunner, Runnable
 		ep.run();
 	}
 
-	@Override
+//	@Override
 	public void run(ApplicationArguments args) throws Exception
 	{
 		if ( thread == null )

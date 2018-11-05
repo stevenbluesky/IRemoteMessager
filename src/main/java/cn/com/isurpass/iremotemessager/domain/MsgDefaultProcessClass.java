@@ -14,6 +14,7 @@ public class MsgDefaultProcessClass {
     private Integer type;
     private Integer subtype;
     private MsgProcessClass msgProcessClass;
+    private String eventcode;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +49,14 @@ public class MsgDefaultProcessClass {
 
     public void setSubtype(Integer subtype) {
         this.subtype = subtype;
+    }
+
+    public String getEventcode() {
+        return eventcode;
+    }
+
+    public void setEventcode(String eventcode) {
+        this.eventcode = eventcode;
     }
 
     @JSONField(serialize = false)

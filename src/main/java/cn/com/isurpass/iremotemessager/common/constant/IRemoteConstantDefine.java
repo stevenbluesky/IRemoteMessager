@@ -1,6 +1,17 @@
 package cn.com.isurpass.iremotemessager.common.constant;
 
 public class IRemoteConstantDefine {
+    public static final int DEFAULT_PLATFORM = 999999;
+    public static final String DEFAULT_EVENT_CODE = "defaultEventCode";
+    public static final int PROCESSOR_CLASS_TYPE_PUSH_TARGET_DECISION = 1;
+    public static final int PROCESSOR_CLASS_TYPE_PUSH_METHOD= 2;
+    public static final int PROCESSOR_CLASS_TYPE_CONTENT_PARSER = 3;
+    public static final int PROCESSOR_CLASS_TYPE_PUSH = 4;
+    public static final int PROCESSOR_SUB_TYPE_NOTIFICATION_JPUSH_NOTIFICATION = 1;
+    public static final int PROCESSOR_SUB_TYPE_NOTIFICATION_JPUSH_MESSAGE = 2;
+    public static final int PROCESSOR_SUB_TYPE_NOTIFICATION_SMS = 3;
+    public static final int PROCESSOR_SUB_TYPE_NOTIFICATION_MAIL = 4;
+
     public static final int USER_SHARE_STATUS_WAIT_FOR_RESPONSE = 0 ;
     public static final int USER_SHARE_STATUS_NORMAL = 1 ;
 
