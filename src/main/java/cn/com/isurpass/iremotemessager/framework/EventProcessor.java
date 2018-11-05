@@ -103,13 +103,13 @@ public class EventProcessor implements Runnable
 
 		String targetDecisionClassName = msgEventGroupeventService.findMsgPushTargetDecisionClassName(eventdata.getEventtype(), eventdata.getPlatform());
 		if (StringUtils.isBlank(targetDecisionClassName)) {
-			log.warn("can't find targetDecisionClass Define");
+			log.warn("push fail, can't find targetDecisionClass Define");
 			return false;
 		}
 
 		String msgPushMethodClassName = msgEventGroupeventService.findMsgPushMethodClassName(eventdata.getEventtype(), eventdata.getPlatform());
 		if (StringUtils.isBlank(targetDecisionClassName)) {
-			log.warn("can't find push method Define");
+			log.warn("push fail, can't find push method Define");
 			return false;
 		}
 
