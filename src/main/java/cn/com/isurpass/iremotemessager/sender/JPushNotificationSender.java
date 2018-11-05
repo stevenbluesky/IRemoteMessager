@@ -9,7 +9,7 @@ import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
 import cn.com.isurpass.iremotemessager.vo.SendResult;
 
-@Component
+@Component("cn.com.isurpass.iremotemessager.sender.JPushNotificationSender")
 public class JPushNotificationSender implements IMessageSender<JPushNotificationData> 
 {
 

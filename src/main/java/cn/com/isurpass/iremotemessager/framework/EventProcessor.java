@@ -13,6 +13,7 @@ import cn.com.isurpass.iremotemessager.vo.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
@@ -173,6 +174,17 @@ public class EventProcessor implements Runnable
 		{
 			return SpringUtil.getBean(classname,Class.forName(classname));
 			//return Class.forName(classname).newInstance();
+		}
+		catch (NoSuchBeanDefinitionException e)
+		{
+			try
+			{
+				return SpringUtil.getBean(Class.forName(classname));
+			}
+			catch (ClassNotFoundException e1)
+			{
+				e1.printStackTrace();
+			}
 		}
 		catch (Throwable t)
 		{

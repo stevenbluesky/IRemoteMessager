@@ -8,6 +8,7 @@ import cn.com.isurpass.iremotemessager.service.UserShareService;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -59,10 +60,25 @@ public class IremotemessagerApplicationTests {
 		System.out.println(devicestatus);
 	}
 
-
 	@Test
 	public void testPushSetting() {
 		MsgPushSetting devicestatus = msgPushSettingService.findPushSetting("devicestatus", 9);
 		System.out.println(devicestatus);
+	}
+
+	@Test
+	public void testGetBean(){
+		try {
+			SpringUtil.getBean("cn.com.isurpass.iremotemessager.sender.MailSender", Class.forName("cn.com.isurpass.iremotemessager.sender.MailSender"));
+		} catch (ClassNotFoundException e) {
+			System.out.println("None");
+//			e.printStackTrace();
+		} catch (NoSuchBeanDefinitionException e) {
+			try {
+				SpringUtil.getBean(Class.forName("cn.com.isurpass.iremotemessager.sender.MailSender"));
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		}
 	}
 }
