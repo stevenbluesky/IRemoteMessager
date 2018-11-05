@@ -1,12 +1,14 @@
 package cn.com.isurpass.iremotemessager.framework;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
 import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
-import cn.com.isurpass.iremotemessager.domain.MsgEventGroupEvent;
-import cn.com.isurpass.iremotemessager.domain.MsgProcessClass;
 import cn.com.isurpass.iremotemessager.domain.User;
 import cn.com.isurpass.iremotemessager.service.MsgEventGroupeventService;
+import cn.com.isurpass.iremotemessager.service.MsgPushSettingService;
 import cn.com.isurpass.iremotemessager.vo.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -24,21 +26,14 @@ import javax.annotation.Resource;
 public class EventProcessor implements Runnable
 {
 	private static Log log = LogFactory.getLog(OwnerTargetDecision.class);
-	private final static int MESSAGE_PARSE_TYPE_JPUSHMESSAGE = 1;
-	private final static int MESSAGE_PARSE_TYPE_JPUSHNOTIFICATION = 2;
-	private final static int MESSAGE_PARSE_TYPE_SMS = 3;
-	private final static int MESSAGE_PARSE_TYPE_MAIL = 4;
-
-	private final static int MESSAGE_SENDER_TYPE_JPUSHMESSAGE = 1;
-	private final static int MESSAGE_SENDER_TYPE_JPUSHNOTIFICATION = 2;
-	private final static int MESSAGE_SENDER_TYPE_SMS = 3;
-	private final static int MESSAGE_SENDER_TYPE_MAIL = 4;
 
 	private EventData eventdata;
 	private ProcessClass processclass;
 
 	@Resource
 	private MsgEventGroupeventService msgEventGroupeventService;
+	@Resource
+	private MsgPushSettingService msgPushSettingService;
 
 	public EventProcessor()
 	{
@@ -66,13 +61,13 @@ public class EventProcessor implements Runnable
 		mmd.setMsgInfo(eventdata, lmu);
 
 		List<JPushMessageData> lpmd = mmd.getJPushMessageData();
-		sendmessage(lpmd, MESSAGE_PARSE_TYPE_JPUSHMESSAGE, MESSAGE_SENDER_TYPE_JPUSHMESSAGE);
+		sendmessage(lpmd, IRemoteConstantDefine.MESSAGE_PARSE_TYPE_JPUSHMESSAGE, IRemoteConstantDefine.MESSAGE_SENDER_TYPE_JPUSHMESSAGE);
 
 		List<JPushNotificationData> lpnd = mmd.getJPushNotificationData();
-		sendmessage(lpnd, MESSAGE_PARSE_TYPE_JPUSHNOTIFICATION, MESSAGE_SENDER_TYPE_JPUSHNOTIFICATION);
+		sendmessage(lpnd, IRemoteConstantDefine.MESSAGE_PARSE_TYPE_JPUSHNOTIFICATION, IRemoteConstantDefine.MESSAGE_SENDER_TYPE_JPUSHNOTIFICATION);
 
 		List<SmsData> smsDataList = mmd.getSmsData();
-		sendmessage(smsDataList, MESSAGE_PARSE_TYPE_SMS, MESSAGE_SENDER_TYPE_SMS);
+		sendmessage(smsDataList, IRemoteConstantDefine.MESSAGE_PARSE_TYPE_SMS, IRemoteConstantDefine.MESSAGE_SENDER_TYPE_SMS);
 	}
 
 	private <T> void sendmessage(List<T> lst, int parsertype, int sendertype)
@@ -113,28 +108,27 @@ public class EventProcessor implements Runnable
 			return false;
 		}
 
+		Map<Integer, String> parserMap = msgPushSettingService.findParserMap(eventdata.getEventtype(), eventdata.getPlatform());
+		Iterator<Map.Entry<Integer, String>> parserIterator = parserMap.entrySet().iterator();
+		while (parserIterator.hasNext()) {
+			Map.Entry<Integer, String> next = parserIterator.next();
+			processclass.getParseclass()[next.getKey()] = next.getValue();
+		}
+
+		Map<Integer, String> senderMap = msgPushSettingService.findSenderMap(eventdata.getEventtype(), eventdata.getPlatform());
+		Iterator<Map.Entry<Integer, String>> senderIterator = senderMap.entrySet().iterator();
+		while (senderIterator.hasNext()) {
+			Map.Entry<Integer, String> next = senderIterator.next();
+			processclass.getParseclass()[next.getKey()] = next.getValue();
+		}
+
 		processclass.setTargetdecisionclass(targetDecisionClassName);
 		processclass.setMethoddecisionclass(msgPushMethodClassName);
-
-//		processclass.setTargetdecisionclass("cn.com.isurpass.iremotemessager.targetdecision.OwnerTargetDecision");
-//		processclass.setMethoddecisionclass("cn.com.isurpass.iremotemessager.methoddecision.JPushMessageMethodDecision");
-//		processclass.getParseclass()[MESSAGE_PARSE_TYPE_JPUSHMESSAGE] = "cn.com.isurpass.iremotemessager.messageparser.JPushMessageParser";
-//		processclass.getSendclass()[MESSAGE_SENDER_TYPE_JPUSHMESSAGE] = "cn.com.isurpass.iremotemessager.sender.JPushMessageSender" ;
-		
-		processclass.setTargetdecisionclass("cn.com.isurpass.iremotemessager.targetdecision.CanOperatePeopleTargetDecision");
-		processclass.setMethoddecisionclass("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationMailSmsMethodDecision");
-		processclass.getParseclass()[MESSAGE_PARSE_TYPE_JPUSHMESSAGE] = "cn.com.isurpass.iremotemessager.messageparser.JPushMessageParser";
-		processclass.getParseclass()[MESSAGE_PARSE_TYPE_JPUSHNOTIFICATION] = "cn.com.isurpass.iremotemessager.messageparser.JPushNotificationParser";
-		processclass.getParseclass()[MESSAGE_PARSE_TYPE_SMS] = "cn.com.isurpass.iremotemessager.messageparser.SmsParser";
-
-		processclass.getSendclass()[MESSAGE_SENDER_TYPE_JPUSHMESSAGE] = "cn.com.isurpass.iremotemessager.sender.JPushMessageSender" ;
-		processclass.getSendclass()[MESSAGE_SENDER_TYPE_JPUSHNOTIFICATION] = "cn.com.isurpass.iremotemessager.sender.JPushNotificationSender" ;
-		processclass.getSendclass()[MESSAGE_SENDER_TYPE_SMS] = "cn.com.isurpass.iremotemessager.sender.SmsSender";
 		
 		JSONObject json = new JSONObject();
 		json.put("key", "a test message");
-		processclass.getMessagetemplate()[MESSAGE_PARSE_TYPE_JPUSHMESSAGE] = new String[] {json.toJSONString()};
-		processclass.getMessagetemplate()[MESSAGE_PARSE_TYPE_JPUSHNOTIFICATION] = new String[] {"A test notification" , json.toJSONString()};
+		processclass.getMessagetemplate()[IRemoteConstantDefine.MESSAGE_PARSE_TYPE_JPUSHMESSAGE] = new String[] {json.toJSONString()};
+		processclass.getMessagetemplate()[IRemoteConstantDefine.MESSAGE_PARSE_TYPE_JPUSHNOTIFICATION] = new String[] {"A test notification" , json.toJSONString()};
 		return true;
 	}
 

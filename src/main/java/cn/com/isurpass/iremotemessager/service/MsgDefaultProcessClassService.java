@@ -31,4 +31,29 @@ public class MsgDefaultProcessClassService {
     public MsgDefaultProcessClass findDefaultProcessorClass(Integer platform, String eventcode, Integer type) {
         return msgDefaultProcessClassDao.findByPlatformAndEventcodeAndType(platform, eventcode, type);
     }
+
+    public MsgDefaultProcessClass findDefaultProcessorClassBySubtype(Integer platform, String eventcode, Integer type, Integer subtype) {
+        return  msgDefaultProcessClassDao.findByPlatformAndEventcodeAndTypeAndSubtype(platform, eventcode, type, subtype);
+    }
+
+    public String findDefaultProcessorClassNameBaseBySubtype(Integer platform, String eventcode, Integer type, Integer subtype) {
+        MsgDefaultProcessClass processClass = msgDefaultProcessClassDao.findByPlatformAndEventcodeAndTypeAndSubtype(platform, eventcode, type, subtype);
+        if (processClass == null || processClass.getMsgProcessClass() == null) {
+            return null;
+        }
+        return processClass.getMsgProcessClass().getClassname();
+    }
+    public String findDefaultProcessorClassNameBySubtype(Integer platform, String eventcode, Integer type, Integer subtype) {
+        String name = findDefaultProcessorClassNameBaseBySubtype(platform, eventcode, type, subtype);
+        if (name == null) {
+            name = findDefaultProcessorClassNameBaseBySubtype(IRemoteConstantDefine.DEFAULT_PLATFORM, eventcode, type, subtype);
+            if (name == null) {
+                name = findDefaultProcessorClassNameBaseBySubtype(platform, IRemoteConstantDefine.DEFAULT_EVENT_CODE, type, subtype);
+                if (name == null) {
+                    name = findDefaultProcessorClassNameBaseBySubtype(IRemoteConstantDefine.DEFAULT_PLATFORM, IRemoteConstantDefine.DEFAULT_EVENT_CODE, type, subtype);
+                }
+            }
+        }
+        return name;
+    }
 }

@@ -5,4 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface MsgDefaultProcessClassDao extends CrudRepository<MsgDefaultProcessClass,Integer>{
     MsgDefaultProcessClass findByPlatformAndEventcodeAndType(Integer paltform, String eventcode, Integer type);
+
+    MsgDefaultProcessClass findByPlatformAndEventcodeAndTypeAndSubtype(Integer paltform, String eventcode, Integer type, Integer subtype);
 }

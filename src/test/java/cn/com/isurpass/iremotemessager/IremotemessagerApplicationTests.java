@@ -1,7 +1,8 @@
 package cn.com.isurpass.iremotemessager;
 
-import cn.com.isurpass.iremotemessager.domain.MsgProcessClass;
+import cn.com.isurpass.iremotemessager.domain.MsgPushSetting;
 import cn.com.isurpass.iremotemessager.service.MsgEventGroupeventService;
+import cn.com.isurpass.iremotemessager.service.MsgPushSettingService;
 import cn.com.isurpass.iremotemessager.service.UserShareDeviceService;
 import cn.com.isurpass.iremotemessager.service.UserShareService;
 import com.alibaba.fastjson.JSONObject;
@@ -24,6 +25,8 @@ public class IremotemessagerApplicationTests {
 	private UserShareDeviceService userShareDeviceService;
 	@Resource
 	private MsgEventGroupeventService msgEventGroupeventService;
+	@Resource
+	private MsgPushSettingService msgPushSettingService;
 
 	@Transactional
 	@Test
@@ -56,4 +59,10 @@ public class IremotemessagerApplicationTests {
 		System.out.println(devicestatus);
 	}
 
+
+	@Test
+	public void testPushSetting() {
+		MsgPushSetting devicestatus = msgPushSettingService.findPushSetting("devicestatus", 9);
+		System.out.println(devicestatus);
+	}
 }
