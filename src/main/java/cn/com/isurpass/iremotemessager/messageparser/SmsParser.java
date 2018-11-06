@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
-@Component
+@Component("cn.com.isurpass.iremotemessager.messageparser.SmsParser")
 public class SmsParser implements IMessageParser<SmsData> {
     @Override
     public List<SmsData> parse(EventData data, SmsData targetdata) {

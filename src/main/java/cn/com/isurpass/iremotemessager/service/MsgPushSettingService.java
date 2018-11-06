@@ -43,7 +43,7 @@ public class MsgPushSettingService {
         }
 
         for (int i = 1; i < 5; i++) {
-            if (!pusherMap.containsValue(i) || pusherMap.get(i) == null) {
+            if (!pusherMap.containsKey(i) || pusherMap.get(i) == null) {
                 pusherMap.put(i, msgDefaultProcessClassService.findDefaultProcessorClassNameBySubtype(platform, eventcode, type, i));
             }
         }

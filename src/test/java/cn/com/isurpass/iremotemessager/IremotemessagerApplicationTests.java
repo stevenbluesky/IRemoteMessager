@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -55,9 +56,19 @@ public class IremotemessagerApplicationTests {
 	}
 
 	@Test
+	@org.springframework.transaction.annotation.Transactional(readOnly = true)
 	public void testNativeQuerySentence() {
-		String devicestatus = msgEventGroupeventService.findMsgPushTargetDecisionClassName("devicestatus", 9);
+		String type = "devicestatus";
+		int platfom = 9;
+		String devicestatus = msgEventGroupeventService.findMsgPushTargetDecisionClassName("devicestatus", platfom);
+		String methodClassName = msgEventGroupeventService.findMsgPushMethodClassName("devicestatus", platfom);
+
 		System.out.println(devicestatus);
+		System.out.println(methodClassName);
+
+		Map<Integer, String> parserMap = msgPushSettingService.findParserMap(type, platfom);
+		Map<Integer, String> senderMap = msgPushSettingService.findSenderMap(type, platfom);
+
 	}
 
 	@Test
