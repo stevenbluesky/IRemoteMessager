@@ -22,7 +22,7 @@ public class AppInit implements /*ApplicationRunner,*/ Runnable
 	{
 		PushMessage.initPushClient(0, "gmoZmRV0fBsazwNQW9mKWax8LBnbgF7QPP9pDHkHpSg=", "meLVvQ27XPIXH9uxxI4Q6kRPNxJySMzdfiXmhD3o5zc=");
 		EventData data = new EventData();
-		data.setPlatform(0);
+		data.setPlatform(9);
 		data.setEventtype("devicestatus");
 		data.setEventparameters(new JSONObject());
 		data.getEventparameters().put("zwavedeviceid", 15951);

@@ -2,7 +2,8 @@
 SQLyog  v12.2.6 (64 bit)
 MySQL - 5.5.56 : Database - iremote
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -122,7 +123,7 @@ CREATE TABLE `msg_pushsettingdtl` (
   `msgpushsettingdtlid` int(9) NOT NULL AUTO_INCREMENT,
   `msgpushsettingid` int(9) NOT NULL,
   `type` int(9) NOT NULL,
-  `subtyp` int(9) DEFAULT NULL,
+  `subtype` int(9) DEFAULT NULL,
   `msgprocessclassid` int(9) NOT NULL,
   PRIMARY KEY (`msgpushsettingdtlid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

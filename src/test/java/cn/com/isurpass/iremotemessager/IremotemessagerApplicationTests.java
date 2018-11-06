@@ -1,12 +1,14 @@
 package cn.com.isurpass.iremotemessager;
 
-import cn.com.isurpass.iremotemessager.domain.MsgProcessClass;
+import cn.com.isurpass.iremotemessager.domain.MsgPushSetting;
 import cn.com.isurpass.iremotemessager.service.MsgEventGroupeventService;
+import cn.com.isurpass.iremotemessager.service.MsgPushSettingService;
 import cn.com.isurpass.iremotemessager.service.UserShareDeviceService;
 import cn.com.isurpass.iremotemessager.service.UserShareService;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -14,6 +16,7 @@ import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -24,6 +27,8 @@ public class IremotemessagerApplicationTests {
 	private UserShareDeviceService userShareDeviceService;
 	@Resource
 	private MsgEventGroupeventService msgEventGroupeventService;
+	@Resource
+	private MsgPushSettingService msgPushSettingService;
 
 	@Transactional
 	@Test
@@ -51,9 +56,40 @@ public class IremotemessagerApplicationTests {
 	}
 
 	@Test
+	@org.springframework.transaction.annotation.Transactional(readOnly = true)
 	public void testNativeQuerySentence() {
-		String devicestatus = msgEventGroupeventService.findMsgPushTargetDecisionClassName("devicestatus", 9);
+		String type = "devicestatus";
+		int platfom = 9;
+		String devicestatus = msgEventGroupeventService.findMsgPushTargetDecisionClassName("devicestatus", platfom);
+		String methodClassName = msgEventGroupeventService.findMsgPushMethodClassName("devicestatus", platfom);
+
+		System.out.println(devicestatus);
+		System.out.println(methodClassName);
+
+		Map<Integer, String> parserMap = msgPushSettingService.findParserMap(type, platfom);
+		Map<Integer, String> senderMap = msgPushSettingService.findSenderMap(type, platfom);
+
+	}
+
+	@Test
+	public void testPushSetting() {
+		MsgPushSetting devicestatus = msgPushSettingService.findPushSetting("devicestatus", 9);
 		System.out.println(devicestatus);
 	}
 
+	@Test
+	public void testGetBean(){
+		try {
+			SpringUtil.getBean("cn.com.isurpass.iremotemessager.sender.MailSender", Class.forName("cn.com.isurpass.iremotemessager.sender.MailSender"));
+		} catch (ClassNotFoundException e) {
+			System.out.println("None");
+//			e.printStackTrace();
+		} catch (NoSuchBeanDefinitionException e) {
+			try {
+				SpringUtil.getBean(Class.forName("cn.com.isurpass.iremotemessager.sender.MailSender"));
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 }
