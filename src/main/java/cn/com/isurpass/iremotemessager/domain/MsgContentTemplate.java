@@ -3,6 +3,8 @@ package cn.com.isurpass.iremotemessager.domain;
 import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +18,22 @@ public class MsgContentTemplate
 	private Integer type;
 	private String contenttemplate;
 	private MsgEventType msgEventType;
+	private Date createtime ;
+	private Date lastupdatetime;
+
+	
+	
+	public MsgContentTemplate()
+	{
+		super();
+	}
+	
+	public MsgContentTemplate(String contenttemplate, Date lastupdatetime)
+	{
+		super();
+		this.contenttemplate = contenttemplate;
+		this.lastupdatetime = lastupdatetime;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +50,7 @@ public class MsgContentTemplate
 	{
 		return platform;
 	}
-	public void setPlatform(int platform)
+	public void setPlatform(Integer platform)
 	{
 		this.platform = platform;
 	}
@@ -56,7 +74,7 @@ public class MsgContentTemplate
 	{
 		return type;
 	}
-	public void setType(int type)
+	public void setType(Integer type)
 	{
 		this.type = type;
 	}
@@ -78,5 +96,21 @@ public class MsgContentTemplate
 
 	public void setMsgEventType(MsgEventType msgEventType) {
 		this.msgEventType = msgEventType;
+	}
+	public Date getCreatetime()
+	{
+		return createtime;
+	}
+	public void setCreatetime(Date createtime)
+	{
+		this.createtime = createtime;
+	}
+	public Date getLastupdatetime()
+	{
+		return lastupdatetime;
+	}
+	public void setLastupdatetime(Date lastupdatetime)
+	{
+		this.lastupdatetime = lastupdatetime;
 	}
 }
