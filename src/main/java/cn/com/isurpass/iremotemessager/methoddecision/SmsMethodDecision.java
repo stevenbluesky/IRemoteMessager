@@ -28,6 +28,7 @@ public class SmsMethodDecision extends MethodDecisionBase{
                 SmsData smsData = new SmsData();
                 smsData.setPhoneusers(new ArrayList<>());
                 smsData.setPhonenumersList(new ArrayList<>());
+                smsData.setLanguage(language);
                 dataHashMap.put(language, smsData);
             }
 

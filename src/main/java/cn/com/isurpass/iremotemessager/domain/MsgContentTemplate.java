@@ -88,7 +88,7 @@ public class MsgContentTemplate
 	}
 
 	@JSONField(serialize = false)
-	@OneToOne(targetEntity = MsgEventType.class,cascade = {CascadeType.REMOVE})
+	@ManyToOne(targetEntity = MsgEventType.class,cascade = {CascadeType.REMOVE})
 	@JoinColumn(name = "msgeventtypeid",referencedColumnName = "msgeventtypeid")
 	public MsgEventType getMsgEventType() {
 		return msgEventType;

@@ -17,7 +17,7 @@ public class MsgEventType {
     private String decription;
     private Date createtime;
     private List<MsgEventGroupEvent> msgEventGroupEvents;
-    private MsgContentTemplate msgContentTemplate;
+    private List<MsgContentTemplate> msgContentTemplates;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,12 +73,12 @@ public class MsgEventType {
     }
 
     @JSONField(serialize = false)
-    @OneToOne(targetEntity=MsgContentTemplate.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,fetch=FetchType.LAZY,mappedBy="msgEventType")
-    public MsgContentTemplate getMsgContentTemplate() {
-        return msgContentTemplate;
+    @OneToMany(targetEntity=MsgContentTemplate.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,fetch=FetchType.LAZY,mappedBy="msgEventType")
+    public List<MsgContentTemplate> getMsgContentTemplates() {
+        return msgContentTemplates;
     }
 
-    public void setMsgContentTemplate(MsgContentTemplate msgContentTemplate) {
-        this.msgContentTemplate = msgContentTemplate;
+    public void setMsgContentTemplates(List<MsgContentTemplate> msgContentTemplates) {
+        this.msgContentTemplates = msgContentTemplates;
     }
 }

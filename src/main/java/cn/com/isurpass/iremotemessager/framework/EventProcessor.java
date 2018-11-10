@@ -7,6 +7,7 @@ import java.util.Map;
 import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
 import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import cn.com.isurpass.iremotemessager.domain.User;
+import cn.com.isurpass.iremotemessager.jms.ITextMessageProcessor;
 import cn.com.isurpass.iremotemessager.service.MsgEventGroupeventService;
 import cn.com.isurpass.iremotemessager.service.MsgPushSettingService;
 import cn.com.isurpass.iremotemessager.vo.*;
@@ -14,18 +15,21 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 
 import cn.com.isurpass.iremotemessager.SpringUtil;
 import cn.com.isurpass.iremotemessager.targetdecision.OwnerTargetDecision;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
 @Component
-public class EventProcessor implements Runnable
-{
+@Scope("prototype")
+public class EventProcessor implements Runnable{
 	private static Log log = LogFactory.getLog(OwnerTargetDecision.class);
 
 	private EventData eventdata;
@@ -48,6 +52,7 @@ public class EventProcessor implements Runnable
 	}
 
 	@Override
+	@Transactional
 	public void run()
 	{
 		if (!initProcessclass()) {
@@ -92,19 +97,19 @@ public class EventProcessor implements Runnable
 	{
 		processclass = new ProcessClass();
 
-		if (StringUtils.isBlank(eventdata.getEventtype()) || IRemoteUtils.isBlank(eventdata.getPlatform())) {
+		if (StringUtils.isBlank(eventdata.getEventtype()) || eventdata.getPlatform() == null) {
 			log.warn("push fail, can't find even type or platform");
 			return false;
 		}
 
-		String targetDecisionClassName = msgEventGroupeventService.findMsgPushTargetDecisionClassName(eventdata.getEventtype(), eventdata.getPlatform());
+ 		String targetDecisionClassName = msgEventGroupeventService.findMsgPushTargetDecisionClassName(eventdata.getEventtype(), eventdata.getPlatform());
 		if (StringUtils.isBlank(targetDecisionClassName)) {
 			log.warn("push fail, can't find targetDecisionClass Define");
 			return false;
 		}
 
 		String msgPushMethodClassName = msgEventGroupeventService.findMsgPushMethodClassName(eventdata.getEventtype(), eventdata.getPlatform());
-		if (StringUtils.isBlank(targetDecisionClassName)) {
+		if (StringUtils.isBlank(msgPushMethodClassName)) {
 			log.warn("push fail, can't find push method Define");
 			return false;
 		}
@@ -120,16 +125,12 @@ public class EventProcessor implements Runnable
 		Iterator<Map.Entry<Integer, String>> senderIterator = senderMap.entrySet().iterator();
 		while (senderIterator.hasNext()) {
 			Map.Entry<Integer, String> next = senderIterator.next();
-			processclass.getParseclass()[next.getKey()] = next.getValue();
+			processclass.getSendclass()[next.getKey()] = next.getValue();
 		}
 
 		processclass.setTargetdecisionclass(targetDecisionClassName);
 		processclass.setMethoddecisionclass(msgPushMethodClassName);
-		
-		JSONObject json = new JSONObject();
-		json.put("key", "a test message");
-		processclass.getMessagetemplate()[IRemoteConstantDefine.MESSAGE_PARSE_TYPE_JPUSHMESSAGE] = new String[] {json.toJSONString()};
-		processclass.getMessagetemplate()[IRemoteConstantDefine.MESSAGE_PARSE_TYPE_JPUSHNOTIFICATION] = new String[] {"A test notification" , json.toJSONString()};
+
 		return true;
 	}
 
@@ -198,4 +199,7 @@ public class EventProcessor implements Runnable
 		this.eventdata = eventdata;
 	}
 
+	public String getTaskKey() {
+		return eventdata.getEventparameters().getString("deviceid");
+	}
 }

@@ -5,12 +5,14 @@ import cn.com.isurpass.iremotemessager.dao.MsgPushSettingDao;
 import cn.com.isurpass.iremotemessager.domain.MsgPushSetting;
 import cn.com.isurpass.iremotemessager.domain.MsgPushSettingDtl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@Transactional
 public class MsgPushSettingService {
     @Resource
     private MsgPushSettingDao msgPushSettingDao;

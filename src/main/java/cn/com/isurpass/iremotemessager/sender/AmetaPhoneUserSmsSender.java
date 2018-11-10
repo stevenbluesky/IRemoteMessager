@@ -1,8 +1,10 @@
-package cn.com.isurpass.iremotemessager.common.sms;
+package cn.com.isurpass.iremotemessager.sender;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
+@Component("cn.com.isurpass.iremotemessager.sender.AmetaPhoneUserSmsSender")
 public class AmetaPhoneUserSmsSender extends NorthAmericanPhoneUserSmsSender {
 
 	@SuppressWarnings("unused")

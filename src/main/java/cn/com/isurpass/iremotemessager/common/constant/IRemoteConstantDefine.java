@@ -84,4 +84,5 @@ public class IRemoteConstantDefine {
     public static final String SYSTEMPARAMETER_SUPPORT_MAIL_VALIDATE = "support_mail_validate";
     public static final String SYSTEMPARAMETER_SUPPORT_MAIL_TOADDRESS = "support_mail_toaddress";
 
+    public static final String QUARTZ_GROUP_DEVICE_TIMER = "QUARTZ_GROUP_DEVICE_TIMER";
 }

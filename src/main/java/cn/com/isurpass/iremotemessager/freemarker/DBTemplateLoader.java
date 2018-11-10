@@ -25,6 +25,7 @@ public class DBTemplateLoader implements TemplateLoader
 	@Override
 	public Object findTemplateSource(String name) throws IOException
 	{
+        name = splitName(name);
 		if ( TEMPLATE_KEY_TEMPLATE_NAME.equals(name) )
 			return TEMPLATE_KEY_TEMPLATE;
 		
@@ -44,11 +45,17 @@ public class DBTemplateLoader implements TemplateLoader
 		
 		MsgContentTemplateService svr = SpringUtil.getBean(MsgContentTemplateService.class);
 		
-		
 		return svr.findContentTemplate(eventcode, platform, language, MsgTemplateType.values()[type]);
 	}
 
-	@Override
+    private String splitName(String name) {
+	    name = name.substring(0, name.lastIndexOf("_"));
+	    name = name.substring(0, name.lastIndexOf("_"));
+
+	    return name;
+    }
+
+    @Override
 	public long getLastModified(Object templateSource)
 	{
 		if ( templateSource == null )

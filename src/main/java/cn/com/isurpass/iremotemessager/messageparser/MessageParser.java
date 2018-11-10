@@ -26,6 +26,7 @@ public class MessageParser
 	static 
 	{
 		freemarkercfg = new Configuration(Configuration.VERSION_2_3_28);
+		freemarkercfg.setTemplateLoader(new DBTemplateLoader());
 	}
 	
 	public MessageParser(EventData data , String language,MsgTemplateType type)

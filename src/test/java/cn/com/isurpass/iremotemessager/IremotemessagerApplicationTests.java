@@ -1,19 +1,20 @@
 package cn.com.isurpass.iremotemessager;
 
+import cn.com.isurpass.iremotemessager.common.mail.MailInterface;
 import cn.com.isurpass.iremotemessager.domain.MsgPushSetting;
-import cn.com.isurpass.iremotemessager.service.MsgEventGroupeventService;
-import cn.com.isurpass.iremotemessager.service.MsgPushSettingService;
-import cn.com.isurpass.iremotemessager.service.UserShareDeviceService;
-import cn.com.isurpass.iremotemessager.service.UserShareService;
+import cn.com.isurpass.iremotemessager.service.*;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,10 @@ public class IremotemessagerApplicationTests {
 	private MsgEventGroupeventService msgEventGroupeventService;
 	@Resource
 	private MsgPushSettingService msgPushSettingService;
+    @Resource(name="transactionManager")
+    private PlatformTransactionManager transactionManager;
+    @Resource
+    private MsgEventTypeService msgEventTypeService;
 
 	@Transactional
 	@Test
@@ -91,5 +96,32 @@ public class IremotemessagerApplicationTests {
 				e1.printStackTrace();
 			}
 		}
+	}
+
+	@Test
+    @Transactional
+	public void testSendMail() {
+		ArrayList<String>maiList = new ArrayList<>();
+		maiList.add("zhulei@isurpass.com.cn");
+		MailInterface.sendMail(maiList, "Test", "Just test");
+	}
+
+	@Test
+	public void testSessionFactory() {
+//		EntityTransaction transaction = entityManager.getTransaction();
+//		transaction.begin();
+        TransactionStatus transaction = transactionManager.getTransaction(new DefaultTransactionDefinition());
+		TransactionStatus transaction1 = transactionManager.getTransaction(new DefaultTransactionDefinition());
+
+		System.out.println(transaction.isNewTransaction());
+		transactionManager.commit(transaction);
+		System.out.println(transaction1.isCompleted());
+		System.out.println(transaction.isCompleted());
+	}
+
+	@Test
+	public void testQueryEventCode() {
+		List<String> allEventCode = msgEventTypeService.findAllEventCode();
+		System.out.println(allEventCode);
 	}
 }
