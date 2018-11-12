@@ -19,7 +19,7 @@ import cn.com.isurpass.iremotemessager.service.MsgContentTemplateService;
 import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
 
-@Component
+@Component("cn.com.isurpass.iremotemessager.messageparser.JPushNotificationParser")
 public class JPushNotificationParser implements IMessageParser<JPushNotificationData> 
 {
 	private static Log log = LogFactory.getLog(JPushNotificationParser.class);

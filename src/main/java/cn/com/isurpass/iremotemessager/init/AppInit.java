@@ -22,7 +22,7 @@ public class AppInit implements ApplicationRunner, Runnable
 	private static Thread thread;
 	private static Log log = LogFactory.getLog(OwnerTargetDecision.class);
 
-	private static final String BROKER_URL = "failover://tcp://192.168.1.145:61616";
+	private static final String BROKER_URL = "failover://tcp://192.168.5.144:61616";
 
 	@Resource
 	private MsgEventTypeService msgEventTypeService;
