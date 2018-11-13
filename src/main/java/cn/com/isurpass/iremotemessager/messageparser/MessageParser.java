@@ -93,5 +93,8 @@ public class MessageParser
 	{
 		return getMessage();
 	}
-	
+
+	public void setType(MsgTemplateType type) {
+		this.type = type;
+	}
 }

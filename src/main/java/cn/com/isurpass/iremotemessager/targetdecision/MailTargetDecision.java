@@ -18,7 +18,7 @@ public class MailTargetDecision extends TargetDecisionBase {
         String[] mails = eventparameters.getObject("mails", String[].class);
         ArrayList<User> userList = new ArrayList<>();
 
-        for (int i = 0; i < mails.length; i++) {
+        for (int i = 0; mails != null && i < mails.length; i++) {
             User user = new User();
             user.setMail(mails[i]);
 
