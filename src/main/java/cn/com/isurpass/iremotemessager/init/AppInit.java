@@ -44,9 +44,11 @@ public class AppInit implements ApplicationRunner, Runnable
 		log.info("init JMS...");
 		TextMessageBaseListener textMessageBaseListener = new TextMessageBaseListener(EventProcessor.class);
 
-		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_USER,
-				ActiveMQConnection.DEFAULT_PASSWORD, BROKER_URL);
+/*		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_USER,
+				ActiveMQConnection.DEFAULT_PASSWORD, BROKER_URL);*/
 		try {
+			ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("jwzh908",
+					"jwzh@321", BROKER_URL);
 			Connection connection = connectionFactory.createConnection();
 			connection.start();
 			Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -59,7 +61,8 @@ public class AppInit implements ApplicationRunner, Runnable
 
 			}
 		} catch (JMSException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
+			System.exit(1);
 		}
 	}
 

@@ -7,9 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
@@ -20,7 +18,7 @@ public class TextMessageBaseListener implements MessageListener {
 	private static final String DEFAULT_TASK_QUEUE = "defaulttaskqueue";
 	private static final String TYPE = "type";
 	private static final String PLATFORM = "platform";
-	private static final String DEVICEID = "deviceid";
+	private static final String DEVICE_ID = "deviceid";
 
 	private Class<EventProcessor> cls ;
 
@@ -62,7 +60,7 @@ public class TextMessageBaseListener implements MessageListener {
 			eventProcessor.setEventdata(eventData);
 //			ITextMessageProcessor pro = JSON.parseObject(tm.getText(), cls);
 
-			String key = json.getString(DEVICEID);
+			String key = json.getString(DEVICE_ID);
 			if ( key == null || key.length() == 0 )
 				key = DEFAULT_TASK_QUEUE;
 			JSMTaskManager.addTask(key, eventProcessor);

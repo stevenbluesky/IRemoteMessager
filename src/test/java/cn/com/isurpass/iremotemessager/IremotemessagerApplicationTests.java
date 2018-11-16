@@ -30,8 +30,6 @@ public class IremotemessagerApplicationTests {
     private MsgEventGroupeventService msgEventGroupeventService;
     @Resource
     private MsgPushSettingService msgPushSettingService;
-    @Resource(name = "transactionManager")
-    private PlatformTransactionManager transactionManager;
     @Resource
     private MsgEventTypeService msgEventTypeService;
 
@@ -98,7 +96,7 @@ public class IremotemessagerApplicationTests {
         }
     }
 
-    @Test
+//    @Test
     @Transactional
     public void testSendMail() {
 		/*ArrayList<String>maiList = new ArrayList<>();
@@ -108,19 +106,6 @@ public class IremotemessagerApplicationTests {
 //		EmailUtils.sendEmail("title", users, null, "content...", null);
         EmailUtils.sendEmail(users, "title", "content..");
         EmailUtils.sendEmail(users, "sfsfsafsfsa", "asfsadfasfsdfadsfasfasf..");
-    }
-
-    @Test
-    public void testSessionFactory() {
-//		EntityTransaction transaction = entityManager.getTransaction();
-//		transaction.begin();
-        TransactionStatus transaction = transactionManager.getTransaction(new DefaultTransactionDefinition());
-        TransactionStatus transaction1 = transactionManager.getTransaction(new DefaultTransactionDefinition());
-
-        System.out.println(transaction.isNewTransaction());
-        transactionManager.commit(transaction);
-        System.out.println(transaction1.isCompleted());
-        System.out.println(transaction.isCompleted());
     }
 
     @Test
