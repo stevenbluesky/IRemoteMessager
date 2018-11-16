@@ -1,31 +1,24 @@
 package cn.com.isurpass.iremotemessager.framework;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
+import cn.com.isurpass.iremotemessager.SpringUtil;
 import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
-import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import cn.com.isurpass.iremotemessager.domain.User;
-import cn.com.isurpass.iremotemessager.jms.ITextMessageProcessor;
 import cn.com.isurpass.iremotemessager.service.MsgEventGroupeventService;
 import cn.com.isurpass.iremotemessager.service.MsgPushSettingService;
+import cn.com.isurpass.iremotemessager.targetdecision.OwnerTargetDecision;
 import cn.com.isurpass.iremotemessager.vo.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import com.alibaba.fastjson.JSONObject;
-
-import cn.com.isurpass.iremotemessager.SpringUtil;
-import cn.com.isurpass.iremotemessager.targetdecision.OwnerTargetDecision;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 @Component
 @Scope("prototype")
@@ -52,7 +45,7 @@ public class EventProcessor implements Runnable{
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public void run()
 	{
 		if (!initProcessclass()) {
@@ -184,7 +177,7 @@ public class EventProcessor implements Runnable{
 			}
 			catch (ClassNotFoundException e1)
 			{
-				e1.printStackTrace();
+				log.error(e1.getMessage(), e1);
 			}
 		}
 		catch (Throwable t)
@@ -197,9 +190,5 @@ public class EventProcessor implements Runnable{
 	public void setEventdata(EventData eventdata)
 	{
 		this.eventdata = eventdata;
-	}
-
-	public String getTaskKey() {
-		return eventdata.getEventparameters().getString("deviceid");
 	}
 }

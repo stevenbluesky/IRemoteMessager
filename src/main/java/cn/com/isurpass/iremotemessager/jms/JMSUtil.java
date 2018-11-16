@@ -20,7 +20,7 @@ public class JMSUtil {
 	private static PooledConnectionFactory poolFactory;
 	private static ThreadLocal<List<String[]>> messageholde = new ThreadLocal<List<String[]>>();
     
-    public static void init() 
+    /*public static void init()
     {  
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://localhost");
         
@@ -34,7 +34,7 @@ public class JMSUtil {
            log.error(e.getMessage() , e);
            System.exit(1);
         }  
-    }  
+    }  */
     
     public static void close()
     {
