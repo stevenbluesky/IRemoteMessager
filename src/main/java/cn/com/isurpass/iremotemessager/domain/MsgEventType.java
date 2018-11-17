@@ -17,7 +17,7 @@ public class MsgEventType {
     private String decription;
     private Date createtime;
     private List<MsgEventGroupEvent> msgEventGroupEvents;
-    private MsgContentTemplate msgContentTemplate;
+    private List<MsgContentTemplate> msgContentTemplates;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,13 +72,24 @@ public class MsgEventType {
         this.msgEventGroupEvents = msgEventGroupEvents;
     }
 
-    @JSONField(serialize = false)
-    @OneToOne(targetEntity=MsgContentTemplate.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,fetch=FetchType.LAZY,mappedBy="msgEventType")
+    /*@JSONField(serialize = false)
+    @ManyToOne(targetEntity=MsgContentTemplate.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,fetch=FetchType.LAZY,mappedBy="msgEventType")*/
+    /*@JSONField(serialize = false)
+    @ManyToOne(targetEntity=MsgContentTemplate.class,cascade={CascadeType.DETACH})
     public MsgContentTemplate getMsgContentTemplate() {
         return msgContentTemplate;
     }
 
     public void setMsgContentTemplate(MsgContentTemplate msgContentTemplate) {
         this.msgContentTemplate = msgContentTemplate;
+    }*/
+    @JSONField(serialize = false)
+    @OneToMany(targetEntity=MsgContentTemplate.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,fetch=FetchType.LAZY,mappedBy="msgEventType")
+    public List<MsgContentTemplate> getMsgContentTemplates() {
+        return msgContentTemplates;
+    }
+
+    public void setMsgContentTemplates(List<MsgContentTemplate> msgContentTemplates) {
+        this.msgContentTemplates = msgContentTemplates;
     }
 }
