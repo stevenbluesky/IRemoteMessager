@@ -1,9 +1,12 @@
 package cn.com.isurpass.iremotemessager.dao;
 
 import cn.com.isurpass.iremotemessager.domain.MsgEventGroupEvent;
+import cn.com.isurpass.iremotemessager.domain.MsgEventType;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface MsgEventGroupEventDao extends CrudRepository<MsgEventGroupEvent, Integer>{
     MsgEventGroupEvent findByMsgEventType_EventcodeAndPlatform(String eventcode, Integer platform);
@@ -21,4 +24,6 @@ public interface MsgEventGroupEventDao extends CrudRepository<MsgEventGroupEvent
             "LEFT JOIN msg_pushsetting ps ON ps.`msgeventgroupid`= eg.`msgeventgroupid` AND ps.`platform`= eg.`platform`\n" +
             "WHERE et.`eventcode`= :eventcode AND ege.`platform`= :platform", nativeQuery = true)
     Integer findMsgPushMethodId(@Param("eventcode")String eventCode, @Param("platform")Integer platform);
+
+    MsgEventGroupEvent findByMsgEventType(MsgEventType event);
 }
