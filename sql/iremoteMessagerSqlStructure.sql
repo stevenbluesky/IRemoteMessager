@@ -2,7 +2,8 @@
 SQLyog  v12.2.6 (64 bit)
 MySQL - 5.5.56 : Database - iremote
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -21,13 +22,15 @@ USE `iremote`;
 DROP TABLE IF EXISTS `msg_contenttemplate`;
 
 CREATE TABLE `msg_contenttemplate` (
-  `msgcontenttemplateid` int(9) NOT NULL,
+  `msgcontenttemplateid` int(9) NOT NULL AUTO_INCREMENT,
   `platform` int(9) NOT NULL,
   `msgeventtypeid` int(9) NOT NULL,
   `eventcode` varchar(128) NOT NULL,
   `language` varchar(16) NOT NULL,
   `type` int(9) NOT NULL,
   `contenttemplate` varchar(4098) NOT NULL,
+  `createtime` datetime NOT NULL,
+  `lastupdatetime` datetime NOT NULL,
   PRIMARY KEY (`msgcontenttemplateid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -56,7 +59,7 @@ CREATE TABLE `msg_eventgroup` (
   `decription` varchar(1024) DEFAULT NULL,
   `createtime` datetime NOT NULL,
   PRIMARY KEY (`msgeventgroupid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `msg_eventgroupevent` */
 
@@ -70,7 +73,7 @@ CREATE TABLE `msg_eventgroupevent` (
   `eventcode` varchar(128) NOT NULL,
   `createtime` datetime NOT NULL,
   PRIMARY KEY (`msgeventgroupeventid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `msg_eventtype` */
 
@@ -83,7 +86,7 @@ CREATE TABLE `msg_eventtype` (
   `decription` varchar(1024) DEFAULT NULL,
   `createtime` datetime NOT NULL,
   PRIMARY KEY (`msgeventtypeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `msg_processclass` */
 
@@ -98,7 +101,7 @@ CREATE TABLE `msg_processclass` (
   `decription` varchar(1024) DEFAULT NULL,
   `createtime` datetime NOT NULL,
   PRIMARY KEY (`msgprocessclassid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `msg_pushsetting` */
 
@@ -112,7 +115,7 @@ CREATE TABLE `msg_pushsetting` (
   `msgpushmethodid` int(9) NOT NULL,
   `createtime` datetime NOT NULL,
   PRIMARY KEY (`msgpushsettingid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `msg_pushsettingdtl` */
 
@@ -122,7 +125,7 @@ CREATE TABLE `msg_pushsettingdtl` (
   `msgpushsettingdtlid` int(9) NOT NULL AUTO_INCREMENT,
   `msgpushsettingid` int(9) NOT NULL,
   `type` int(9) NOT NULL,
-  `subtyp` int(9) DEFAULT NULL,
+  `subtype` int(9) DEFAULT NULL,
   `msgprocessclassid` int(9) NOT NULL,
   PRIMARY KEY (`msgpushsettingdtlid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

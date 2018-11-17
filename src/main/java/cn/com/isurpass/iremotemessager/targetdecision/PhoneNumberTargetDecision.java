@@ -18,7 +18,7 @@ public class PhoneNumberTargetDecision extends TargetDecisionBase {
         String[][] phonenumbers = eventparameters.getObject("phonenumbers", String[][].class);
         ArrayList<User> userList = new ArrayList<>();
 
-        for (int i = 0; i < phonenumbers.length; i++) {
+        for (int i = 0; phonenumbers != null && i < phonenumbers.length; i++) {
             User user = new User();
             user.setCountrycode(phonenumbers[i][0]);
             user.setPhonenumber(phonenumbers[i][1]);

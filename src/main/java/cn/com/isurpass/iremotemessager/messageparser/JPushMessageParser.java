@@ -11,9 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.com.isurpass.iremotemessager.common.constant.MsgMethodType;
 import cn.com.isurpass.iremotemessager.common.constant.MsgTemplateType;
-import cn.com.isurpass.iremotemessager.domain.MsgContentTemplate;
 import cn.com.isurpass.iremotemessager.framework.IMessageParser;
 import cn.com.isurpass.iremotemessager.jpush.JPushHelper;
 import cn.com.isurpass.iremotemessager.jpush.vo.Payload;
@@ -21,7 +19,7 @@ import cn.com.isurpass.iremotemessager.service.MsgContentTemplateService;
 import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
 
-@Component
+@Component("cn.com.isurpass.iremotemessager.messageparser.JPushMessageParser")
 public class JPushMessageParser implements IMessageParser<JPushMessageData> 
 {
 	private static Log log = LogFactory.getLog(JPushMessageParser.class);
@@ -32,16 +30,8 @@ public class JPushMessageParser implements IMessageParser<JPushMessageData>
 	@Override
 	public List<JPushMessageData> parse(EventData data, JPushMessageData targetdata) 
 	{		
-		List<MsgContentTemplate> lst = ctservice.findByEventcodeAndLanguageAndType(data.getEventtype(),data.getPlatform(), "zh_CN", MsgMethodType.jpushmessage);
 		
-		MsgContentTemplate ct = ctservice.findContentTemplate(lst, MsgTemplateType.json);
-		if ( ct == null )
-		{
-			log.warn("json template is null");
-			return null;
-		}
-		
-		MessageParser mp = new MessageParser(ct.getContenttemplate() , data);
+		MessageParser mp = new MessageParser(data, "zh_CN" , MsgTemplateType.json);
 		String extdata = mp.getMessage();
 		
 		Payload py = JPushHelper.createMessage(targetdata.getAliases(), JSONObject.parseObject(extdata));

@@ -11,9 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.com.isurpass.iremotemessager.common.constant.MsgMethodType;
 import cn.com.isurpass.iremotemessager.common.constant.MsgTemplateType;
-import cn.com.isurpass.iremotemessager.domain.MsgContentTemplate;
 import cn.com.isurpass.iremotemessager.framework.IMessageParser;
 import cn.com.isurpass.iremotemessager.jpush.JPushHelper;
 import cn.com.isurpass.iremotemessager.jpush.vo.Payload;
@@ -21,7 +19,7 @@ import cn.com.isurpass.iremotemessager.service.MsgContentTemplateService;
 import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
 
-@Component
+@Component("cn.com.isurpass.iremotemessager.messageparser.JPushNotificationParser")
 public class JPushNotificationParser implements IMessageParser<JPushNotificationData> 
 {
 	private static Log log = LogFactory.getLog(JPushNotificationParser.class);
@@ -32,26 +30,12 @@ public class JPushNotificationParser implements IMessageParser<JPushNotification
 	@Override
 	public List<JPushNotificationData> parse(EventData data, JPushNotificationData targetdata) 
 	{	
-		List<MsgContentTemplate> lst = ctservice.findByEventcodeAndLanguageAndType(data.getEventtype(),data.getPlatform(), targetdata.getLanguage(), MsgMethodType.jpushnotification);
-		
-		MsgContentTemplate ct = ctservice.findContentTemplate(lst, MsgTemplateType.sentence);
-		if ( ct == null )
-		{
-			log.warn("sentence template is null");
-			return null;
-		}
-		
-		MessageParser mp = new MessageParser(ct.getContenttemplate() , data);
+
+		MessageParser mp = new MessageParser(data,targetdata.getLanguage(),MsgTemplateType.sentence);
 		String alart = mp.getMessage();
 		
-		ct = ctservice.findContentTemplate(lst, MsgTemplateType.json);
-		if ( ct == null )
-		{
-			log.warn("json template is null");
-			return null;
-		}
-		
-		mp = new MessageParser(ct.getContenttemplate() , data);
+
+		mp = new MessageParser(data,targetdata.getLanguage(),MsgTemplateType.json);
 		String extdata = mp.getMessage();
 		
 		Payload py = JPushHelper.createNotification(targetdata.getAliases(), alart ,JSONObject.parseObject(extdata),targetdata);

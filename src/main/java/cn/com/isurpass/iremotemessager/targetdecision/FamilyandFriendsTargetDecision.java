@@ -19,6 +19,10 @@ public class FamilyandFriendsTargetDecision extends FamilyMemeberTargetDecision
 	{
 		List<User> lst = super.descision();
 
+		if (super.phoneuser == null) {
+			return lst;
+		}
+
 		List<User> friends = super.userservice.findFriends(super.phoneuser.getPhoneuserid());
 
 		if (IRemoteUtils.isNotBlank(friends)) {

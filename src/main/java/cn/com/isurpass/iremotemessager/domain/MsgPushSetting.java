@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "msg_pushsetting")
@@ -16,7 +17,7 @@ public class MsgPushSetting {
     private MsgProcessClass msgPushMethod;
     private Date createtime;
     private MsgEventGroup msgEventGroup;
-    private MsgPushSettingDtl msgPushSettingDtl;
+    private List<MsgPushSettingDtl> msgPushSettingDtlList;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,12 +81,12 @@ public class MsgPushSetting {
     }
 
     @JSONField(serialize = false)
-    @OneToOne(targetEntity=MsgPushSettingDtl.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,fetch=FetchType.LAZY,mappedBy="msgPushSetting")
-    public MsgPushSettingDtl getMsgPushSettingDtl() {
-        return msgPushSettingDtl;
+    @OneToMany(targetEntity=MsgPushSettingDtl.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,fetch=FetchType.LAZY,mappedBy="msgPushSetting")
+    public List<MsgPushSettingDtl> getMsgPushSettingDtlList() {
+        return msgPushSettingDtlList;
     }
 
-    public void setMsgPushSettingDtl(MsgPushSettingDtl msgPushSettingDtl) {
-        this.msgPushSettingDtl = msgPushSettingDtl;
+    public void setMsgPushSettingDtlList(List<MsgPushSettingDtl> msgPushSettingDtlList) {
+        this.msgPushSettingDtlList = msgPushSettingDtlList;
     }
 }

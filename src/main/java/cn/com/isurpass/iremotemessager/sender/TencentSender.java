@@ -1,7 +1,8 @@
-package cn.com.isurpass.iremotemessager.common.sms;
+package cn.com.isurpass.iremotemessager.sender;
 
 import cn.com.isurpass.iremotemessager.common.constant.ErrorCodeDefine;
 import cn.com.isurpass.iremotemessager.common.util.HttpUtil;
+import cn.com.isurpass.iremotemessager.framework.ISmsMessageSender;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -10,15 +11,14 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class TencentSender implements ISmsSender
+public class TencentSender implements ISmsMessageSender
 {
 	private static Log log = LogFactory.getLog(TencentSender.class);
 	
 	private final String BASE_URL = "https://yun.tim.qq.com/v5/tlssmssvr/sendsms?sdkappid=1400022505&random=";
 	private final String APPKEY = "56b5858053990645786fc5a4a04104af";
 	private final String smsSign;
-	
-	
+
 	public TencentSender(String smsSign)
 	{
 		super();
@@ -29,7 +29,7 @@ public class TencentSender implements ISmsSender
 	{
 		return smsSign;
 	}
-	
+
 	@Override
 	public int sendSMS(String countrycode, String phonenumber, String message)
 	{

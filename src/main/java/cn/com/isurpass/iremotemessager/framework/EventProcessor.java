@@ -1,44 +1,37 @@
 package cn.com.isurpass.iremotemessager.framework;
 
-import java.util.List;
-
-import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
-import cn.com.isurpass.iremotemessager.domain.MsgEventGroupEvent;
-import cn.com.isurpass.iremotemessager.domain.MsgProcessClass;
+import cn.com.isurpass.iremotemessager.SpringUtil;
+import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
 import cn.com.isurpass.iremotemessager.domain.User;
 import cn.com.isurpass.iremotemessager.service.MsgEventGroupeventService;
+import cn.com.isurpass.iremotemessager.service.MsgPushSettingService;
+import cn.com.isurpass.iremotemessager.targetdecision.OwnerTargetDecision;
 import cn.com.isurpass.iremotemessager.vo.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import com.alibaba.fastjson.JSONObject;
-
-import cn.com.isurpass.iremotemessager.SpringUtil;
-import cn.com.isurpass.iremotemessager.targetdecision.OwnerTargetDecision;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 @Component
-public class EventProcessor implements Runnable
-{
+@Scope("prototype")
+public class EventProcessor implements Runnable{
 	private static Log log = LogFactory.getLog(OwnerTargetDecision.class);
-	private final static int MESSAGE_PARSE_TYPE_JPUSHMESSAGE = 1;
-	private final static int MESSAGE_PARSE_TYPE_JPUSHNOTIFICATION = 2;
-	private final static int MESSAGE_PARSE_TYPE_SMS = 3;
-	private final static int MESSAGE_PARSE_TYPE_MAIL = 4;
-
-	private final static int MESSAGE_SENDER_TYPE_JPUSHMESSAGE = 1;
-	private final static int MESSAGE_SENDER_TYPE_JPUSHNOTIFICATION = 2;
-	private final static int MESSAGE_SENDER_TYPE_SMS = 3;
-	private final static int MESSAGE_SENDER_TYPE_MAIL = 4;
 
 	private EventData eventdata;
 	private ProcessClass processclass;
 
 	@Resource
 	private MsgEventGroupeventService msgEventGroupeventService;
+	@Resource
+	private MsgPushSettingService msgPushSettingService;
 
 	public EventProcessor()
 	{
@@ -52,6 +45,7 @@ public class EventProcessor implements Runnable
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public void run()
 	{
 		if (!initProcessclass()) {
@@ -66,13 +60,13 @@ public class EventProcessor implements Runnable
 		mmd.setMsgInfo(eventdata, lmu);
 
 		List<JPushMessageData> lpmd = mmd.getJPushMessageData();
-		sendmessage(lpmd, MESSAGE_PARSE_TYPE_JPUSHMESSAGE, MESSAGE_SENDER_TYPE_JPUSHMESSAGE);
+		sendmessage(lpmd, IRemoteConstantDefine.MESSAGE_PARSE_TYPE_JPUSHMESSAGE, IRemoteConstantDefine.MESSAGE_SENDER_TYPE_JPUSHMESSAGE);
 
 		List<JPushNotificationData> lpnd = mmd.getJPushNotificationData();
-		sendmessage(lpnd, MESSAGE_PARSE_TYPE_JPUSHNOTIFICATION, MESSAGE_SENDER_TYPE_JPUSHNOTIFICATION);
+		sendmessage(lpnd, IRemoteConstantDefine.MESSAGE_PARSE_TYPE_JPUSHNOTIFICATION, IRemoteConstantDefine.MESSAGE_SENDER_TYPE_JPUSHNOTIFICATION);
 
 		List<SmsData> smsDataList = mmd.getSmsData();
-		sendmessage(smsDataList, MESSAGE_PARSE_TYPE_SMS, MESSAGE_SENDER_TYPE_SMS);
+		sendmessage(smsDataList, IRemoteConstantDefine.MESSAGE_PARSE_TYPE_SMS, IRemoteConstantDefine.MESSAGE_SENDER_TYPE_SMS);
 	}
 
 	private <T> void sendmessage(List<T> lst, int parsertype, int sendertype)
@@ -96,45 +90,40 @@ public class EventProcessor implements Runnable
 	{
 		processclass = new ProcessClass();
 
-		if (StringUtils.isBlank(eventdata.getEventtype()) || IRemoteUtils.isBlank(eventdata.getPlatform())) {
+		if (StringUtils.isBlank(eventdata.getEventtype()) || eventdata.getPlatform() == null) {
 			log.warn("push fail, can't find even type or platform");
 			return false;
 		}
 
-		String targetDecisionClassName = msgEventGroupeventService.findMsgPushTargetDecisionClassName(eventdata.getEventtype(), eventdata.getPlatform());
+ 		String targetDecisionClassName = msgEventGroupeventService.findMsgPushTargetDecisionClassName(eventdata.getEventtype(), eventdata.getPlatform());
 		if (StringUtils.isBlank(targetDecisionClassName)) {
 			log.warn("push fail, can't find targetDecisionClass Define");
 			return false;
 		}
 
 		String msgPushMethodClassName = msgEventGroupeventService.findMsgPushMethodClassName(eventdata.getEventtype(), eventdata.getPlatform());
-		if (StringUtils.isBlank(targetDecisionClassName)) {
+		if (StringUtils.isBlank(msgPushMethodClassName)) {
 			log.warn("push fail, can't find push method Define");
 			return false;
+		}
+
+		Map<Integer, String> parserMap = msgPushSettingService.findParserMap(eventdata.getEventtype(), eventdata.getPlatform());
+		Iterator<Map.Entry<Integer, String>> parserIterator = parserMap.entrySet().iterator();
+		while (parserIterator.hasNext()) {
+			Map.Entry<Integer, String> next = parserIterator.next();
+			processclass.getParseclass()[next.getKey()] = next.getValue();
+		}
+
+		Map<Integer, String> senderMap = msgPushSettingService.findSenderMap(eventdata.getEventtype(), eventdata.getPlatform());
+		Iterator<Map.Entry<Integer, String>> senderIterator = senderMap.entrySet().iterator();
+		while (senderIterator.hasNext()) {
+			Map.Entry<Integer, String> next = senderIterator.next();
+			processclass.getSendclass()[next.getKey()] = next.getValue();
 		}
 
 		processclass.setTargetdecisionclass(targetDecisionClassName);
 		processclass.setMethoddecisionclass(msgPushMethodClassName);
 
-//		processclass.setTargetdecisionclass("cn.com.isurpass.iremotemessager.targetdecision.OwnerTargetDecision");
-//		processclass.setMethoddecisionclass("cn.com.isurpass.iremotemessager.methoddecision.JPushMessageMethodDecision");
-//		processclass.getParseclass()[MESSAGE_PARSE_TYPE_JPUSHMESSAGE] = "cn.com.isurpass.iremotemessager.messageparser.JPushMessageParser";
-//		processclass.getSendclass()[MESSAGE_SENDER_TYPE_JPUSHMESSAGE] = "cn.com.isurpass.iremotemessager.sender.JPushMessageSender" ;
-		
-		processclass.setTargetdecisionclass("cn.com.isurpass.iremotemessager.targetdecision.CanOperatePeopleTargetDecision");
-		processclass.setMethoddecisionclass("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationMailSmsMethodDecision");
-		processclass.getParseclass()[MESSAGE_PARSE_TYPE_JPUSHMESSAGE] = "cn.com.isurpass.iremotemessager.messageparser.JPushMessageParser";
-		processclass.getParseclass()[MESSAGE_PARSE_TYPE_JPUSHNOTIFICATION] = "cn.com.isurpass.iremotemessager.messageparser.JPushNotificationParser";
-		processclass.getParseclass()[MESSAGE_PARSE_TYPE_SMS] = "cn.com.isurpass.iremotemessager.messageparser.SmsParser";
-
-		processclass.getSendclass()[MESSAGE_SENDER_TYPE_JPUSHMESSAGE] = "cn.com.isurpass.iremotemessager.sender.JPushMessageSender" ;
-		processclass.getSendclass()[MESSAGE_SENDER_TYPE_JPUSHNOTIFICATION] = "cn.com.isurpass.iremotemessager.sender.JPushNotificationSender" ;
-		processclass.getSendclass()[MESSAGE_SENDER_TYPE_SMS] = "cn.com.isurpass.iremotemessager.sender.SmsSender";
-		
-		JSONObject json = new JSONObject();
-		json.put("key", "a test message");
-		processclass.getMessagetemplate()[MESSAGE_PARSE_TYPE_JPUSHMESSAGE] = new String[] {json.toJSONString()};
-		processclass.getMessagetemplate()[MESSAGE_PARSE_TYPE_JPUSHNOTIFICATION] = new String[] {"A test notification" , json.toJSONString()};
 		return true;
 	}
 
@@ -180,6 +169,17 @@ public class EventProcessor implements Runnable
 			return SpringUtil.getBean(classname,Class.forName(classname));
 			//return Class.forName(classname).newInstance();
 		}
+		catch (NoSuchBeanDefinitionException e)
+		{
+			try
+			{
+				return SpringUtil.getBean(Class.forName(classname));
+			}
+			catch (ClassNotFoundException e1)
+			{
+				log.error(e1.getMessage(), e1);
+			}
+		}
 		catch (Throwable t)
 		{
 			log.error(t.getMessage(), t);
@@ -191,5 +191,4 @@ public class EventProcessor implements Runnable
 	{
 		this.eventdata = eventdata;
 	}
-
 }

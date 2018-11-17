@@ -5,11 +5,11 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "msg_contenttemplate")
-public class MsgContentTemplate {
+public class MsgContentTemplate 
+{
 	private Integer msgcontenttemplateid;
 	private Integer platform;
 	private String eventcode;
@@ -19,6 +19,18 @@ public class MsgContentTemplate {
 	private MsgEventType msgEventType;
 	private Date createtime;
 	private Date lastupdatetime;
+
+	public MsgContentTemplate()
+	{
+		super();
+	}
+
+	public MsgContentTemplate(String contenttemplate, Date lastupdatetime)
+	{
+		super();
+		this.contenttemplate = contenttemplate;
+		this.lastupdatetime = lastupdatetime;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,17 +83,6 @@ public class MsgContentTemplate {
 	{
 		this.contenttemplate = contenttemplate;
 	}
-
-	/*@JSONField(serialize = false)
-	@OneToOne(targetEntity = MsgEventType.class,cascade = {CascadeType.REMOVE})
-	@JoinColumn(name = "msgeventtypeid",referencedColumnName = "msgeventtypeid")
-	public MsgEventType getMsgEventType() {
-		return msgEventType;
-	}
-
-	public void setMsgEventType(MsgEventType msgEventType) {
-		this.msgEventType = msgEventType;
-	}*/
 
 /*	@JSONField(serialize = false)
 	@OneToMany(targetEntity=MsgEventType.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,fetch=FetchType.LAZY,mappedBy="msgContentTemplate")

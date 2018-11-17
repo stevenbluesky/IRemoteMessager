@@ -28,7 +28,7 @@ public class FamilyMemeberTargetDecision extends OwnerTargetDecision
 			return lst;
 		}*/
 
-		if (IRemoteUtils.isBlank(super.phoneuser.getFamilyid())) {
+		if (super.phoneuser == null || IRemoteUtils.isBlank(super.phoneuser.getFamilyid())) {
 			return lst;
 		}
 		

@@ -11,7 +11,7 @@ public class MsgPushSettingDtl {
 
     private Integer msgpushsettingdtlid;
     private Integer type;
-    private Integer subtyp;
+    private Integer subtype;
     private MsgPushSetting msgPushSetting;
     private MsgProcessClass msgProcessClass;
 
@@ -26,6 +26,13 @@ public class MsgPushSettingDtl {
         this.msgpushsettingdtlid = msgpushsettingdtlid;
     }
 
+    public Integer getSubtype() {
+        return subtype;
+    }
+
+    public void setSubtype(Integer subtype) {
+        this.subtype = subtype;
+    }
 
     public Integer getType() {
         return type;
@@ -35,17 +42,8 @@ public class MsgPushSettingDtl {
         this.type = type;
     }
 
-
-    public Integer getSubtyp() {
-        return subtyp;
-    }
-
-    public void setSubtyp(Integer subtyp) {
-        this.subtyp = subtyp;
-    }
-
     @JSONField(serialize = false)
-    @OneToOne(targetEntity = MsgPushSetting.class,cascade = {CascadeType.REMOVE})
+    @ManyToOne(targetEntity = MsgPushSetting.class,cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "msgpushsettingid",referencedColumnName = "msgpushsettingid")
     public MsgPushSetting getMsgPushSetting() {
         return msgPushSetting;

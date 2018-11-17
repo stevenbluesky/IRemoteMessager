@@ -29,7 +29,13 @@ public class SmsData {
 
     public String[][] getPhonenumbers() {
         if (phonenumbers == null && phonenumersList != null) {
-            return phonenumersList.toArray(new String[0][]);
+            String[][] strings = new String[phonenumersList.size()][];
+            for (int i = 0; i < phonenumersList.size(); i++) {
+                List<String> strings1 = phonenumersList.get(i);
+                String[] strings3 = strings1.toArray(new String[0]);
+                strings[i] = strings3;
+            }
+            return strings;
         }
         return phonenumbers;
     }
