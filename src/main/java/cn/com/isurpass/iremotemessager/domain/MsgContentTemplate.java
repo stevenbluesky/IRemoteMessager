@@ -3,9 +3,8 @@ package cn.com.isurpass.iremotemessager.domain;
 import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.Date;
-
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "msg_contenttemplate")
@@ -18,16 +17,14 @@ public class MsgContentTemplate
 	private Integer type;
 	private String contenttemplate;
 	private MsgEventType msgEventType;
-	private Date createtime ;
+	private Date createtime;
 	private Date lastupdatetime;
 
-	
-	
 	public MsgContentTemplate()
 	{
 		super();
 	}
-	
+
 	public MsgContentTemplate(String contenttemplate, Date lastupdatetime)
 	{
 		super();
@@ -50,7 +47,7 @@ public class MsgContentTemplate
 	{
 		return platform;
 	}
-	public void setPlatform(Integer platform)
+	public void setPlatform(int platform)
 	{
 		this.platform = platform;
 	}
@@ -74,7 +71,7 @@ public class MsgContentTemplate
 	{
 		return type;
 	}
-	public void setType(Integer type)
+	public void setType(int type)
 	{
 		this.type = type;
 	}
@@ -87,9 +84,18 @@ public class MsgContentTemplate
 		this.contenttemplate = contenttemplate;
 	}
 
+/*	@JSONField(serialize = false)
+	@OneToMany(targetEntity=MsgEventType.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,fetch=FetchType.LAZY,mappedBy="msgContentTemplate")
+	public List<MsgEventType> getMsgEventTypes() {
+		return msgEventTypes;
+	}
+
+	public void setMsgEventTypes(List<MsgEventType> msgEventTypes) {
+		this.msgEventTypes = msgEventTypes;
+	}*/
 	@JSONField(serialize = false)
-	@ManyToOne(targetEntity = MsgEventType.class,cascade = {CascadeType.REMOVE})
-	@JoinColumn(name = "msgeventtypeid",referencedColumnName = "msgeventtypeid")
+	@ManyToOne(targetEntity=MsgEventType.class,cascade={CascadeType.DETACH},fetch = FetchType.LAZY)
+	@JoinColumn(name="msgeventtypeid",referencedColumnName="msgeventtypeid",nullable=true)
 	public MsgEventType getMsgEventType() {
 		return msgEventType;
 	}
@@ -97,20 +103,20 @@ public class MsgContentTemplate
 	public void setMsgEventType(MsgEventType msgEventType) {
 		this.msgEventType = msgEventType;
 	}
-	public Date getCreatetime()
-	{
+
+	public Date getCreatetime() {
 		return createtime;
 	}
-	public void setCreatetime(Date createtime)
-	{
+
+	public void setCreatetime(Date createtime) {
 		this.createtime = createtime;
 	}
-	public Date getLastupdatetime()
-	{
+
+	public Date getLastupdatetime() {
 		return lastupdatetime;
 	}
-	public void setLastupdatetime(Date lastupdatetime)
-	{
+
+	public void setLastupdatetime(Date lastupdatetime) {
 		this.lastupdatetime = lastupdatetime;
 	}
 }

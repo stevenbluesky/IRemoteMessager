@@ -72,6 +72,7 @@ public class MsgEventType {
         this.msgEventGroupEvents = msgEventGroupEvents;
     }
 
+
     @JSONField(serialize = false)
     @OneToMany(targetEntity=MsgContentTemplate.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,fetch=FetchType.LAZY,mappedBy="msgEventType")
     public List<MsgContentTemplate> getMsgContentTemplates() {
