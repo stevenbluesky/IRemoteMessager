@@ -16,6 +16,8 @@ public interface MsgEventGroupDao extends CrudRepository<MsgEventGroup, Integer>
 
     List<MsgEventGroup> findByEventgroupnameContaining(String eventgroupname, Pageable pageable);
 
+    List<MsgEventGroup> findByEventgroupnameContaining(String eventgroupname);
+
     long countByEventgroupnameContaining(String eventgroupname);
 
     MsgEventGroup findByMsgeventgroupid(Integer msgeventgroupid);

@@ -1,25 +1,21 @@
 package cn.com.isurpass.iremotemessager.service;
 
 import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
-import cn.com.isurpass.iremotemessager.dao.MsgEventGroupDao;
-import cn.com.isurpass.iremotemessager.dao.MsgEventGroupEventDao;
-import cn.com.isurpass.iremotemessager.dao.MsgEventTypeDao;
-import cn.com.isurpass.iremotemessager.dao.MsgProcessClassDao;
+import cn.com.isurpass.iremotemessager.dao.*;
 import cn.com.isurpass.iremotemessager.domain.*;
 import cn.com.isurpass.iremotemessager.vo.EventGroupVo;
 import cn.com.isurpass.iremotemessager.vo.EventtypeVo;
-import cn.com.isurpass.iremotemessager.vo.MessageTemplateVo;
-import com.google.common.collect.Lists;
+import cn.com.isurpass.iremotemessager.vo.PushSettingVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.beans.Transient;
 import java.util.*;
 
 @Service
-public class MsgEventGroupService {
+public class MsgPushSettingService {
     @Resource
     private MsgEventGroupEventDao msgEventGroupEventDao;
     @Resource
@@ -31,6 +27,8 @@ public class MsgEventGroupService {
     @Resource
     private MsgEventTypeDao eventdao;
 
+    @Autowired
+    private MsgPushSettingDao psd;
     public MsgEventGroupEvent findByEventCodeAndPlatform(String eventCode, Integer platform) {
         return msgEventGroupEventDao.findByMsgEventType_EventcodeAndPlatform(eventCode, platform);
     }
@@ -93,12 +91,12 @@ public class MsgEventGroupService {
 
     public Map<String, Object> listEventGroup(Pageable pageable, EventGroupVo eventgroup) {
         Map<String, Object> map = new HashMap<>();
-        int platform = eventgroup.getPlatform()==null?888888:eventgroup.getPlatform();
+        int platform = eventgroup.getPlatform()==null?0:eventgroup.getPlatform();
         String eventgroupname = eventgroup.getEventgroupname();
         List<MsgEventGroup> eventgrouplist = new ArrayList<>();
         List<EventGroupVo> eventgrouplistvo = new ArrayList<>();
         long count = 0 ;
-        if(platform==888888){
+        if(platform==0){
             eventgrouplist = eventgroupdao.findByEventgroupnameContaining(eventgroupname,pageable);
             count = eventgroupdao.countByEventgroupnameContaining(eventgroupname);
         }else {
@@ -242,5 +240,38 @@ public class MsgEventGroupService {
                 msgEventGroupEventDao.save(eventge);
             }
         }
+    }
+
+    public Map<String, Object> listPushSetting(Pageable pageable, PushSettingVo pushsettingvo) {
+        Map<String, Object> map = new HashMap<>();
+        List<MsgEventGroup> eventgroup = eventgroupdao.findByEventgroupnameContaining(pushsettingvo.getEventgroupname());
+        List<MsgPushSetting> pushsettinglist = null;
+        long count = 0;
+        int platform = pushsettingvo.getPlatform()==null?888888:pushsettingvo.getPlatform();
+        if(platform==888888){
+            pushsettinglist = psd.findByMsgEventGroupIn(eventgroup,pageable);
+            count = psd.countByMsgEventGroupIn(eventgroup);
+        }else{
+            pushsettinglist = psd.findByPlatformAndMsgEventGroupIn(pushsettingvo.getPlatform(),eventgroup,pageable);
+            count = psd.countByPlatformAndMsgEventGroupIn(pushsettingvo.getPlatform(),eventgroup);
+        }
+
+        map.put("total",count);
+        map.put("rows", pushsettinglistdbtransfer2vo(pushsettinglist));
+        return map;
+    }
+    private List<PushSettingVo> pushsettinglistdbtransfer2vo(List<MsgPushSetting> pushsettinglist) {
+        List<PushSettingVo> pushsettinglistvo = new ArrayList<>();
+        for(MsgPushSetting p : pushsettinglist){
+            PushSettingVo pushsettingvo = new PushSettingVo();
+            pushsettingvo.setMsgpushsettingid(p.getMsgpushsettingid());
+            pushsettingvo.setPlatform(p.getPlatform());
+            pushsettingvo.setEventgroupname(p.getMsgEventGroup().getEventgroupname());
+            pushsettingvo.setPushtargetclass(p.getMsgPushTargetDecision().getClassname());
+            pushsettingvo.setPushmethodclass(p.getMsgPushMethod().getClassname());
+            pushsettingvo.setPushclass(p.getMsgPushSettingDtl().getMsgProcessClass().getClassname());
+            pushsettinglistvo.add(pushsettingvo);
+        }
+        return pushsettinglistvo;
     }
 }

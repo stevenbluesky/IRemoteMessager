@@ -30,7 +30,7 @@
             var obj =[
                 {
                     text: "消息推送设置",
-                    href:"push/pushsettinglistpage"
+                    href:"pushsetting/pushsettinglistpage"
                 },
                 {
                     text: "事件组定义",

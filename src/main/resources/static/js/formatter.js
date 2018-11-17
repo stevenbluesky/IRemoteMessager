@@ -4,35 +4,44 @@ function formatter_platform(value, row, index) {
     }
     if (value == 999999) {
         return "默认";
-    }else if (value == 1) {
-        return 1;
+    }else if (value == 0) {
+        return "经纬纵横";
     }
     else if (value == 2) {
-        return 2;
+        return "创佳";
     }
     else if (value == 3) {
-        return 3;
+        return "多灵";
     }
     else if (value == 4) {
-        return 4;
-    }
-    else if (value == 5) {
-        return 5;
+        return "Tecus";
     }
     else if (value == 6) {
-        return 6;
+        return "小虎智慧家";
     }
     else if (value == 7) {
-        return 7;
+        return "iSurpass";
     }
     else if (value == 8) {
-        return 8;
+        return "Keemple";
     }
     else if (value == 9) {
-        return 9;
+        return "Ameta";
     }
     else if (value == 10) {
-        return 10;
+        return "金网智能";
+    }
+    else if (value == 11) {
+        return "乾坤小智";
+    }
+    else if (value == 12) {
+        return "欧多客";
+    }
+    else if (value == 13) {
+        return "讯宿智能锁";
+    }
+    else if (value == 14) {
+        return "西屋安防 A";
     }
 }
 function formatter_type(value, row, index) {
@@ -69,11 +78,19 @@ function formatter_language(value, row, index) {
 
 var platform = [
     {platformName:'默认',platformValue:'999999'},
-    {platformName:'小白管家',platformValue:'93'},
-    {platformName:'大白管家',platformValue:'94'},
-    {platformName:'中白管家',platformValue:'95'},
-    {platformName:'高白管家',platformValue:'96'},
-    {platformName:'低白管家',platformValue:'97'}]
+    {platformName:'经纬纵横',platformValue:'0'},
+    {platformName:'创佳',platformValue:'2'},
+    {platformName:'多灵',platformValue:'3'},
+    {platformName:'Tecus',platformValue:'4'},
+    {platformName:'小虎智慧家',platformValue:'6'},
+    {platformName:'iSurpass',platformValue:'7'},
+    {platformName:'Keemple',platformValue:'8'},
+    {platformName:'Ameta',platformValue:'9'},
+    {platformName:'金网智能',platformValue:'10'},
+    {platformName:'乾坤小智',platformValue:'11'},
+    {platformName:'欧多客',platformValue:'12'},
+    {platformName:'讯宿智能锁',platformValue:'13'},
+    {platformName:'西屋安防 A',platformValue:'14'}]
 
 var language = [
     {languageName:'中文(zh_CN)',languageValue:'zh_CN'},

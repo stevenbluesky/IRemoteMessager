@@ -2,7 +2,7 @@
 <div class="col-md-1"></div>
     <div class="row-horizontal">
         <div class="col-md-10">
-            <form id="defaultForm">
+            <form id="defaultForm" class="form-horizontal">
                 <div class="text-center"><h1>修改事件组</h1></div>
                 <hr>
                 <div class="col-sm-12">
