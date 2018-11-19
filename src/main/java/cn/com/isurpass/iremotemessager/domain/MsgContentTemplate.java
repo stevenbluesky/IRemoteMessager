@@ -6,11 +6,12 @@ import org.hibernate.annotations.GenericGenerator;
 import java.util.Date;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "msg_contenttemplate")
-public class MsgContentTemplate 
-{
+public class MsgContentTemplate {
 	private Integer msgcontenttemplateid;
 	private Integer platform;
 	private String eventcode;
@@ -18,7 +19,7 @@ public class MsgContentTemplate
 	private Integer type;
 	private String contenttemplate;
 	private MsgEventType msgEventType;
-	private Date createtime ;
+	private Date createtime;
 	private Date lastupdatetime;
 
 	
@@ -87,7 +88,7 @@ public class MsgContentTemplate
 		this.contenttemplate = contenttemplate;
 	}
 
-	@JSONField(serialize = false)
+	/*@JSONField(serialize = false)
 	@ManyToOne(targetEntity = MsgEventType.class,cascade = {CascadeType.REMOVE})
 	@JoinColumn(name = "msgeventtypeid",referencedColumnName = "msgeventtypeid")
 	public MsgEventType getMsgEventType() {
@@ -96,21 +97,41 @@ public class MsgContentTemplate
 
 	public void setMsgEventType(MsgEventType msgEventType) {
 		this.msgEventType = msgEventType;
+	}*/
+
+/*	@JSONField(serialize = false)
+	@OneToMany(targetEntity=MsgEventType.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,fetch=FetchType.LAZY,mappedBy="msgContentTemplate")
+	public List<MsgEventType> getMsgEventTypes() {
+		return msgEventTypes;
 	}
-	public Date getCreatetime()
-	{
+
+	public void setMsgEventTypes(List<MsgEventType> msgEventTypes) {
+		this.msgEventTypes = msgEventTypes;
+	}*/
+	@JSONField(serialize = false)
+	@ManyToOne(targetEntity=MsgEventType.class,cascade={CascadeType.DETACH},fetch = FetchType.LAZY)
+	@JoinColumn(name="msgeventtypeid",referencedColumnName="msgeventtypeid",nullable=true)
+	public MsgEventType getMsgEventType() {
+		return msgEventType;
+	}
+
+	public void setMsgEventType(MsgEventType msgEventType) {
+		this.msgEventType = msgEventType;
+	}
+
+	public Date getCreatetime() {
 		return createtime;
 	}
-	public void setCreatetime(Date createtime)
-	{
+
+	public void setCreatetime(Date createtime) {
 		this.createtime = createtime;
 	}
-	public Date getLastupdatetime()
-	{
+
+	public Date getLastupdatetime() {
 		return lastupdatetime;
 	}
-	public void setLastupdatetime(Date lastupdatetime)
-	{
+
+	public void setLastupdatetime(Date lastupdatetime) {
 		this.lastupdatetime = lastupdatetime;
 	}
 }

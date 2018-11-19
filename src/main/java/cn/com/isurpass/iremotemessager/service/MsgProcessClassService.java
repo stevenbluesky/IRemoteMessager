@@ -1,6 +1,5 @@
 package cn.com.isurpass.iremotemessager.service;
 
-import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
 import cn.com.isurpass.iremotemessager.dao.MsgProcessClassDao;
 import cn.com.isurpass.iremotemessager.domain.MsgProcessClass;
 import org.springframework.stereotype.Service;
@@ -18,9 +17,6 @@ public class MsgProcessClassService {
     public Map<Integer, String> listProcessClass(Integer type, Integer subType) {
         HashMap<Integer, String> processClassMap = new HashMap<>();
         List<MsgProcessClass> processClassList;
-        if (type == null) {
-            type = IRemoteConstantDefine.DEFAULT_PLATFORM;
-        }
         if (subType != null) {
             processClassList = msgProcessClassDao.findByTypeAndSubtype(type, subType);
         } else {
