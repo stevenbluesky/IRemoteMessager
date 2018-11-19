@@ -21,14 +21,22 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional
 public class MsgPushSettingService {
     @Resource
     private MsgEventGroupDao eventgroupdao;
     @Resource
     private MsgPushSettingDao msgPushSettingDao;
     @Resource
+    private MsgProcessClassDao msgProcessClassDao;
+    @Resource
     private MsgDefaultProcessClassService msgDefaultProcessClassService;
+    @Resource
+    private MsgEventGroupDao eventgroupdao;
+    @Resource
+    private MsgEventTypeDao eventdao;
+
+    @Autowired
+    private MsgPushSettingDao msgPushSettingDao;
 
     public MsgPushSetting findPushSetting(String eventcode, Integer platform) {
         MsgPushSetting msgPushSetting = msgPushSettingDao.findMsgPushSetting(eventcode, platform);

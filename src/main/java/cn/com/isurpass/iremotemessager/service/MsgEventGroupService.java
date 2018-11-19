@@ -8,14 +8,11 @@ import cn.com.isurpass.iremotemessager.dao.MsgProcessClassDao;
 import cn.com.isurpass.iremotemessager.domain.*;
 import cn.com.isurpass.iremotemessager.vo.EventGroupVo;
 import cn.com.isurpass.iremotemessager.vo.EventtypeVo;
-import cn.com.isurpass.iremotemessager.vo.MessageTemplateVo;
-import com.google.common.collect.Lists;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.beans.Transient;
 import java.util.*;
 
 @Service
@@ -27,68 +24,22 @@ public class MsgEventGroupService {
     @Resource
     private MsgDefaultProcessClassService msgDefaultProcessClassService;
     @Resource
-    private MsgEventGroupDao eventgroupdao;
+    private MsgEventGroupDao msgEventGroupDao;
     @Resource
     private MsgEventTypeDao eventdao;
 
-    public MsgEventGroupEvent findByEventCodeAndPlatform(String eventCode, Integer platform) {
-        return msgEventGroupEventDao.findByMsgEventType_EventcodeAndPlatform(eventCode, platform);
-    }
+    public Map<Integer, String> listAllEventGroup(Integer platform){
+        if (platform == null) {
+            platform = IRemoteConstantDefine.DEFAULT_PLATFORM;
+        }
+        Map<Integer, String> eventGroupMap = new HashMap<>();
 
-    public MsgProcessClass findMsgPushTargetDecision(String eventCode, Integer platform) {
-        Integer pushTargetDecisionId = msgEventGroupEventDao.findMsgPushTargetDecisionId(eventCode, platform);
-        if (pushTargetDecisionId == null) {
-            return null;
+        List<MsgEventGroup> msgEventGroupList = msgEventGroupDao.findByPlatform(platform);
+        for (MsgEventGroup msgEventGroup : msgEventGroupList) {
+            eventGroupMap.put(msgEventGroup.getMsgeventgroupid(), msgEventGroup.getEventgroupname());
         }
 
-        return msgProcessClassDao.findById(pushTargetDecisionId).orElse(null);
-    }
-
-    public MsgProcessClass findMsgPushMethod(String eventCode, Integer platform) {
-        Integer pushTargetDecisionId = msgEventGroupEventDao.findMsgPushMethodId(eventCode, platform);
-        if (pushTargetDecisionId == null) {
-            return null;
-        }
-
-        return msgProcessClassDao.findById(pushTargetDecisionId).orElse(null);
-    }
-
-    public String findMsgPushTargetDecisionClassName(String eventCode, Integer platform) {
-        MsgProcessClass msgPushTargetDecision = findMsgPushTargetDecision(eventCode, platform);
-        if (msgPushTargetDecision == null) {
-            String className = msgDefaultProcessClassService.findDefaultTargetDesicionName(platform, eventCode);
-            if (className == null) {
-                className = msgDefaultProcessClassService.findDefaultTargetDesicionName(IRemoteConstantDefine.DEFAULT_PLATFORM, eventCode);
-                if (className == null) {
-                    className = msgDefaultProcessClassService.findDefaultTargetDesicionName(platform, IRemoteConstantDefine.DEFAULT_EVENT_CODE);
-                    if (className == null) {
-                        className = msgDefaultProcessClassService.findDefaultTargetDesicionName(IRemoteConstantDefine.DEFAULT_PLATFORM, IRemoteConstantDefine.DEFAULT_EVENT_CODE);
-                    }
-                }
-            }
-            return className;
-        }
-
-        return  msgPushTargetDecision.getClassname();
-    }
-
-    public String findMsgPushMethodClassName(String eventCode, Integer platform) {
-        MsgProcessClass pushMethod = findMsgPushMethod(eventCode, platform);
-        if (pushMethod == null) {
-            String className = msgDefaultProcessClassService.findDefaultPushMethod(platform, eventCode);
-            if (className == null) {
-                className = msgDefaultProcessClassService.findDefaultPushMethod(IRemoteConstantDefine.DEFAULT_PLATFORM, eventCode);
-                if (className == null) {
-                    className = msgDefaultProcessClassService.findDefaultPushMethod(platform, IRemoteConstantDefine.DEFAULT_EVENT_CODE);
-                    if (className == null) {
-                        className = msgDefaultProcessClassService.findDefaultPushMethod(IRemoteConstantDefine.DEFAULT_PLATFORM, IRemoteConstantDefine.DEFAULT_EVENT_CODE);
-                    }
-                }
-            }
-            return className;
-        }
-
-        return  pushMethod.getClassname();
+        return eventGroupMap;
     }
 
     public Map<String, Object> listEventGroup(Pageable pageable, EventGroupVo eventgroup) {
@@ -99,11 +50,11 @@ public class MsgEventGroupService {
         List<EventGroupVo> eventgrouplistvo = new ArrayList<>();
         long count = 0 ;
         if(platform==888888){
-            eventgrouplist = eventgroupdao.findByEventgroupnameContaining(eventgroupname,pageable);
-            count = eventgroupdao.countByEventgroupnameContaining(eventgroupname);
+            eventgrouplist = msgEventGroupDao.findByEventgroupnameContaining(eventgroupname,pageable);
+            count = msgEventGroupDao.countByEventgroupnameContaining(eventgroupname);
         }else {
-            eventgrouplist = eventgroupdao.findByPlatformAndEventgroupnameContaining(platform, eventgroupname, pageable);
-            count = eventgroupdao.countByPlatformAndEventgroupnameContaining(platform, eventgroupname);
+            eventgrouplist = msgEventGroupDao.findByPlatformAndEventgroupnameContaining(platform, eventgroupname, pageable);
+            count = msgEventGroupDao.countByPlatformAndEventgroupnameContaining(platform, eventgroupname);
         }
         eventgrouplistvo =  eventgrouplistdbtransfer2vo(eventgrouplist);
         map.put("total",count);
@@ -133,7 +84,7 @@ public class MsgEventGroupService {
     public int checkNameAndPlatform(EventGroupVo eventgroup) {
         int platform = eventgroup.getPlatform()==null?0:eventgroup.getPlatform();
         String eventgroupname = eventgroup.getEventgroupname();
-        MsgEventGroup meg = eventgroupdao.findByPlatformAndEventgroupname(platform,eventgroupname);
+        MsgEventGroup meg = msgEventGroupDao.findByPlatformAndEventgroupname(platform,eventgroupname);
         if(meg==null){
             return 1;
         }
@@ -146,30 +97,30 @@ public class MsgEventGroupService {
         msgEventGroup.setEventgroupname(eventgroup.getEventgroupname());
         msgEventGroup.setDecription(eventgroup.getDescription());
         msgEventGroup.setCreatetime(new Date());
-        eventgroupdao.save(msgEventGroup);
+        msgEventGroupDao.save(msgEventGroup);
     }
 
     public MsgEventGroup findByMsgEventGroupId(Integer msgeventgroupid) {
-        return eventgroupdao.findByMsgeventgroupid(msgeventgroupid);
+        return msgEventGroupDao.findByMsgeventgroupid(msgeventgroupid);
     }
 
     public void updateeventtypedata(EventGroupVo eventgroup) {
-        MsgEventGroup dbgroup = eventgroupdao.findByMsgeventgroupid(eventgroup.getMsgeventgroupid());
+        MsgEventGroup dbgroup = msgEventGroupDao.findByMsgeventgroupid(eventgroup.getMsgeventgroupid());
         dbgroup.setPlatform(eventgroup.getPlatform());
         dbgroup.setEventgroupname(eventgroup.getEventgroupname());
         dbgroup.setDecription(eventgroup.getDescription());
-        eventgroupdao.save(dbgroup);
+        msgEventGroupDao.save(dbgroup);
     }
     @Transactional
     public void deleteEventGroups(String[] ids) {
         if(ids!=null&&ids.length>0){
             for(String id:ids){
-                eventgroupdao.deleteByMsgeventgroupid(Integer.parseInt(id));
+                msgEventGroupDao.deleteByMsgeventgroupid(Integer.parseInt(id));
             }
         }
     }
     public Map<String, Object> listEventGroupEvent(Pageable pageable, Integer msgeventgroupid) {
-        MsgEventGroup eventgroup = eventgroupdao.findByMsgeventgroupid(msgeventgroupid);
+        MsgEventGroup eventgroup = msgEventGroupDao.findByMsgeventgroupid(msgeventgroupid);
 
         List<EventtypeVo> resultlist = new ArrayList<>();
         for(MsgEventGroupEvent m : eventgroup.getMsgEventGroupEvents()){
@@ -199,7 +150,7 @@ public class MsgEventGroupService {
     public Map<String, Object> listAddEventGroupEvent(Pageable pageable, Integer msgeventgroupid,String eventname,String eventcode) {
         //Iterable<MsgEventType> all = eventdao.findAll();
         List<MsgEventType> alllist = eventdao.findByEventtypenameContainingAndEventcodeContaining(eventname,eventcode);
-        MsgEventGroup eventgroup = eventgroupdao.findByMsgeventgroupid(msgeventgroupid);
+        MsgEventGroup eventgroup = msgEventGroupDao.findByMsgeventgroupid(msgeventgroupid);
         List<Integer> dbidlist = new ArrayList<>();
 
         for(MsgEventGroupEvent e:eventgroup.getMsgEventGroupEvents()){
@@ -229,7 +180,7 @@ public class MsgEventGroupService {
     }
 
     public void addEventGroupEventToGroup(String[] ids, Integer msgeventgroupid) {
-        MsgEventGroup eventgroup = eventgroupdao.findByMsgeventgroupid(msgeventgroupid);
+        MsgEventGroup eventgroup = msgEventGroupDao.findByMsgeventgroupid(msgeventgroupid);
         if(ids!=null&&ids.length>0){
             for(String id:ids){
                 MsgEventGroupEvent eventge = new MsgEventGroupEvent();

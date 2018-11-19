@@ -16,6 +16,9 @@ import java.util.List;
 public interface MsgEventTypeDao extends CrudRepository<MsgEventType, Integer> {
     @Query(value = "SELECT eventcode from msg_eventtype", nativeQuery = true)
     List<String> findAllEventCode();
+    @Query(value = "SELECT eventcode from msg_eventtype", nativeQuery = true)
+    List<String> findAllEventCode();
+
     List<MsgEventType> findByEventtypenameContainingAndEventcodeContaining(String eventname, String eventcode, Pageable pageable);
 
     long countByEventtypenameContainingAndEventcodeContaining(String eventname, String eventcode);
@@ -27,5 +30,4 @@ public interface MsgEventTypeDao extends CrudRepository<MsgEventType, Integer> {
     MsgEventType findByEventcode(String eventcode);
 
     List<MsgEventType> findByEventtypenameContainingAndEventcodeContaining(String eventname, String eventcode);
-
 }

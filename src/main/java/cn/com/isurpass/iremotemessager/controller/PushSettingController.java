@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -31,6 +32,10 @@ public class PushSettingController {
 
     @Autowired
     private MsgPushSettingService pss;
+    @Resource
+    private MsgEventGroupService msgEventGroupService;
+    @Resource
+    private MsgProcessClassService msgProcessClassService;
 
     @RequestMapping(value = "/pushsettinglistpage")
     public ModelAndView toPushsettingListPage(ModelAndView mv) {
@@ -49,15 +54,27 @@ public class PushSettingController {
         Pageable pageable = PageRequest.of(pr.getPage() - 1, pr.getRows(), Sort.Direction.DESC, "msgpushsettingid");
         return pss.listPushSetting(pageable,pushsettingvo);
     }
+
+    @RequestMapping("listalleventgroup")
+    @ResponseBody
+    public Map<Integer, String> listEventGroup(Integer platform) {
+        return msgEventGroupService.listAllEventGroup(platform);
+    }
+
+    @RequestMapping("listprocessorclassbytype")
+    @ResponseBody
+    public Map<Integer, String> listProcessorClassByType(Integer type, Integer subType){
+        return msgProcessClassService.listProcessClass(type, subType);
+    }
     //deletepushsettings
     @RequestMapping(value = "/deletepushsettings")
     @ResponseBody
     public JsonResult deleteEvents(@RequestBody String[] ids) {
         try {
             pss.deletePushSettings(ids);
-            return new JsonResult(1, "Âà†Èô§ÊàêÂäüÔºÅ");
+            return new JsonResult(1, "…æ≥˝≥…π¶£°");
         } catch (Exception e) {
-            return new JsonResult(-1, "Âà†Èô§Â§±Ë¥•ÔºÅ");
+            return new JsonResult(-1, "…æ≥˝ ß∞‹£°");
         }
     }
     //modifypushsettingpage

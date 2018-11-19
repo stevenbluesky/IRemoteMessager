@@ -9,7 +9,7 @@
                     <div  class="form-group" align="right">
                         <label  class="col-sm-4 control-label">厂商*</label>
                         <div class="col-sm-5">
-                            <select name="platform" class="col-md-12 form-control" id="platform">
+                            <select name="platform" class="col-md-12 form-control" id=4"platform">
 
                             </select>
                         </div>
