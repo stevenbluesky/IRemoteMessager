@@ -84,6 +84,17 @@ public class MsgContentTemplate
 		this.contenttemplate = contenttemplate;
 	}
 
+	/*@JSONField(serialize = false)
+	@ManyToOne(targetEntity = MsgEventType.class,cascade = {CascadeType.REMOVE})
+	@JoinColumn(name = "msgeventtypeid",referencedColumnName = "msgeventtypeid")
+	public MsgEventType getMsgEventType() {
+		return msgEventType;
+	}
+
+	public void setMsgEventType(MsgEventType msgEventType) {
+		this.msgEventType = msgEventType;
+	}*/
+
 /*	@JSONField(serialize = false)
 	@OneToMany(targetEntity=MsgEventType.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,fetch=FetchType.LAZY,mappedBy="msgContentTemplate")
 	public List<MsgEventType> getMsgEventTypes() {

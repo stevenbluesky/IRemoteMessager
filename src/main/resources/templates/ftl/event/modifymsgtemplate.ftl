@@ -23,7 +23,7 @@
                 </div>
 
             </div>
-            <form id="defaultForm" method="POST">
+            <form id="defaultForm" class="form-horizontal" method="POST">
                 <hr>
                 <div class="col-sm-12">
                     <div  class="form-group" align="right">

@@ -11,5 +11,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = "/messagepushsetting")
 public class MessagePushSettingController {
-
 }

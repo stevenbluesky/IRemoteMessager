@@ -5,7 +5,7 @@
     <div class="row-horizontal">
         <div class="col-md-10">
             <div class="text-center"><h1>导入消息模板</h1></div>
-            <form id="defaultForm" action="../event/importmsgtemplatefile" method="POST" enctype="multipart/form-data">
+            <form id="defaultForm" class="form-horizontal" action="../event/importmsgtemplatefile" method="POST" enctype="multipart/form-data">
                 <hr>
                 <div class="col-sm-12">
                     <div  class="form-group" align="right">

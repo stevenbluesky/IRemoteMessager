@@ -2,7 +2,7 @@
 <div class="col-md-1"></div>
     <div class="row-horizontal">
         <div class="col-md-10">
-            <form id="defaultForm" action="addeventdata" method="POST">
+            <form id="defaultForm" class="form-horizontal" action="addeventdata" method="POST">
                 <div class="text-center"><h1>新增事件</h1></div>
                 <hr>
                 <div class="col-sm-12">

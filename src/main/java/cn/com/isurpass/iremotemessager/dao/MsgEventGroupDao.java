@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface MsgEventGroupDao extends CrudRepository<MsgEventGroup, Integer> {
+    List<MsgEventGroup> findByPlatform(Integer platform);
 
     List<MsgEventGroup> findByPlatformAndEventgroupnameContaining(int platform, String eventgroupname, Pageable pageable);
 
@@ -15,6 +16,8 @@ public interface MsgEventGroupDao extends CrudRepository<MsgEventGroup, Integer>
     MsgEventGroup findByPlatformAndEventgroupname(int platform, String eventgroupname);
 
     List<MsgEventGroup> findByEventgroupnameContaining(String eventgroupname, Pageable pageable);
+
+    List<MsgEventGroup> findByEventgroupnameContaining(String eventgroupname);
 
     long countByEventgroupnameContaining(String eventgroupname);
 
