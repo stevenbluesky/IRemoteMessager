@@ -88,11 +88,54 @@ public class MsgPushSettingService {
             pushsettingvo.setMsgpushsettingid(p.getMsgpushsettingid());
             pushsettingvo.setPlatform(p.getPlatform());
             pushsettingvo.setEventgroupname(p.getMsgEventGroup().getEventgroupname());
-            pushsettingvo.setPushtargetclass(p.getMsgPushTargetDecision().getClassname());
-            pushsettingvo.setPushmethodclass(p.getMsgPushMethod().getClassname());
-            pushsettingvo.setPushclass(p.getMsgPushSettingDtl().getMsgProcessClass().getClassname());
+            pushsettingvo.setPushtargetclass(p.getMsgPushTargetDecision().getName());
+            pushsettingvo.setPushmethodclass(p.getMsgPushMethod().getName());
+            pushsettingvo.setPushclass(getPushClassStr(p));
             pushsettinglistvo.add(pushsettingvo);
         }
         return pushsettinglistvo;
+    }
+    private String getPushClassStr(MsgPushSetting p){
+        StringBuffer sb = new StringBuffer();
+        List<MsgPushSettingDtl> dtllist = p.getMsgPushSettingDtlList();
+        if(dtllist!=null&&dtllist.size()>0){
+            for(MsgPushSettingDtl d : dtllist){
+                sb.append(d.getMsgProcessClass().getName()+", ");
+            }
+        }
+        String pushclassstr = sb.toString();
+        return pushclassstr.contains(", ")==true?pushclassstr.substring(0,pushclassstr.lastIndexOf(", ")):pushclassstr;
+    }
+
+    public void deletePushSettings(String[] ids) {
+        if(ids!=null&&ids.length>0){
+            for(String id:ids){
+                msgPushSettingDao.deleteByMsgpushsettingid(id);
+            }
+        }
+    }
+
+    public PushSettingVo findByMsgpushsettingid(Integer msgpushsettingid) {
+        MsgPushSetting pushsetting = msgPushSettingDao.findByMsgpushsettingid(msgpushsettingid);
+        PushSettingVo pushsettingvo = new PushSettingVo();
+        pushsettingvo.setPlatform(pushsetting.getPlatform());
+        pushsettingvo.setEventgroupname(pushsetting.getMsgEventGroup().getEventgroupname());
+        pushsettingvo.setPushtargetclass(String.valueOf(pushsetting.getMsgPushTargetDecision().getMsgprocessclassid()));
+        pushsettingvo.setPushmethodclass(String.valueOf(pushsetting.getMsgPushMethod().getMsgprocessclassid()));
+        List<MsgPushSettingDtl> dtllist = pushsetting.getMsgPushSettingDtlList();
+        if(dtllist!=null&&dtllist.size()>0){
+            for(MsgPushSettingDtl d: dtllist){
+                if(d.getType()==4&&d.getSubtype()<3){
+                    pushsettingvo.setApppushclass(String.valueOf(d.getMsgProcessClass().getMsgprocessclassid()));
+                }
+                if(d.getType()==4&&d.getSubtype()==3){
+                    pushsettingvo.setSmspushclass(String.valueOf(d.getMsgProcessClass().getMsgprocessclassid()));
+                }
+                if(d.getType()==4&&d.getSubtype()==4){
+                    pushsettingvo.setEmailpushclass(String.valueOf(d.getMsgProcessClass().getMsgprocessclassid()));
+                }
+            }
+        }
+        return pushsettingvo;
     }
 }

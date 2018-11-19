@@ -1,6 +1,6 @@
 <#include "../_head0.ftl"/>
 <div class="col-md-1"></div>
-    <div class="row">
+    <div class="row-horizontal">
         <div class="col-md-10">
             <form id="defaultForm" action="addeventdata" method="POST" class="form-horizontal">
                 <div class="text-center"><h1>新增消息推送设置</h1></div>
@@ -101,10 +101,6 @@
                 addSMSClass();
                 addEmailClass();
             });
-            $("#platform").onchange(function (e) {
-                $("#platform").empty();
-                addEventGroup();
-            });
             $("#btn-submit").click(function (e) {
                 document.getElementById("btn-submit").setAttribute("disabled", true);
                 $("#defaultForm").submit();
@@ -118,124 +114,48 @@
                 $("#platform").append(str);
             }
             function addEventGroup() {
-                var platform = $("#platform").val();
                 var str = "";
                 $.ajax({
                     type: "POST",
                     contentType: 'application/json',
                     traditional: true,
-                    url: "../pushsetting/listalleventgroup?platform="+platform,
+                    url: "../pushsetting/geteventgroup",
                     success: function (data) {
-                        var obj = JSON.parse(data);
-                        for(var key in obj){
-                            str += "<option value='" + obj[key] +"'>" + obj[value] + "</option>";
+                        /* var jsonObj = eval('(' + data + ')');
+                         if (jsonObj['status'] == 1) {*/
+                        if(data.status == 1){
+                            spop({template: '新增成功！', position: 'top-center', style: 'success', autoclose: 1500,onClose: function() {
+                                    //parent.location.href = parent.location.href;
+                                    self.location=document.referrer;
+                                }});
+                        } else {
+                            spop({template: '新增失败！', position: 'top-center', style: 'error', autoclose: 2000});
                         }
-                        $("#platform").append(str);
                     },
                     error: function (data) {
-                        spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
+                        spop({template: '新增失败！', position: 'top-center', style: 'error', autoclose: 2000});
                     }
                 });
                 $("#eventgroupname").append(str);
             }
             function addPushTargetClass() {
                 var str = "";
-                $.ajax({
-                    type: "POST",
-                    contentType: 'application/json',
-                    traditional: true,
-                    url: "../pushsetting/listprocessorclassbytype?type=1",
-                    success: function (data) {
-                        var obj = JSON.parse(data);
-                        for(var key in obj){
-                            str += "<option value='" + obj[key] +"'>" + obj[value] + "</option>";
-                        }
-                        $("#pushtargetclass").append(str);
-                    },
-                    error: function (data) {
-                        spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
-                    }
-                });
                 $("#pushtargetclass").append(str);
             }
             function addPushMethodClass() {
                 var str = "";
-                $.ajax({
-                    type: "POST",
-                    contentType: 'application/json',
-                    traditional: true,
-                    url: "../pushsetting/listprocessorclassbytype?type=2",
-                    success: function (data) {
-                        var obj = JSON.parse(data);
-                        for(var key in obj){
-                            str += "<option value='" + obj[key] +"'>" + obj[value] + "</option>";
-                        }
-                        $("#pushmethodclass").append(str);
-                    },
-                    error: function (data) {
-                        spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
-                    }
-                });
                 $("#pushmethodclass").append(str);
             }
             function addAPPClass() {
                 var str = "";
-                $.ajax({
-                    type: "POST",
-                    contentType: 'application/json',
-                    traditional: true,
-                    url: "../pushsetting/listprocessorclassbytype?type=4&subtype=1",
-                    success: function (data) {
-                        var obj = JSON.parse(data);
-                        for(var key in obj){
-                            str += "<option value='" + obj[key] +"'>" + obj[value] + "</option>";
-                        }
-                        $("#apppushclass").append(str);
-                    },
-                    error: function (data) {
-                        spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
-                    }
-                });
                 $("#apppushclass").append(str);
             }
             function addSMSClass() {
                 var str = "";
-                $.ajax({
-                    type: "POST",
-                    contentType: 'application/json',
-                    traditional: true,
-                    url: "../pushsetting/listprocessorclassbytype?type=4&subtype=3",
-                    success: function (data) {
-                        var obj = JSON.parse(data);
-                        for(var key in obj){
-                            str += "<option value='" + obj[key] +"'>" + obj[value] + "</option>";
-                        }
-                        $("#smspushclass").append(str);
-                    },
-                    error: function (data) {
-                        spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
-                    }
-                });
                 $("#smspushclass").append(str);
             }
             function addEmailClass() {
                 var str = "";
-                $.ajax({
-                    type: "POST",
-                    contentType: 'application/json',
-                    traditional: true,
-                    url: "../pushsetting/listprocessorclassbytype?type=4&subtype=4",
-                    success: function (data) {
-                        var obj = JSON.parse(data);
-                        for(var key in obj){
-                            str += "<option value='" + obj[key] +"'>" + obj[value] + "</option>";
-                        }
-                        $("#emailpushclass").append(str);
-                    },
-                    error: function (data) {
-                        spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
-                    }
-                });
                 $("#emailpushclass").append(str);
             }
         </script>

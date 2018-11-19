@@ -2,27 +2,26 @@
     <div class="col-md-1"></div>
     <div class="col-md-10">
       <div class="row">
-          <div class="text-center"><h1>事件组定义</h1></div>
+          <div class="text-center"><h1>事件组定义列表</h1></div>
           <hr>
           <form id="searchForm" class="form-horizontal">
               <div class="form-group">
-                  <div class="col-md-4">
-                      <label class="col-md-5  control-label">厂商</label>
-                      <div class="col-md-7">
+                  <div class="col-md-5">
+                      <label class="col-md-4  control-label">厂商</label>
+                      <div class="col-md-8">
                           <select name="searchplatform" class="col-md-12 form-control" id="searchplatform">
 
                           </select>
                       </div>
                   </div>
-                  <div class="col-md-4">
-                      <label class="col-md-5 control-label">事件组名称</label>
-                      <div class="col-md-7">
+                  <div class="col-md-5">
+                      <label class="col-md-4 control-label">事件组名称</label>
+                      <div class="col-md-8">
                           <input type="text" class="form-control" id="searcheventgroupname" name="searcheventgroupname" placeholder="事件组名称" >
                       </div>
                   </div>
-                  <div class="col-md-4" align="right">
-                      <div class="col-md-5"></div>
-                      <div class="col-md-7">
+                  <div class="col-md-2" align="right">
+                      <div class="col-md-12">
                           <button type="button" id="searchsubmit" class="btn btn-default"
                                   style="width:100%;">查询</button>
                       </div>
@@ -202,7 +201,7 @@
             }
         }
         function addPlatform() {
-            var str = "<option value='0'>全部</option>";
+            var str = "<option value='888888'>全部</option>";
             for(var i = 0; i < platform.length; i++){
                 str += "<option value='" + platform[i].platformValue +"'>" + platform[i].platformName + "</option>";
             }

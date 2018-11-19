@@ -31,4 +31,7 @@ public interface MsgPushSettingDao extends CrudRepository<MsgPushSetting, Intege
             "WHERE et.`eventcode`= :eventcode AND ege.`platform`= :platform", nativeQuery = true)
     MsgPushSetting findMsgPushSetting(@Param("eventcode")String eventCode, @Param("platform")Integer platform);
 
+    void deleteByMsgpushsettingid(String id);
+
+    MsgPushSetting findByMsgpushsettingid(Integer msgpushsettingid);
 }
