@@ -5,37 +5,37 @@
       <div class="text-center"><h1>新增事件组事件</h1></div>
       <hr>
           <div class="form-group">
-              <div class="col-md-4">
-                  <label class="col-md-5  control-label" align="right">厂商：</label>
-                  <div class="col-md-7" align="center">
+              <div class="col-md-5">
+                  <label class="col-md-4  control-label" align="right">厂商：</label>
+                  <div class="col-md-8" align="center">
                       <span id="platform"></span>
                   </div>
               </div>
-              <div class="col-md-6">
-                  <label class="col-md-3 control-label" align="right">事件组：</label>
+              <div class="col-md-5">
+                  <label class="col-md-4 control-label" align="right">事件组：</label>
                   <div class="col-md-8">
                         <#if eventgroup??&&eventgroup.eventgroupname??>${eventgroup.eventgroupname}</#if>
                   </div>
               </div>
+              <div class="col-md-2" align="right"></div>
           </div>
       </div>
         <form class="form-horizontal" >
           <div class="form-group">
-              <div class="col-md-4">
-                  <label class="col-md-5  control-label">事件名称</label>
-                  <div class="col-md-7">
+              <div class="col-md-5">
+                  <label class="col-md-4  control-label">事件名称</label>
+                  <div class="col-md-8">
                       <input type="text" class="form-control" id="searcheventname" name="searcheventname" placeholder="事件名称" >
                   </div>
               </div>
-              <div class="col-md-4">
-                  <label class="col-md-5 control-label">事件代码</label>
-                  <div class="col-md-7">
+              <div class="col-md-5">
+                  <label class="col-md-4 control-label">事件代码</label>
+                  <div class="col-md-8">
                       <input type="text" class="form-control" id="searcheventcode" name="searcheventcode" placeholder="事件代码" >
                   </div>
               </div>
-              <div class="col-md-4" align="right">
-                  <div class="col-md-5"></div>
-                  <div class="col-md-7">
+              <div class="col-md-2" align="right">
+                  <div class="col-md-12">
                       <button type="button" id="searchsubmit" class="btn btn-default"
                               style="width:100%;">查询</button>
                   </div>

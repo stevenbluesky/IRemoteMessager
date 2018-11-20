@@ -8,7 +8,7 @@
             <form id="defaultForm" class="form-horizontal" action="../event/importmsgtemplatefile" method="POST" enctype="multipart/form-data">
                 <hr>
                 <div class="col-sm-12">
-                    <div  class="form-group" align="right">
+                    <div  class="form-group" align="right" id="platformtr">
                         <label for="platform"  class="col-sm-4 control-label">厂商*</label>
                         <div class="col-sm-5">
                             <select name="platform" class="col-md-12 form-control" id="platform">
@@ -38,8 +38,11 @@
 <div class="col-md-1"></div>
         <script type="text/javascript">
             $(document).ready(function() {
-                addPlatform();
+                document.getElementById("platformtr").style.visibility="hidden";
             });
+            window.onload = function () {
+                addPlatform();
+            }
             $("#btn-submit").click(function (e) {
                 document.getElementById("btn-submit").setAttribute("disabled", true);
                 $('#defaultForm').submit();

@@ -43,7 +43,7 @@ public class MsgPushSettingDtl {
     }
 
     @JSONField(serialize = false)
-    @ManyToOne(targetEntity = MsgPushSetting.class,cascade = {CascadeType.DETACH},fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = MsgPushSetting.class,cascade={CascadeType.DETACH})
     @JoinColumn(name = "msgpushsettingid",referencedColumnName = "msgpushsettingid")
     public MsgPushSetting getMsgPushSetting() {
         return msgPushSetting;

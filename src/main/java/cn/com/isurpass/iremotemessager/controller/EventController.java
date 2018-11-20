@@ -110,11 +110,10 @@ public class EventController {
     }
 
     @RequestMapping(value = "/exportmessagetemplate")
-    @ResponseBody
-    public JsonResult exportMessageTemplate(MessageTemplateVo msgvo, HttpServletRequest request, HttpServletResponse response) {
+    public void exportMessageTemplate(MessageTemplateVo msgvo, HttpServletRequest request, HttpServletResponse response) {
         List<ExportMessageTemplateVo> dataset = eventtypeservice.exportMessageTemplate(msgvo);
         if(dataset==null||dataset.size()==0){
-            new JsonResult(1,"筛选不到数据！");
+            return ;
         }
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
         String sheetName = "消息模板_"+msgvo.getPlatform()+"_"+msgvo.getLanguage();
@@ -124,14 +123,36 @@ public class EventController {
         int[] columnWidth = { 10, 20, 30,10,10,80 };
         String[] columnName = { "platform", "msgeventtypeid", "eventcode" ,"language","type","contenttemplate"};
         try {
-            new ExportExcelUtil().ExportNoResponse(sheetName, titleName, fileName, columnNumber, columnWidth, columnName, dataset);
-            //new ExportExcelUtil().ExportWithResponse(sheetName, titleName, fileName, columnNumber, columnWidth, columnName, dataset,response);
+            HSSFWorkbook wb = new ExportExcelUtil().ExportNoResponse(sheetName, titleName, fileName, columnNumber, columnWidth, columnName, dataset);
+            //HSSFWorkbook wb = new ExportExcelUtil().ExportWithResponse(sheetName, titleName, fileName, columnNumber, columnWidth, columnName, dataset, response);
+            if(wb==null){
+                return ;
+            }
+            this.setResponseHeader(response, fileName);
+            OutputStream os = response.getOutputStream();
+            wb.write(os);
+            os.flush();
+            os.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new JsonResult(1,"导出" + fileName + "到桌面成功！");
     }
-
+    //发送响应流方法
+    public void setResponseHeader(HttpServletResponse response, String fileName) {
+        try {
+            try {
+                fileName = new String(fileName.getBytes(),"ISO8859-1");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            response.setContentType("application/octet-stream;charset=ISO8859-1");
+            response.setHeader("Content-Disposition", "attachment;filename="+ fileName+".xls");
+            response.addHeader("Pargam", "no-cache");
+            response.addHeader("Cache-Control", "no-cache");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
     @RequestMapping(value = "/eventlistpage")
     public ModelAndView toeventlistpage(ModelAndView mv) {
         mv.setViewName("event/eventlist");
@@ -244,10 +265,11 @@ public class EventController {
         if(file==null||file.getSize()==0) {
             mv.setViewName("failed");
         }
-
+        String originalFilename = file.getOriginalFilename();
         boolean b = eventtypeservice.msgImport(platform,file);
         if(b){
             mv.setViewName("event/eventlist");
+            mv.addObject("importresult", originalFilename+"上传解析完毕！");
         }else{
             mv.setViewName("failed");
         }

@@ -28,15 +28,15 @@ public class MsgEventGroupService {
     @Resource
     private MsgEventTypeDao eventdao;
 
-    public Map<Integer, String> listAllEventGroup(Integer platform){
+    public Map<String, String> listAllEventGroup(Integer platform){
         if (platform == null) {
             platform = IRemoteConstantDefine.DEFAULT_PLATFORM;
         }
-        Map<Integer, String> eventGroupMap = new HashMap<>();
+        Map<String, String> eventGroupMap = new HashMap<>();
 
         List<MsgEventGroup> msgEventGroupList = msgEventGroupDao.findByPlatform(platform);
         for (MsgEventGroup msgEventGroup : msgEventGroupList) {
-            eventGroupMap.put(msgEventGroup.getMsgeventgroupid(), msgEventGroup.getEventgroupname());
+            eventGroupMap.put(String.valueOf(msgEventGroup.getEventgroupname()),String.valueOf(msgEventGroup.getMsgeventgroupid()));
         }
 
         return eventGroupMap;
