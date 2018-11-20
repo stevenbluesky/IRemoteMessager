@@ -6,10 +6,10 @@
                 <div class="text-center"><h1>修改事件组</h1></div>
                 <hr>
                 <div class="col-sm-12">
-                    <div  class="form-group" align="right">
+                    <div  class="form-group" align="right" id="platformtr">
                         <label for="platform"  class="col-sm-4 control-label">厂商*</label>
                         <div class="col-sm-5">
-                            <input type="hidden" name="msgeventgroupid" <#if eventgroup??>value="${eventgroup.msgeventgroupid}"</#if>>
+                            <input type="hidden" name="msgeventgroupid" <#if eventgroup??>value="${eventgroup.msgeventgroupid?c}"</#if>>
                             <select name="platform" class="col-md-12 form-control" id="platform">
 
                             </select>
@@ -50,8 +50,12 @@
 <div class="col-md-1"></div>
         <script type="text/javascript">
             $(document).ready(function() {
-                addPlatform();
+                //document.getElementById("platformtr").style.visibility="hidden";
+                document.getElementById("platformtr").style.display="none";
             });
+            window.onload = function () {
+                addPlatform();
+            }
             $("#btn-cancel").click(function(r){
                 $("input").val("");
             });
@@ -82,7 +86,7 @@
             function addPlatform() {
                 var str = "";
                 var pl = "";
-                <#if msg??>pl="${msg.platform}"</#if>
+                <#if eventgroup??>pl="${eventgroup.platform?c}"</#if>
                 for(var i = 0; i < platform.length; i++){
                     if(pl!=""&&platform[i].platformValue==pl){
                         str += "<option value='" + platform[i].platformValue + "' selected='selected'>" + platform[i].platformName + "</option>";

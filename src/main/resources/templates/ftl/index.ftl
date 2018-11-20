@@ -58,7 +58,7 @@
     <div class="col-xs-11 col-sm-11 col-md-11" align="right">
         欢迎您：
         <#if person??>${person.phonenumber}</#if>
-        <a href="logout">安全退出&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href="logout">安全退出</a>
     </div>
         <div class="col-xs-1 col-sm-1 col-md-1">
             &nbsp;&nbsp;

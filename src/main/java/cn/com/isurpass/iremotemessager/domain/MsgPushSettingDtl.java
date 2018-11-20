@@ -43,7 +43,7 @@ public class MsgPushSettingDtl {
     }
 
     @JSONField(serialize = false)
-    @ManyToOne(targetEntity = MsgPushSetting.class,cascade = {CascadeType.REMOVE})
+    @ManyToOne(targetEntity = MsgPushSetting.class,cascade={CascadeType.DETACH})
     @JoinColumn(name = "msgpushsettingid",referencedColumnName = "msgpushsettingid")
     public MsgPushSetting getMsgPushSetting() {
         return msgPushSetting;
@@ -54,7 +54,7 @@ public class MsgPushSettingDtl {
     }
 
     @JSONField(serialize = false)
-    @OneToOne(targetEntity = MsgProcessClass.class,cascade = {CascadeType.REMOVE})
+    @OneToOne(targetEntity = MsgProcessClass.class,cascade = {CascadeType.DETACH})
     @JoinColumn(name = "msgprocessclassid",referencedColumnName = "msgprocessclassid")
     public MsgProcessClass getMsgProcessClass() {
         return msgProcessClass;

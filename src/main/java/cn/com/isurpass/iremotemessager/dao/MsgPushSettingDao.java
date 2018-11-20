@@ -31,14 +31,9 @@ public interface MsgPushSettingDao extends CrudRepository<MsgPushSetting, Intege
 
     List<MsgPushSetting> findByMsgEventGroupIn(List<MsgEventGroup> eventgroup, Pageable pageable);
 
-    @Query(value = "SELECT ps.* FROM msg_eventgroupevent ege \n" +
-            "LEFT JOIN msg_eventtype et ON et.`eventcode`= ege.`eventcode` \n" +
-            "LEFT JOIN msg_eventgroup eg ON eg.`msgeventgroupid` = ege.`msgeventgroupid` AND eg.`platform` = ege.`platform`\n" +
-            "LEFT JOIN msg_pushsetting ps ON ps.`msgeventgroupid`= eg.`msgeventgroupid` AND ps.`platform`= eg.`platform`\n" +
-            "WHERE et.`eventcode`= :eventcode AND ege.`platform`= :platform", nativeQuery = true)
-    MsgPushSetting findMsgPushSetting(@Param("eventcode")String eventCode, @Param("platform")Integer platform);
-
-    void deleteByMsgpushsettingid(String id);
+    void deleteByMsgpushsettingid(int id);
 
     MsgPushSetting findByMsgpushsettingid(Integer msgpushsettingid);
+
+    MsgPushSetting findByPlatformAndMsgEventGroup(Integer platform, MsgEventGroup eventgroup);
 }

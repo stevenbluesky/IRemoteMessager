@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html>
 <head>
-    <title>freemark</title>
+    <title>主页</title>
 </head>
 <body>
 <h1>Hello!</h1>

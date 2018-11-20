@@ -14,8 +14,7 @@ import java.util.List;
  * Time:17:32
  */
 public interface MsgEventTypeDao extends CrudRepository<MsgEventType, Integer> {
-    @Query(value = "SELECT eventcode from msg_eventtype", nativeQuery = true)
-    List<String> findAllEventCode();
+
     @Query(value = "SELECT eventcode from msg_eventtype", nativeQuery = true)
     List<String> findAllEventCode();
 

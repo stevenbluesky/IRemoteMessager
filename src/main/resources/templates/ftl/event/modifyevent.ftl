@@ -9,7 +9,7 @@
                     <div  class="form-group" align="right">
                         <label for="eventname"  class="col-sm-4 control-label">事件名称*</label>
                         <div class="col-sm-5">
-                            <input type="hidden" name="msgeventtypeid" <#if event??>value="${event.msgeventtypeid}"</#if>>
+                            <input type="hidden" name="msgeventtypeid" <#if event??>value="${event.msgeventtypeid?c}"</#if>>
                             <input type="text" class="form-control" id="eventname" name="eventname" <#if event??>value="${event.eventtypename}"</#if> placeholder="事件名称">
                         </div>
                     </div>

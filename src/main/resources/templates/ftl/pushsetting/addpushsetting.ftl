@@ -9,7 +9,7 @@
                     <div  class="form-group" align="right">
                         <label  class="col-sm-4 control-label">厂商*</label>
                         <div class="col-sm-5">
-                            <select name="platform" class="col-md-12 form-control" id=4"platform">
+                            <select name="platform" class="col-md-12 form-control" id="platform">
 
                             </select>
                         </div>
@@ -101,13 +101,34 @@
                 addSMSClass();
                 addEmailClass();
             });
-            $("#platform").onchange(function (e) {
-                $("#platform").empty();
+            $("#platform").change(function (e) {
+                $("#eventgroupname").empty();
                 addEventGroup();
             });
             $("#btn-submit").click(function (e) {
                 document.getElementById("btn-submit").setAttribute("disabled", true);
-                $("#defaultForm").submit();
+                $.ajax({
+                    type: "POST",
+                    dataType: "html",
+                    async: false,
+                    url: "../pushsetting/addpushsettingdata",
+                    data: $('#defaultForm').serialize(),
+                    success: function (data) {
+                        var jsonObj = eval('(' + data + ')');
+                        if (jsonObj['status'] == 1) {
+                            spop({template: '新增成功！', position: 'top-center', style: 'success', autoclose: 1500,onClose: function() {
+                                    //parent.location.href = parent.location.href;
+                                    self.location=document.referrer;
+                                }});
+                        } else {
+                            spop({template: jsonObj['msg'], position: 'top-center', style: 'error', autoclose: 2000});
+                            $("#btn-submit").removeAttr("disabled");
+                        }
+                    },
+                    error: function (data) {
+                        spop({template: '新增失败！', position: 'top-center', style: 'error', autoclose: 2000});
+                    }
+                });
             });
 
             function addPlatform() {
@@ -119,6 +140,9 @@
             }
             function addEventGroup() {
                 var platform = $("#platform").val();
+                if(platform==undefined||platform==""){
+                    platform=999999;
+                }
                 var str = "";
                 $.ajax({
                     type: "POST",
@@ -128,15 +152,15 @@
                     success: function (data) {
                         var obj = JSON.parse(data);
                         for(var key in obj){
-                            str += "<option value='" + obj[key] +"'>" + obj[value] + "</option>";
+                            str += "<option value='" + obj[key] +"'>" + key + "</option>";
                         }
-                        $("#platform").append(str);
+                        $("#eventgroupname").append(str);
                     },
                     error: function (data) {
                         spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
                     }
                 });
-                $("#eventgroupname").append(str);
+
             }
             function addPushTargetClass() {
                 var str = "";
@@ -148,7 +172,7 @@
                     success: function (data) {
                         var obj = JSON.parse(data);
                         for(var key in obj){
-                            str += "<option value='" + obj[key] +"'>" + obj[value] + "</option>";
+                            str += "<option value='" + obj[key] +"'>" + key + "</option>";
                         }
                         $("#pushtargetclass").append(str);
                     },
@@ -156,7 +180,6 @@
                         spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
                     }
                 });
-                $("#pushtargetclass").append(str);
             }
             function addPushMethodClass() {
                 var str = "";
@@ -168,7 +191,7 @@
                     success: function (data) {
                         var obj = JSON.parse(data);
                         for(var key in obj){
-                            str += "<option value='" + obj[key] +"'>" + obj[value] + "</option>";
+                            str += "<option value='" + obj[key] +"'>" + key + "</option>";
                         }
                         $("#pushmethodclass").append(str);
                     },
@@ -176,7 +199,6 @@
                         spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
                     }
                 });
-                $("#pushmethodclass").append(str);
             }
             function addAPPClass() {
                 var str = "";
@@ -184,11 +206,12 @@
                     type: "POST",
                     contentType: 'application/json',
                     traditional: true,
-                    url: "../pushsetting/listprocessorclassbytype?type=4&subtype=1",
+                    url: "../pushsetting/listprocessorclassbytype?type=4&subType=1",
                     success: function (data) {
                         var obj = JSON.parse(data);
+                        str += "<option value='" + 0 +"'> 默认</option>";
                         for(var key in obj){
-                            str += "<option value='" + obj[key] +"'>" + obj[value] + "</option>";
+                            str += "<option value='" + obj[key] +"'>" + key + "</option>";
                         }
                         $("#apppushclass").append(str);
                     },
@@ -196,7 +219,6 @@
                         spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
                     }
                 });
-                $("#apppushclass").append(str);
             }
             function addSMSClass() {
                 var str = "";
@@ -204,11 +226,12 @@
                     type: "POST",
                     contentType: 'application/json',
                     traditional: true,
-                    url: "../pushsetting/listprocessorclassbytype?type=4&subtype=3",
+                    url: "../pushsetting/listprocessorclassbytype?type=4&subType=3",
                     success: function (data) {
                         var obj = JSON.parse(data);
+                        str += "<option value='" + 0 +"'> 默认</option>";
                         for(var key in obj){
-                            str += "<option value='" + obj[key] +"'>" + obj[value] + "</option>";
+                            str += "<option value='" + obj[key] +"'>" + key + "</option>";
                         }
                         $("#smspushclass").append(str);
                     },
@@ -216,7 +239,6 @@
                         spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
                     }
                 });
-                $("#smspushclass").append(str);
             }
             function addEmailClass() {
                 var str = "";
@@ -224,11 +246,12 @@
                     type: "POST",
                     contentType: 'application/json',
                     traditional: true,
-                    url: "../pushsetting/listprocessorclassbytype?type=4&subtype=4",
+                    url: "../pushsetting/listprocessorclassbytype?type=4&subType=4",
                     success: function (data) {
                         var obj = JSON.parse(data);
+                        str += "<option value='" + 0 +"'>默认</option>";
                         for(var key in obj){
-                            str += "<option value='" + obj[key] +"'>" + obj[value] + "</option>";
+                            str += "<option value='" + obj[key] +"'>" + key + "</option>";
                         }
                         $("#emailpushclass").append(str);
                     },
@@ -236,6 +259,5 @@
                         spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
                     }
                 });
-                $("#emailpushclass").append(str);
             }
         </script>

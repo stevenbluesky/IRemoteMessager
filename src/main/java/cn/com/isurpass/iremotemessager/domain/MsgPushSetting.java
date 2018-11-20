@@ -70,7 +70,7 @@ public class MsgPushSetting {
     }
 
     @JSONField(serialize = false)
-    @OneToOne(targetEntity = MsgEventGroup.class,cascade = {CascadeType.REMOVE})
+    @OneToOne(targetEntity = MsgEventGroup.class,cascade = {CascadeType.DETACH})
     @JoinColumn(name = "msgeventgroupid",referencedColumnName = "msgeventgroupid")
     public MsgEventGroup getMsgEventGroup() {
         return msgEventGroup;

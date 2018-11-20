@@ -5,11 +5,11 @@ import cn.com.isurpass.iremotemessager.vo.MessageTemplateVo;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.util.CellRangeAddress;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.filechooser.FileSystemView;
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -27,9 +27,9 @@ import java.util.regex.Pattern;
  * Time:16:34
  */
 public class ExportExcelUtil {
-    public void ExportWithResponse(String sheetName, String titleName,
+    public HSSFWorkbook ExportWithResponse(String sheetName, String titleName,
                                    String fileName, int columnNumber, int[] columnWidth,
-                                   String[] columnName, List<MessageTemplateVo> dataList,
+                                   String[] columnName, List<ExportMessageTemplateVo> dataList,
                                    HttpServletResponse response) throws Exception {
         if (columnNumber == columnWidth.length&& columnWidth.length == columnName.length) {
             // 第一步，创建一个webbook，对应一个Excel文件
@@ -128,12 +128,12 @@ public class ExportExcelUtil {
                 zidonghuanhang2.setBorderTop(HSSFCellStyle.BORDER_THIN);
                 HSSFCell datacell = null;
                 // 遍历集合数据，产生数据行
-                Iterator<MessageTemplateVo> it = dataList.iterator();
+                Iterator<ExportMessageTemplateVo> it = dataList.iterator();
                 int index = 0;
                 while (it.hasNext()) {
                     index++;
                     row = sheet.createRow(index);
-                    MessageTemplateVo t =  it.next();
+                    ExportMessageTemplateVo t =  it.next();
                     // 利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
                     Field[] fields = t.getClass().getDeclaredFields();
                     for (short ii = 0; ii < fields.length; ii++) {
@@ -194,44 +194,16 @@ public class ExportExcelUtil {
             }
 
             // 第六步，将文件存到浏览器设置的下载位置
-            String filename = fileName + ".xls";
-            response.setContentType("application/vnd.ms-excel");
-            response.setCharacterEncoding("GBK");
-            response.setHeader("Content-disposition", "attachment;filename="+"Devices.xls");//Excel文件名
-
-            // 清空response
-            /*response.reset();
-            // 设置response的Header
-            response.setHeader("Content-Disposition", "attachment;filename="
-                    + new String(filename.getBytes()));*/
-            //response.addHeader("Content-Length", "" + tempFile.length());
-/*            OutputStream toClient = new BufferedOutputStream(
-                    response.getOutputStream());*/
-            //response.setContentType("application/vnd.ms-excel;charset=utf-8");
-            //response.setHeader("Content-Disposition", "attachment;filename=" + filename);
-           /* toClient.write(buffer);
-            toClient.flush();
-            toClient.close();*/
-            OutputStream out = response.getOutputStream();
-            try {
-                wb.write(out);// 将数据写出去
-                String str = "导出" + fileName + "成功！";
-                System.out.println(str);
-            } catch (Exception e) {
-                e.printStackTrace();
-                String str1 = "导出" + fileName + "失败！";
-                System.out.println(str1);
-            } finally {
-                out.close();
-            }
+            return wb;
 
         } else {
             System.out.println("列数目长度名称三个数组长度要一致");
+            return null;
         }
 
     }
 
-    public void ExportNoResponse(String sheetName, String titleName,
+    public HSSFWorkbook ExportNoResponse(String sheetName, String titleName,
                                  String fileName, int columnNumber, int[] columnWidth,
                                  String[] columnName, List<ExportMessageTemplateVo> dataList) throws Exception {
         if (columnNumber == columnWidth.length&& columnWidth.length == columnName.length) {
@@ -387,7 +359,8 @@ public class ExportExcelUtil {
             }
 
             // 第六步，将文件存到指定位置
-            try {
+            return wb;
+            /*try {
                 FileOutputStream fout = new FileOutputStream(FileSystemView.getFileSystemView().getHomeDirectory().getPath()+"/"+fileName+".xls");//位置
                 wb.write(fout);
                 String str = "导出" + fileName + "成功！";
@@ -397,9 +370,10 @@ public class ExportExcelUtil {
                 e.printStackTrace();
                 String str1 = "导出" + fileName + "失败！";
                 System.out.println(str1);
-            }
+            }*/
         } else {
             System.out.println("列数目长度名称三个数组长度要一致");
+            return null;
         }
 
     }

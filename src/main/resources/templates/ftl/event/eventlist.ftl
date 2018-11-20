@@ -114,8 +114,16 @@
         $("#searchsubmit").click(function () {
             $("#table").bootstrapTable("refreshOptions", {pageNumber: 1})
         });
-
-
+        window.onload = function () {
+            showImportResult();
+        }
+        function showImportResult() {
+            var re = "";
+            <#if importresult??>re="${importresult}"</#if>
+            if(re!=""){
+                spop({template: re, position: 'top-center', style: 'success', autoclose: 2000});
+            }
+        }
         function formatter_date(value, row, index) {
             return new Date(value).Format("yyyy-MM-dd hh:mm:ss");
         }
@@ -218,6 +226,8 @@
                 return ;
             }else {
                 window.location.href='../event/messagetemplatepage?msgeventtypeid='+ids[0];
+               /* $("#iframeDetail").attr("src", '../event/messagetemplatepage?msgeventtypeid='+ids[0]);
+                $('#myModal').modal('show');*/
             }
         }
 
