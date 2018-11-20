@@ -70,7 +70,7 @@ public class MsgPushSetting {
     }
 
     @JSONField(serialize = false)
-    @OneToOne(targetEntity = MsgEventGroup.class,cascade = {CascadeType.REMOVE})
+    @OneToOne(targetEntity = MsgEventGroup.class,cascade = {CascadeType.DETACH})
     @JoinColumn(name = "msgeventgroupid",referencedColumnName = "msgeventgroupid")
     public MsgEventGroup getMsgEventGroup() {
         return msgEventGroup;
@@ -81,7 +81,7 @@ public class MsgPushSetting {
     }
 
     @JSONField(serialize = false)
-    @OneToMany(targetEntity=MsgPushSettingDtl.class,cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,fetch=FetchType.LAZY,mappedBy="msgPushSetting")
+    @OneToMany(targetEntity=MsgPushSettingDtl.class, cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval=true,fetch=FetchType.LAZY,mappedBy="msgPushSetting")
     public List<MsgPushSettingDtl> getMsgPushSettingDtlList() {
         return msgPushSettingDtlList;
     }
