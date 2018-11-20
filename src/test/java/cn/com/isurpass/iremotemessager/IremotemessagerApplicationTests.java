@@ -1,6 +1,8 @@
 package cn.com.isurpass.iremotemessager;
 
 import cn.com.isurpass.iremotemessager.common.util.EmailUtils;
+import cn.com.isurpass.iremotemessager.dao.MsgEventGroupDao;
+import cn.com.isurpass.iremotemessager.dao.MsgPushSettingDao;
 import cn.com.isurpass.iremotemessager.domain.MsgPushSetting;
 import cn.com.isurpass.iremotemessager.service.*;
 import com.alibaba.fastjson.JSONObject;
@@ -32,6 +34,10 @@ public class IremotemessagerApplicationTests {
     private MsgPushSettingService msgPushSettingService;
     @Resource
     private MsgEventTypeService msgEventTypeService;
+    @Resource
+    private MsgPushSettingDao msgPushSettingDao;
+    @Resource
+    private MsgEventGroupDao msgEventGroupDao;
 
     @Transactional
     @Test
@@ -112,5 +118,13 @@ public class IremotemessagerApplicationTests {
     public void testQueryEventCode() {
         List<String> allEventCode = msgEventTypeService.findAllEventCode();
         System.out.println(allEventCode);
+    }
+
+    @Test
+    public void testSQL(){
+//        MsgPushSetting msgPushSetting = msgPushSettingDao.findById(3).orElse(null);
+//        msgPushSettingDao.delete(msgPushSetting);
+            msgPushSettingDao.deleteById(1);
+//            msgEventGroupDao.deleteById(2);
     }
 }

@@ -60,7 +60,7 @@ public class MsgDefaultProcessClass {
     }
 
     @JSONField(serialize = false)
-    @OneToOne(targetEntity = MsgProcessClass.class,cascade = {CascadeType.REMOVE})
+    @OneToOne(targetEntity = MsgProcessClass.class, cascade = {CascadeType.DETACH},fetch = FetchType.LAZY)
     @JoinColumn(name = "msgprocessclassid",referencedColumnName = "msgprocessclassid")
     public MsgProcessClass getMsgProcessClass() {
         return msgProcessClass;
