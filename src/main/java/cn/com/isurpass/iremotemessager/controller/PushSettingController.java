@@ -1,16 +1,12 @@
 package cn.com.isurpass.iremotemessager.controller;
 
-import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import cn.com.isurpass.iremotemessager.common.util.JsonResult;
 import cn.com.isurpass.iremotemessager.common.util.PageResult;
-import cn.com.isurpass.iremotemessager.domain.MsgEventGroup;
 import cn.com.isurpass.iremotemessager.service.MsgEventGroupService;
 import cn.com.isurpass.iremotemessager.service.MsgProcessClassService;
 import cn.com.isurpass.iremotemessager.service.MsgPushSettingService;
-import cn.com.isurpass.iremotemessager.vo.EventGroupVo;
-import cn.com.isurpass.iremotemessager.vo.MessageTemplateVo;
 import cn.com.isurpass.iremotemessager.vo.PushSettingVo;
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -64,16 +60,14 @@ public class PushSettingController {
     @ResponseBody
     public String listEventGroup(Integer platform) {
         Map<String, String> stringStringMap = msgEventGroupService.listAllEventGroup(platform);
-        JSONObject json = net.sf.json.JSONObject.fromObject(stringStringMap);
-        return json.toString();
+        return JSONObject.toJSONString(stringStringMap);
     }
 
     @RequestMapping("listprocessorclassbytype")
     @ResponseBody
     public String listProcessorClassByType(Integer type, Integer subType){
         Map<String, String> stringStringMap = msgProcessClassService.listProcessClass(type, subType);
-        JSONObject json = net.sf.json.JSONObject.fromObject(stringStringMap);
-        return json.toString();
+        return JSONObject.toJSONString(stringStringMap);
     }
     //deletepushsettings
     @RequestMapping(value = "/deletepushsettings")

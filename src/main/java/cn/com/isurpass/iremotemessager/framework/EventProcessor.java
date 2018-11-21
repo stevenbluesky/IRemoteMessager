@@ -65,6 +65,9 @@ public class EventProcessor implements Runnable{
 		List<JPushNotificationData> lpnd = mmd.getJPushNotificationData();
 		sendmessage(lpnd, IRemoteConstantDefine.MESSAGE_PARSE_TYPE_JPUSHNOTIFICATION, IRemoteConstantDefine.MESSAGE_SENDER_TYPE_JPUSHNOTIFICATION);
 
+		List<MailData> mailDataList = mmd.getMailData();
+		sendmessage(mailDataList, IRemoteConstantDefine.MESSAGE_PARSE_TYPE_MAIL, IRemoteConstantDefine.MESSAGE_SENDER_TYPE_MAIL);
+
 		List<SmsData> smsDataList = mmd.getSmsData();
 		sendmessage(smsDataList, IRemoteConstantDefine.MESSAGE_PARSE_TYPE_SMS, IRemoteConstantDefine.MESSAGE_SENDER_TYPE_SMS);
 	}
