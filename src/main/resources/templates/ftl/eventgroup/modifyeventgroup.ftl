@@ -76,6 +76,7 @@
                                 }});
                         } else {
                             spop({template: '修改失败！', position: 'top-center', style: 'error', autoclose: 2000});
+                            $("#btn-submit").removeAttr("disabled");
                         }
                     },
                     error: function (data) {

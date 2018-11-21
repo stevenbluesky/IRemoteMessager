@@ -129,8 +129,12 @@ public class EventTypeService {
     }
 
 
-    public void addmsgtemplatedata(MessageTemplateVo messagetemplatevo) {
+    public int addmsgtemplatedata(MessageTemplateVo messagetemplatevo) {
         MsgEventType event = eventtypedao.findByMsgeventtypeid(messagetemplatevo.getMsgeventtypeid());
+        MsgContentTemplate template = msgdao.findByPlatformAndMsgEventTypeAndLanguageAndType(messagetemplatevo.getPlatform(),event,messagetemplatevo.getLanguage(),messagetemplatevo.getType());
+        if(template!=null){
+            return -1;
+        }
         MsgContentTemplate msgContentTemplate = new MsgContentTemplate();
         msgContentTemplate.setPlatform(messagetemplatevo.getPlatform());
         msgContentTemplate.setType(messagetemplatevo.getType());
@@ -141,16 +145,22 @@ public class EventTypeService {
         msgContentTemplate.setEventcode(event.getEventcode());
         msgContentTemplate.setContenttemplate(messagetemplatevo.getContenttemplate());
         msgdao.save(msgContentTemplate);
+        return 1;
     }
 
-    public void updatemsgdata(MessageTemplateVo messageTemplateVo) {
+    public int updatemsgdata(MessageTemplateVo messageTemplateVo) {
         MsgContentTemplate msg = msgdao.findByMsgcontenttemplateid(messageTemplateVo.getMsgcontenttemplateid());
+        MsgContentTemplate template = msgdao.findByPlatformAndMsgEventTypeAndLanguageAndType(messageTemplateVo.getPlatform(),msg.getMsgEventType(),messageTemplateVo.getLanguage(),messageTemplateVo.getType());
+        if(template!=null&&template!=msg){
+            return -1;
+        }
         msg.setContenttemplate(messageTemplateVo.getContenttemplate());
         msg.setLastupdatetime(new Date());
         msg.setType(messageTemplateVo.getType());
         msg.setPlatform(messageTemplateVo.getPlatform());
         msg.setLanguage(messageTemplateVo.getLanguage());
         msgdao.save(msg);
+        return 1;
     }
 
     public MsgContentTemplate findByMsgTemplateTemplateId(Integer msgcontenttemplateid) {
