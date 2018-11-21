@@ -5,20 +5,20 @@
           <div class="text-center"><h1>消息模板</h1></div>
           <hr>
               <div class="form-group">
-                  <div class="col-md-2"></div>
-                  <div class="col-md-4">
-                      <label class="col-md-5  control-label">事件名称：</label>
-                      <div class="col-md-7">
+                  <div class="col-md-1"></div>
+                  <div class="col-md-5">
+                      <label class="col-md-4  control-label">事件名称：</label>
+                      <div class="col-md-8">
                           <#if event??&&event.eventtypename??>${event.eventtypename}</#if>
                       </div>
                   </div>
-                  <div class="col-md-4">
-                      <label class="col-md-5 control-label">事件代码：</label>
-                      <div class="col-md-7">
+                  <div class="col-md-5">
+                      <label class="col-md-4 control-label">事件代码：</label>
+                      <div class="col-md-8">
                             <#if event??&&event.eventcode??>${event.eventcode}</#if>
                       </div>
                   </div>
-                  <div class="col-md-2"></div>
+                  <div class="col-md-1"></div>
               </div>
       </div>
       <hr>
@@ -46,7 +46,7 @@
 
     <script type="text/javascript">
         var url = "../event/showmessagetemplatelist";
-        <#if event??&&event.msgeventtypeid??>url = url+"?msgeventtypeid="+${event.msgeventtypeid}</#if>
+        <#if event??&&event.msgeventtypeid??>url = url+"?msgeventtypeid="+${event.msgeventtypeid?c}</#if>
         var temp;
         var confirmdelete = url;
         $('#table').bootstrapTable({
@@ -152,7 +152,7 @@
 
         function toAddMsgTemplatePage() {
             var msgeventtypeid = "";
-            <#if event??&&event.msgeventtypeid??>msgeventtypeid = ${event.msgeventtypeid}</#if>
+            <#if event??&&event.msgeventtypeid??>msgeventtypeid = ${event.msgeventtypeid?c}</#if>
             window.location.href='../event/addmsgtemplatepage?msgeventtypeid='+msgeventtypeid;
         }
 

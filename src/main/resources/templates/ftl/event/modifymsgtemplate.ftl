@@ -6,27 +6,27 @@
                 <div class="text-center"><h1>修改消息模板</h1></div>
                 <hr>
                 <div class="form-group">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4">
-                        <label class="col-md-5  control-label">事件名称：</label>
-                        <div class="col-md-7">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <label class="col-md-4  control-label">事件名称：</label>
+                        <div class="col-md-8">
                           <#if event??&&event.eventtypename??>${event.eventtypename}</#if>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <label class="col-md-5 control-label">事件代码：</label>
-                        <div class="col-md-7">
+                    <div class="col-md-5">
+                        <label class="col-md-4 control-label">事件代码：</label>
+                        <div class="col-md-8">
                             <#if event??&&event.eventcode??>${event.eventcode}</#if>
                         </div>
                     </div>
-                    <div class="col-md-2"></div>
+                    <div class="col-md-1"></div>
                 </div>
 
             </div>
             <form id="defaultForm" class="form-horizontal" method="POST">
                 <hr>
                 <div class="col-sm-12">
-                    <div  class="form-group" align="right">
+                    <div  class="form-group" align="right" id="platformtr">
                         <label for="platform"  class="col-sm-4 control-label">厂商*</label>
                         <div class="col-sm-5">
                             <input type="hidden" name="msgeventtypeid" <#if event??>value="${event.msgeventtypeid}"</#if>>
@@ -80,6 +80,8 @@
                 addPlatform();
                 addType();
                 addLanguage();
+                //document.getElementById("platformtr").style.visibility="hidden";
+                document.getElementById("platformtr").style.display="none";
             });
             $("#btn-submit").click(function (e) {
                 document.getElementById("btn-submit").setAttribute("disabled", true);
@@ -108,7 +110,7 @@
             function addPlatform() {
                 var str = "";
                 var pl = "";
-                <#if msg??>pl="${msg.platform}"</#if>
+                <#if msg??>pl="${msg.platform?c}"</#if>
                 for(var i = 0; i < platform.length; i++){
                     if(pl!=""&&platform[i].platformValue==pl){
                         str += "<option value='" + platform[i].platformValue + "' selected='selected'>" + platform[i].platformName + "</option>";

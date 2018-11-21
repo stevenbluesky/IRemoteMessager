@@ -55,6 +55,7 @@ public abstract class MethodDecisionBase implements IMessageMethodDecision
 			pnd.setAliaseslist(new ArrayList<>());
 			pnd.setAndroidbundlerid(ns.getBuilder_id());
 			pnd.setIossound(ns.getSound());
+			pnd.setLanguage(mu.getLanguage());
 			lst.add(pnd);
 		}
 		

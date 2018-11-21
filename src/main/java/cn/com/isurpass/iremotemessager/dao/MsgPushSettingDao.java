@@ -30,4 +30,10 @@ public interface MsgPushSettingDao extends CrudRepository<MsgPushSetting, Intege
     long countByMsgEventGroupIn(List<MsgEventGroup> eventgroup);
 
     List<MsgPushSetting> findByMsgEventGroupIn(List<MsgEventGroup> eventgroup, Pageable pageable);
+
+    void deleteByMsgpushsettingid(int id);
+
+    MsgPushSetting findByMsgpushsettingid(Integer msgpushsettingid);
+
+    MsgPushSetting findByPlatformAndMsgEventGroup(Integer platform, MsgEventGroup eventgroup);
 }

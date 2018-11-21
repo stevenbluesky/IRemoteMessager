@@ -14,8 +14,8 @@ public class MsgProcessClassService {
     @Resource
     private MsgProcessClassDao msgProcessClassDao;
 
-    public Map<Integer, String> listProcessClass(Integer type, Integer subType) {
-        HashMap<Integer, String> processClassMap = new HashMap<>();
+    public Map<String, String> listProcessClass(Integer type, Integer subType) {
+        HashMap<String, String> processClassMap = new HashMap<>();
         List<MsgProcessClass> processClassList;
         if (subType != null) {
             processClassList = msgProcessClassDao.findByTypeAndSubtype(type, subType);
@@ -24,7 +24,7 @@ public class MsgProcessClassService {
         }
 
         for (MsgProcessClass msgProcessClass : processClassList) {
-            processClassMap.put(msgProcessClass.getMsgprocessclassid(), msgProcessClass.getName());
+            processClassMap.put(String.valueOf(msgProcessClass.getName()),String.valueOf(msgProcessClass.getMsgprocessclassid()));
         }
 
         return processClassMap;

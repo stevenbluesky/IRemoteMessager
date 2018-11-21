@@ -9,4 +9,6 @@ public interface MsgProcessClassDao extends CrudRepository<MsgProcessClass, Inte
     List<MsgProcessClass> findByType(Integer type);
 
     List<MsgProcessClass> findByTypeAndSubtype(Integer type, Integer subtype);
+
+    MsgProcessClass findByMsgprocessclassid(int parseInt);
 }

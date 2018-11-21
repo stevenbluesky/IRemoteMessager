@@ -13,8 +13,10 @@ import java.util.List;
 public class MailSender implements IMessageSender<MailData>{
     @Override
     public List<SendResult> send(EventData data, MailData targetdata) {
+        new Thread(() -> {
+            EmailUtils.sendEmail(targetdata.getMails(), targetdata.getMailtitle(), targetdata.getMailcontent());
+        }).start();
 
-        EmailUtils.sendEmail(targetdata.getMails(), targetdata.getMailtitle(), targetdata.getMailcontent());
         return null;
     }
 }

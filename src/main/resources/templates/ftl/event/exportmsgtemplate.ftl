@@ -41,8 +41,11 @@
         addLanguage();
     });
     $("#btn-submit").click(function (e) {
-        document.getElementById("btn-submit").setAttribute("disabled", true);
-        $.ajax({
+        //document.getElementById("btn-submit").setAttribute("disabled", true);
+        var platform = $("#platform").val();
+        var language = $("#language").val();
+        window.location.href="../event/exportmessagetemplate?platform="+platform+"&language="+language;
+/*        $.ajax({
             type: "POST",
             dataType: "html",
             url: "../event/exportmessagetemplate",
@@ -60,7 +63,7 @@
             error: function (data) {
                 spop({template: '导出失败！', position: 'top-center', style: 'error', autoclose: 2000});
             }
-        });
+        });*/
     });
     function addPlatform() {
         var str = "";
