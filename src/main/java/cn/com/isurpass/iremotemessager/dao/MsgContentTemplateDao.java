@@ -2,6 +2,7 @@ package cn.com.isurpass.iremotemessager.dao;
 
 import java.util.List;
 
+import cn.com.isurpass.iremotemessager.domain.MsgEventType;
 import cn.com.isurpass.iremotemessager.vo.MessageTemplateVo;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
@@ -23,4 +24,6 @@ public interface MsgContentTemplateDao extends CrudRepository<MsgContentTemplate
     List<MsgContentTemplate> findByPlatformAndLanguage(Integer platform, String language);
 
     List<MsgContentTemplate> findByEventcodeAndPlatformAndLanguageInAndType(String s, int parseInt, String s1, int parseInt1);
+
+    MsgContentTemplate findByPlatformAndMsgEventTypeAndLanguageAndType(Integer platform, MsgEventType event, String language, Integer type);
 }

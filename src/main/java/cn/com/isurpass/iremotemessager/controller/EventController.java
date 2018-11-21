@@ -223,7 +223,10 @@ public class EventController {
             return new JsonResult(-1, "消息模板不能为空！");
         }
         try {
-            eventtypeservice.updatemsgdata(msgvo);
+            int result = eventtypeservice.updatemsgdata(msgvo);
+            if(result==-1){
+                return new JsonResult(-1, "事件+厂商+语言+类型不唯一！");
+            }
             return new JsonResult(1, "修改成功！");
         } catch (Exception e) {
             return new JsonResult(-1, "修改失败！");
@@ -253,7 +256,10 @@ public class EventController {
             return new JsonResult(-1, "模板内容不能为空！");
         }
         try {
-            eventtypeservice.addmsgtemplatedata(messagetemplatevo);
+            int result = eventtypeservice.addmsgtemplatedata(messagetemplatevo);
+            if(result==-1){
+                return new JsonResult(-1, "事件+厂商+语言+类型不唯一！");
+            }
             return new JsonResult(1, "新增成功！");
         } catch (Exception e) {
             return new JsonResult(-1, "新增失败！");
