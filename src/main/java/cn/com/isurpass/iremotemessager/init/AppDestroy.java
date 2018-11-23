@@ -1,5 +1,6 @@
 package cn.com.isurpass.iremotemessager.init;
 
+import cn.com.isurpass.iremotemessager.jms.JMSUtil;
 import cn.com.isurpass.iremotemessager.jms.JSMTaskManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,5 +17,6 @@ public class AppDestroy{
         log.info("destroy");
 
         JSMTaskManager.shutdown();
+        JMSUtil.close();
     }
 }

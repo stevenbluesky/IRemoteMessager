@@ -1,6 +1,10 @@
 package cn.com.isurpass.iremotemessager.controller;
 
 import cn.com.isurpass.iremotemessager.domain.PhoneUser;
+import cn.com.isurpass.iremotemessager.framework.EventProcessor;
+import cn.com.isurpass.iremotemessager.init.AppInit;
+import cn.com.isurpass.iremotemessager.jms.JMSUtil;
+import cn.com.isurpass.iremotemessager.jms.TextMessageBaseListener;
 import cn.com.isurpass.iremotemessager.service.PhoneUserAttributeService;
 import cn.com.isurpass.iremotemessager.service.PhoneUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
+import javax.jms.JMSException;
+import javax.jms.MessageConsumer;
+import javax.jms.Topic;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 
 /**
  * @author liwenxiang
@@ -22,6 +31,9 @@ public class IndexController {
     private PhoneUserService pus;
     @Autowired
     private PhoneUserAttributeService puas;
+    @Autowired
+    private AppInit appInit;
+
     @RequestMapping(value = "/index")
     public ModelAndView toDemo(ModelAndView mv) {
         mv.setViewName("index");
@@ -62,5 +74,12 @@ public class IndexController {
     public String logout(HttpServletRequest request){
         request.getSession().removeAttribute("person");
         return "login";
+    }
+
+    @RequestMapping("jms/consumer/regist")
+    @ResponseBody
+    public String registJmsConsumer(String topic){
+        JMSUtil.regist(Arrays.asList(topic));
+        return "registed";
     }
 }

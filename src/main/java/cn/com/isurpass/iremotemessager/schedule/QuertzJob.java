@@ -1,17 +1,10 @@
 package cn.com.isurpass.iremotemessager.schedule;
 
 
-import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
-import cn.com.isurpass.iremotemessager.jms.JMSUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.*;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
-
-import javax.annotation.Resource;
 
 @Component
 public class QuertzJob implements Job {
@@ -52,7 +45,7 @@ public class QuertzJob implements Job {
         }
         finally
         {
-            JMSUtil.commitmessage();
+//            JMSUtil.commitmessage();
         }
 
     }
