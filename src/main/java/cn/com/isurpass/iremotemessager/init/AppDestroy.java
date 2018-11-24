@@ -14,7 +14,9 @@ public class AppDestroy{
 
     @PreDestroy
     public void destroy() throws Exception {
-        log.info("destroy");
+        if (log.isInfoEnabled()) {
+            log.info(String.format("destroy"));
+        }
 
         JSMTaskManager.shutdown();
         JMSUtil.close();

@@ -5,6 +5,7 @@ import cn.com.isurpass.iremotemessager.dao.MsgContentTemplateDao;
 import cn.com.isurpass.iremotemessager.dao.MsgEventTypeDao;
 import cn.com.isurpass.iremotemessager.domain.MsgContentTemplate;
 import cn.com.isurpass.iremotemessager.domain.MsgEventType;
+import cn.com.isurpass.iremotemessager.jms.JMSUtil;
 import cn.com.isurpass.iremotemessager.vo.EventtypeVo;
 import cn.com.isurpass.iremotemessager.vo.ExportMessageTemplateVo;
 import cn.com.isurpass.iremotemessager.vo.MessageTemplateVo;
@@ -43,6 +44,8 @@ public class EventTypeService {
         msgEventType.setCreatetime(new Date());
 
         eventtypedao.save(msgEventType);
+
+        JMSUtil.regist(Arrays.asList(eventtype.getEventcode()));
     }
 
     public Map<String, Object> listEventType(Pageable pageable , EventtypeVo eventtype){
@@ -204,11 +207,14 @@ public class EventTypeService {
             if(datalist == null||datalist.size()==0){
                 return false;
             }
+
+            ArrayList<String> eventCodeList = new ArrayList<>();
             for(List l : datalist){
+                String eventCode;
                 MsgContentTemplate m = new MsgContentTemplate();
                 m.setPlatform(Integer.parseInt((String) l.get(0)));
                 m.setMsgEventType(eventtypedao.findByEventcode((String) l.get(2)));
-                m.setEventcode((String) l.get(2));
+                m.setEventcode(eventCode = (String) l.get(2));
                 m.setLanguage((String) l.get(3));
                 m.setType(Integer.parseInt((String) l.get(4)));
                 m.setContenttemplate((String) l.get(5));
@@ -219,7 +225,10 @@ public class EventTypeService {
                     continue;
                 }
                 msgdao.save(m);
+                eventCodeList.add(eventCode);
             }
+
+            JMSUtil.regist(eventCodeList);
         } catch (IOException e) {
             e.printStackTrace();
             return false;

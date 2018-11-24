@@ -75,11 +75,4 @@ public class IndexController {
         request.getSession().removeAttribute("person");
         return "login";
     }
-
-    @RequestMapping("jms/consumer/regist")
-    @ResponseBody
-    public String registJmsConsumer(String topic){
-        JMSUtil.regist(Arrays.asList(topic));
-        return "registed";
-    }
 }
