@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
@@ -36,17 +37,20 @@ public class TextMessageBaseListener implements MessageListener {
 		try
 		{
 			TextMessage tm = (TextMessage) message;
-
-			log.info(tm.getText());
-
-			if ( log.isInfoEnabled())
-			{
-				log.info(cls.getName());
+			if ( log.isInfoEnabled()){
 				log.info(tm.getText());
 			}
-			JSONObject json = JSON.parseObject(tm.getText());
+
+			JSONObject json;
+			try {
+				json = JSON.parseObject(tm.getText());
+			} catch (JMSException e) {
+				return;
+			}
 			if (!json.containsKey(TYPE) || !json.containsKey(PLATFORM)) {
-				log.info("type or platform is null: "+tm.getText());
+				if (log.isInfoEnabled()) {
+					log.info("type or platform is null: "+tm.getText());
+				}
 				return;
 			}
 
@@ -58,7 +62,6 @@ public class TextMessageBaseListener implements MessageListener {
 			EventProcessor eventProcessor = SpringUtil.getBean(cls);
 
 			eventProcessor.setEventdata(eventData);
-//			ITextMessageProcessor pro = JSON.parseObject(tm.getText(), cls);
 
 			String key = json.getString(DEVICE_ID);
 			if ( key == null || key.length() == 0 )

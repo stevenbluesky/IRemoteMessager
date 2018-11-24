@@ -33,7 +33,7 @@ public class TaskWrap implements Runnable {
 			catch(Throwable t1){};
 		}
 
-		JMSUtil.commitmessage();
+//		JMSUtil.commitmessage();
 		ThreadNameHelper.clearThreadname();
 	}
 

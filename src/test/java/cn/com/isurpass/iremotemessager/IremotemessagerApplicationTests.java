@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
@@ -126,5 +127,12 @@ public class IremotemessagerApplicationTests {
 //        msgPushSettingDao.delete(msgPushSetting);
             msgPushSettingDao.deleteById(1);
 //            msgEventGroupDao.deleteById(2);
+    }
+
+    @Test
+    public void testThread(){
+        new Thread(() -> {
+            System.out.println(msgEventGroupDao);
+        }).start();
     }
 }

@@ -1,9 +1,13 @@
 package cn.com.isurpass.iremotemessager.sender;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import cn.com.isurpass.iremotemessager.SpringUtil;
 import cn.com.isurpass.iremotemessager.common.util.AES;
+import cn.com.isurpass.iremotemessager.domain.OemProductor;
+import cn.com.isurpass.iremotemessager.service.OemProductorService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,6 +28,19 @@ public class PushMessage
 	private static Map<Integer, JPushClient[]> jpushmap = new ConcurrentHashMap<Integer, JPushClient[]>();
 	private static JPushClient iSurpassPushClent = new JPushClient("29263ccfdb548afedbc0cdda",
 										"df1a7eaf85c6bba7c9fd5d3b");
+
+	public static void initPushClient(){
+		if (log.isInfoEnabled()) {
+			log.info("init JPush...");
+		}
+
+		Iterable<OemProductor> productIterable = SpringUtil.getBean(OemProductorService.class).listOemPushKey();
+		Iterator<OemProductor> iterator = productIterable.iterator();
+		while (iterator.hasNext()) {
+			OemProductor product = iterator.next();
+			PushMessage.initPushClient(product.getPlatform(), product.getPushmasterkey(), product.getPushappkey());
+		}
+	}
 
 	public static void initPushClient(int platform, String masterkey, String appkey)
 	{
