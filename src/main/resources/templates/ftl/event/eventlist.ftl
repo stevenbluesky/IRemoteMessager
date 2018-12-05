@@ -6,20 +6,20 @@
           <hr>
           <form id="searchForm" class="form-horizontal" method="POST" >
               <div class="form-group">
-                  <div class="col-md-5">
-                      <label class="col-md-4  control-label">事件名称</label>
-                      <div class="col-md-8">
+                  <div class="col-xs-5 col-sm-5 col-md-5">
+                      <label class="col-xs-4 col-sm-4 col-md-4  control-label">事件名称</label>
+                      <div class="col-xs-8 col-sm-8 col-md-8">
                           <input type="text" class="form-control" id="searcheventname" name="searcheventname" placeholder="事件名称" >
                       </div>
                   </div>
-                  <div class="col-md-5">
-                      <label class="col-md-4 control-label">事件代码</label>
-                      <div class="col-md-8">
+                  <div class="col-xs-5 col-sm-5 col-md-5">
+                      <label class="col-xs-4 col-sm-4 col-md-4 control-label">事件代码</label>
+                      <div class="col-xs-8 col-sm-8 col-md-8">
                           <input type="text" class="form-control" id="searcheventcode" name="searcheventcode" placeholder="事件代码" >
                       </div>
                   </div>
-                  <div class="col-md-2" align="right">
-                      <div class="col-md-12">
+                  <div class="col-xs-2 col-sm-2 col-md-2" align="right">
+                      <div class="col-xs-12 col-sm-12 col-md-12">
                           <button type="button" id="searchsubmit" class="btn btn-default"
                                   style="width:100%;">查询</button>
                       </div>

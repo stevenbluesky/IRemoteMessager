@@ -164,7 +164,7 @@ public class MsgEventGroupService {
             }
         }
         List<EventtypeVo> resultlist = new ArrayList<>();
-        for(MsgEventType m : alllist){
+/*        for(MsgEventType m : alllist){
             EventtypeVo event = new EventtypeVo();
             event.setMsgeventtypeid(m.getMsgeventtypeid());
             event.setEventname(m.getEventtypename());
@@ -172,11 +172,26 @@ public class MsgEventGroupService {
             event.setDescription(m.getDecription());
             event.setCreatetime(m.getCreatetime());
             resultlist.add(event);
+            if(resultlist.size()<=pageable.getPageSize()&&){
+
+            }
+        }*/
+        for(int i=0;i<alllist.size();i++){
+            int i1 = pageable.getPageNumber() * pageable.getPageSize();
+            if(resultlist.size()<=pageable.getPageSize()&&i>= i1 &&i<i1+pageable.getPageSize()){
+                EventtypeVo event = new EventtypeVo();
+                event.setMsgeventtypeid(alllist.get(i).getMsgeventtypeid());
+                event.setEventname(alllist.get(i).getEventtypename());
+                event.setEventcode(alllist.get(i).getEventcode());
+                event.setDescription(alllist.get(i).getDecription());
+                event.setCreatetime(alllist.get(i).getCreatetime());
+                resultlist.add(event);
+            }
         }
         Map<String, Object> map = new HashMap<>();
-        map.put("total",resultlist.size());
+        map.put("total",alllist.size());
         map.put("rows", resultlist);
-        return map;
+        return map;//TODO 添加事件组事件时所有未选事件都列出来了  页数从0开始
     }
 
     public void addEventGroupEventToGroup(String[] ids, Integer msgeventgroupid) {

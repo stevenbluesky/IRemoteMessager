@@ -5,20 +5,20 @@
           <div class="text-center"><h1>消息模板</h1></div>
           <hr>
               <div class="form-group">
-                  <div class="col-md-1"></div>
-                  <div class="col-md-5">
-                      <label class="col-md-4  control-label">事件名称：</label>
-                      <div class="col-md-8">
+                  <div class="col-xs-1 col-sm-1 col-md-1"></div>
+                  <div class="col-xs-5 col-sm-5 col-md-5">
+                      <label class="col-xs-4 col-sm-4 col-md-4  control-label">事件名称：</label>
+                      <div class="col-xs-8 col-sm-8 col-md-8">
                           <#if event??&&event.eventtypename??>${event.eventtypename}</#if>
                       </div>
                   </div>
-                  <div class="col-md-5">
-                      <label class="col-md-4 control-label">事件代码：</label>
-                      <div class="col-md-8">
+                  <div class="col-xs-5 col-sm-5 col-md-5">
+                      <label class="col-xs-4 col-sm-4 col-md-4 control-label">事件代码：</label>
+                      <div class="col-xs-8 col-sm-8 col-md-8">
                             <#if event??&&event.eventcode??>${event.eventcode}</#if>
                       </div>
                   </div>
-                  <div class="col-md-1"></div>
+                  <div class="col-xs-1 col-sm-1 col-md-1"></div>
               </div>
       </div>
       <hr>
