@@ -5,27 +5,27 @@
             <form id="defaultForm" class="form-horizontal">
                 <div class="text-center"><h1>修改事件</h1></div>
                 <hr>
-                <div class="col-sm-12">
+                <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group" align="right">
-                        <label for="eventname"  class="col-sm-4 control-label">事件名称*</label>
-                        <div class="col-sm-5">
+                        <label for="eventname"  class="col-xs-4 col-sm-4 col-md-4 control-label">事件名称*</label>
+                        <div class="col-xs-5 col-sm-5 col-md-5">
                             <input type="hidden" name="msgeventtypeid" <#if event??>value="${event.msgeventtypeid?c}"</#if>>
                             <input type="text" class="form-control" id="eventname" name="eventname" <#if event??>value="${event.eventtypename}"</#if> placeholder="事件名称">
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group" align="right">
-                        <label for="eventcode"  class="col-sm-4 control-label">事件代码*</label>
-                        <div class="col-sm-5">
+                        <label for="eventcode"  class="col-xs-4 col-sm-4 col-md-4 control-label">事件代码*</label>
+                        <div class="col-xs-5 col-sm-5 col-md-5">
                             <input type="text" class="form-control" id="eventcode" name="eventcode" <#if event??>value="${event.eventcode}"</#if> placeholder="事件代码">
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group" align="right">
-                        <label for="description"  class="col-sm-4 control-label">说明&nbsp;&nbsp;</label>
-                        <div class="col-sm-5">
+                        <label for="description"  class="col-xs-4 col-sm-4 col-md-4 control-label">说明&nbsp;&nbsp;</label>
+                        <div class="col-xs-5 col-sm-5 col-md-5">
                             <input type="text" class="form-control" id="description" name="description" <#if event??&&event.decription??>value="${event.decription}"</#if> placeholder="说明">
                         </div>
                     </div>
@@ -36,14 +36,14 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-3" align="right">
+                    <div class="col-xs-2 col-sm-2 col-md-2"></div>
+                    <div class="col-xs-3 col-sm-3 col-md-3" align="right">
                         <button id="btn-submit" class="btn btn-default" style="width:30%">确定</button>
                     </div>
-                    <div class="col-sm-3" align="right">
+                    <div class="col-xs-3 col-sm-3 col-md-3" align="right">
                         <button id="btn-cancel" class="btn btn-default" style="width:30%">取消</button>
                     </div>
-                    <div class="col-sm-4"></div>
+                    <div class="col-xs-4 col-sm-4 col-md-4"></div>
                 </div>
             </form>
     </div>

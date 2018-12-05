@@ -32,7 +32,6 @@
                 <input type="button" id="login-button" value="登 录" >
                 <div class="clear">  </div>
             </div>
-
         </form>
     </div>
 </div>

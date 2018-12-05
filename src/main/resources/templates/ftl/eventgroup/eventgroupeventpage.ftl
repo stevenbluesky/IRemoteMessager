@@ -5,20 +5,20 @@
           <div class="text-center"><h1>事件组事件</h1></div>
           <hr>
               <div class="form-group">
-                  <div class="col-md-3"></div>
-                  <div class="col-md-3">
-                      <label class="col-md-5  control-label">厂商：</label>
-                      <div class="col-md-7">
+                  <div class="col-xs-3 col-sm-3 col-md-3"></div>
+                  <div class="col-xs-3 col-sm-3 col-md-3">
+                      <label class="col-xs-5 col-sm-5 col-md-5  control-label">厂商：</label>
+                      <div class="col-xs-7 col-sm-7 col-md-7">
                           <span id="platform"></span>
                       </div>
                   </div>
-                  <div class="col-md-5">
-                      <label class="col-md-4 control-label">事件组：</label>
-                      <div class="col-md-8">
+                  <div class="col-xs-5 col-sm-5 col-md-5">
+                      <label class="col-xs-4 col-sm-4 col-md-4 control-label">事件组：</label>
+                      <div class="col-xs-8 col-sm-8 col-md-8">
                             <#if eventgroup??&&eventgroup.eventgroupname??>${eventgroup.eventgroupname}</#if>
                       </div>
                   </div>
-                  <div class="col-md-1"></div>
+                  <div class="col-xs-1 col-sm-1 col-md-1"></div>
               </div>
       </div>
       <hr>

@@ -20,6 +20,18 @@
         }
     </style>
     <script>
+        $(document).ready(function() {
+            var obj = document.getElementById("framediv");
+            obj.style.cssText="height:"+($(window).height()-50)+"px;overflow: hidden;z-index: 999;";
+            /*alert($(window).height()); //浏览器当前窗口可视区域高度
+            alert($(document).height()); //浏览器当前窗口文档的高度
+            alert($(document.body).height());//浏览器当前窗口文档body的高度
+            alert($(document.body).outerHeight(true));//浏览器当前窗口文档body的总高度 包括border padding margin
+            alert($(window).width()); //浏览器当前窗口可视区域宽度
+            alert($(document).width());//浏览器当前窗口文档对象宽度
+            alert($(document.body).width());//浏览器当前窗口文档body的宽度
+            alert($(document.body).outerWidth(true));//浏览器当前窗口文档body的总宽度 包括border padding margin*/
+        })
         $(function() {
             $('#treeview12').treeview({data: getTree()});
             $('#treeview12').on('nodeSelected', function(event, data) {
@@ -72,8 +84,8 @@
             </div>
         </div>
     </div>
-
-    <div class="col-xs-10 col-sm-10 col-md-10" style="height: 800px;overflow: hidden;z-index: 999;">
+<#--height: 800px;-->
+    <div class="col-xs-10 col-sm-10 col-md-10" id="framediv" >
         <iframe class="" id="right" name="right" frameborder="0" src="pushsetting/pushsettinglistpage"
                 style="height: 100%;width: 100%;overflow-x: hidden;" ></iframe>
     </div>
