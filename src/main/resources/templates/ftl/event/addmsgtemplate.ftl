@@ -1,7 +1,6 @@
 <#include "../_head0.ftl"/>
-<div class="col-md-1"></div>
     <div class="row-horizontal">
-        <div class="col-md-10">
+        <div class="col-md-11">
             <div class="row">
                 <div class="text-center"><h1>新增消息模板</h1></div>
                 <hr>
@@ -30,7 +29,7 @@
                         <label for="platform"  class="col-xs-4 col-sm-4 col-md-4 control-label">厂商*</label>
                         <div class="col-xs-5 col-sm-5 col-md-5">
                             <input type="hidden" name="msgeventtypeid" <#if event??>value="${event.msgeventtypeid?c}"</#if>>
-                            <select name="platform" class="col-xs-12 col-sm-12 col-md-12 form-control" id="platform">
+                            <select name="platform" class="col-xs-12 col-sm-12 selectpicker col-md-12 form-control" data-live-search="true" id="platform">
 
                             </select>
                         </div>
@@ -40,7 +39,7 @@
                     <div  class="form-group" align="right">
                         <label for="language"  class="col-xs-4 col-sm-4 col-md-4 control-label">语言*</label>
                         <div class="col-xs-5 col-sm-5 col-md-5">
-                            <select name="language" class="col-xs-12 col-sm-12 col-md-12 form-control" id="language">
+                            <select name="language" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true" id="language">
 
                             </select>
                         </div>
@@ -50,7 +49,7 @@
                     <div  class="form-group" align="right">
                         <label for="type"  class="col-xs-4 col-sm-4 col-md-4 control-label">类型*</label>
                         <div class="col-xs-5 col-sm-5 col-sm-5">
-                            <select name="type" class="col-xs-12 col-sm-12 col-md-12 form-control" id="type">
+                            <select name="type" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true" id="type">
 
                             </select>
                         </div>
@@ -118,6 +117,7 @@
                     str += "<option value='" + platform[i].platformValue +"'>" + platform[i].platformName + "</option>";
                 }
                 $("#platform").append(str);
+                $("#platform").selectpicker('refresh');
             }
 
             function addLanguage() {
@@ -126,6 +126,7 @@
                     str += "<option value='" + language[i].languageValue +"'>" + language[i].languageName + "</option>";
                 }
                 $("#language").append(str);
+                $("#language").selectpicker('refresh');
             }
 
             function addType() {
@@ -134,5 +135,6 @@
                     str += "<option value='" + type[i].typeValue +"'>" + type[i].typeName + "</option>";
                 }
                 $("#type").append(str);
+                $("#type").selectpicker('refresh');
             }
         </script>

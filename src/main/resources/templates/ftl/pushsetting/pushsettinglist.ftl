@@ -1,6 +1,5 @@
 <#include "../_head0.ftl"/>
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
+    <div class="col-md-12">
       <div class="row">
           <div class="text-center"><h1>消息推送设置列表</h1></div>
           <hr>
@@ -9,7 +8,7 @@
                   <div class="col-xs-5 col-sm-5 col-md-5">
                       <label class="col-xs-4 col-sm-4 col-md-4  control-label" >厂商</label>
                       <div class="col-xs-8 col-sm-8 col-md-8">
-                          <select name="searchplatform" class="col-xs-12 col-sm-12 col-md-12 form-control" id="searchplatform">
+                          <select name="searchplatform" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true" id="searchplatform">
 
                           </select>
                       </div>
@@ -52,7 +51,6 @@
         </thead>
     </table>
       </div>
-        <div class="col-md-1"></div>
     </div>
 
     <script type="text/javascript">
@@ -193,6 +191,7 @@
                 str += "<option value='" + platform[i].platformValue +"'>" + platform[i].platformName + "</option>";
             }
             $("#searchplatform").append(str);
+            $("#searchplatform").selectpicker('refresh');
         }
     </script>
 <#include "../modal.ftl"/>

@@ -18,6 +18,7 @@
     <link href="../static/css/bootstrapValidator.min.css" rel="stylesheet">
     <link href="../static/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 
+    <script src="../static/js/formatter.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
     <script src="../static/js/bootstrapValidator.min.js"></script>
     <script src="../static/js/bootstrap-datetimepicker.min.js"></script>
@@ -29,7 +30,7 @@
     <script src="../static/js/html5shiv.min.js"></script>
     <script src="../static/js/respond.min.js"></script>
     <![endif]-->
-    <script src="../static/js/formatter.js"></script>
+
     <style type="text/css">
         .form-group > div {
             margin-bottom: 10px;

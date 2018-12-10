@@ -1,9 +1,8 @@
 <#include "../_head0.ftl"/>
 <script src="../static/js/fileinput.js"></script>
 <link href="../static/css/fileinput.css" rel="stylesheet">
-<div class="col-md-1"></div>
     <div class="row-horizontal">
-        <div class="col-md-10">
+        <div class="col-md-11">
             <div class="text-center"><h1>导入消息模板</h1></div>
             <form id="defaultForm" class="form-horizontal" action="../event/importmsgtemplatefile" method="POST" enctype="multipart/form-data">
                 <hr>
@@ -11,7 +10,7 @@
                     <div  class="form-group" align="right" id="platformtr">
                         <label for="platform"  class="col-xs-4 col-sm-4 col-md-4 control-label">厂商*</label>
                         <div class="col-xs-5 col-sm-5 col-md-5">
-                            <select name="platform" class="col-xs-12 col-sm-12 col-md-12 form-control" id="platform">
+                            <select name="platform" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true" id="platform">
 
                             </select>
                         </div>
@@ -75,5 +74,6 @@
                     str += "<option value='" + platform[i].platformValue + "'>" + platform[i].platformName + "</option>";
                 }
                 $("#platform").append(str);
+                $("#platform").selectpicker('refresh');
             }
         </script>

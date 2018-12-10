@@ -1,6 +1,5 @@
 <#include "../_head0.ftl"/>
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
+    <div class="col-md-12">
       <div class="row">
           <div class="text-center"><h1>消息模板</h1></div>
           <hr>
@@ -42,7 +41,6 @@
         </thead>
     </table>
     </div>
-    <div class="col-md-1"></div>
 
     <script type="text/javascript">
         var url = "../event/showmessagetemplatelist";

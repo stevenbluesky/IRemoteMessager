@@ -1,6 +1,5 @@
 <#include "../_head0.ftl"/>
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
+    <div class="col-md-12">
       <div class="row">
           <div class="text-center"><h1>事件定义列表</h1></div>
           <hr>
@@ -24,7 +23,6 @@
                                   style="width:100%;">查询</button>
                       </div>
                   </div>
-
           </form>
       </div>
     </div>
@@ -54,7 +52,6 @@
         </thead>
     </table>
       </div>
-        <div class="col-md-1"></div>
     </div>
 
     <script type="text/javascript">
@@ -179,7 +176,7 @@
             $.confirm({
                 title: '确认',
                 content: '确定执行删除操作吗？',
-                //type: 'green',
+                type: 'blue',
                 icon: 'glyphicon glyphicon-question-sign',
                 buttons: {
                     ok: {
