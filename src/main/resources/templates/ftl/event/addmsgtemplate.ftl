@@ -6,61 +6,61 @@
                 <div class="text-center"><h1>新增消息模板</h1></div>
                 <hr>
                 <div class="form-group">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4">
-                        <label class="col-md-5  control-label">事件名称：</label>
-                        <div class="col-md-7">
+                    <div class="col-xs-2 col-sm-2 col-md-2"></div>
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <label class="col-xs-5 col-sm-5 col-md-5  control-label">事件名称：</label>
+                        <div class="col-xs-7 col-sm-7 col-md-7">
                           <#if event??&&event.eventtypename??>${event.eventtypename}</#if>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <label class="col-md-5 control-label">事件代码：</label>
-                        <div class="col-md-7">
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <label class="col-xs-5 col-sm-5 col-md-5 control-label">事件代码：</label>
+                        <div class="col-xs-7 col-sm-7 col-md-7">
                             <#if event??&&event.eventcode??>${event.eventcode}</#if>
                         </div>
                     </div>
-                    <div class="col-md-2"></div>
+                    <div class="col-xs-2 col-sm-2 col-md-2"></div>
                 </div>
 
             </div>
             <form id="defaultForm" class="form-horizontal" method="POST">
                 <hr>
-                <div class="col-sm-12">
+                <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group" align="right">
-                        <label for="platform"  class="col-sm-4 control-label">厂商*</label>
-                        <div class="col-sm-5">
+                        <label for="platform"  class="col-xs-4 col-sm-4 col-md-4 control-label">厂商*</label>
+                        <div class="col-xs-5 col-sm-5 col-md-5">
                             <input type="hidden" name="msgeventtypeid" <#if event??>value="${event.msgeventtypeid?c}"</#if>>
-                            <select name="platform" class="col-md-12 form-control" id="platform">
+                            <select name="platform" class="col-xs-12 col-sm-12 col-md-12 form-control" id="platform">
 
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group" align="right">
-                        <label for="language"  class="col-sm-4 control-label">语言*</label>
-                        <div class="col-sm-5">
-                            <select name="language" class="col-md-12 form-control" id="language">
+                        <label for="language"  class="col-xs-4 col-sm-4 col-md-4 control-label">语言*</label>
+                        <div class="col-xs-5 col-sm-5 col-md-5">
+                            <select name="language" class="col-xs-12 col-sm-12 col-md-12 form-control" id="language">
 
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group" align="right">
-                        <label for="type"  class="col-sm-4 control-label">类型*</label>
-                        <div class="col-sm-5">
-                            <select name="type" class="col-md-12 form-control" id="type">
+                        <label for="type"  class="col-xs-4 col-sm-4 col-md-4 control-label">类型*</label>
+                        <div class="col-xs-5 col-sm-5 col-sm-5">
+                            <select name="type" class="col-xs-12 col-sm-12 col-md-12 form-control" id="type">
 
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group" align="right">
-                        <label for="description"  class="col-sm-4 control-label">模板*</label>
-                        <div class="col-sm-5">
-                            <textarea class="col-md-12 form-control" name="contenttemplate" id="contenttemplate"></textarea>
+                        <label for="description"  class="col-xs-4 col-sm-4 col-md-4 control-label">模板*</label>
+                        <div class="col-xs-5 col-sm-5 col-md-5">
+                            <textarea class="col-xs-12 col-sm-12 col-md-12 form-control" name="contenttemplate" id="contenttemplate"></textarea>
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                 </div>
             </form>
             <div class="row">
-                <div class="col-sm-12" align="center">
+                <div class="col-xs-12 col-sm-12 col-md-12" align="center">
                     <button id="btn-submit" class="btn btn-default"
                             style="width:20%">确定</button>
                 </div>

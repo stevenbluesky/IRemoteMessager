@@ -5,21 +5,21 @@
             <div class="text-center"><h1>导出消息模板</h1></div>
             <form id="defaultForm" class="form-horizontal" method="POST">
                 <hr>
-                <div class="col-sm-12">
+                <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group">
-                        <label for="platform"  class="col-sm-4 control-label" style="text-align: right;">厂商*</label>
-                        <div class="col-sm-5">
-                            <select name="platform" class="col-md-12 form-control" id="platform">
+                        <label for="platform"  class="col-xs-4 col-sm-4 col-md-4 control-label" style="text-align: right;">厂商*</label>
+                        <div class="col-xs-5 col-sm-5 col-md-5">
+                            <select name="platform" class="col-xs-12 col-sm-12 col-md-12 form-control" id="platform">
 
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group" align="right">
-                        <label for="language"  class="col-sm-4 control-label">语言*</label>
-                        <div class="col-sm-5">
-                            <select name="language" class="col-md-12 form-control" id="language">
+                        <label for="language"  class="col-xs-4 col-sm-4 col-md-4 control-label">语言*</label>
+                        <div class="col-xs-5 col-sm-5 col-sm-5">
+                            <select name="language" class="col-xs-12 col-sm-12 col-md-12 form-control" id="language">
 
                             </select>
                         </div>
@@ -27,7 +27,7 @@
                 </div>
             </form>
             <div class="row">
-                <div class="col-sm-12" align="center">
+                <div class="col-xs-12 col-sm-12 col-md-12" align="center">
                     <button id="btn-submit" class="btn btn-default"
                             style="width:20%">导出</button>
                 </div>

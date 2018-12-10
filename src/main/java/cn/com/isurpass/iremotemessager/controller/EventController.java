@@ -110,10 +110,11 @@ public class EventController {
     }
 
     @RequestMapping(value = "/exportmessagetemplate")
-    public void exportMessageTemplate(MessageTemplateVo msgvo, HttpServletRequest request, HttpServletResponse response) {
+    @ResponseBody
+    public String exportMessageTemplate(MessageTemplateVo msgvo, HttpServletRequest request, HttpServletResponse response) {
         List<ExportMessageTemplateVo> dataset = eventtypeservice.exportMessageTemplate(msgvo);
         if(dataset==null||dataset.size()==0){
-            return ;
+            return "无数据！";
         }
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
         String sheetName = "消息模板_"+msgvo.getPlatform()+"_"+msgvo.getLanguage();
@@ -126,7 +127,7 @@ public class EventController {
             HSSFWorkbook wb = new ExportExcelUtil().ExportNoResponse(sheetName, titleName, fileName, columnNumber, columnWidth, columnName, dataset);
             //HSSFWorkbook wb = new ExportExcelUtil().ExportWithResponse(sheetName, titleName, fileName, columnNumber, columnWidth, columnName, dataset, response);
             if(wb==null){
-                return ;
+                return "系统错误！";
             }
             this.setResponseHeader(response, fileName);
             OutputStream os = response.getOutputStream();
@@ -136,6 +137,7 @@ public class EventController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return "导出成功！";
     }
     //发送响应流方法
     public void setResponseHeader(HttpServletResponse response, String fileName) {

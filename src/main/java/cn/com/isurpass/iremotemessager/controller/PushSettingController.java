@@ -6,7 +6,7 @@ import cn.com.isurpass.iremotemessager.service.MsgEventGroupService;
 import cn.com.isurpass.iremotemessager.service.MsgProcessClassService;
 import cn.com.isurpass.iremotemessager.service.MsgPushSettingService;
 import cn.com.isurpass.iremotemessager.vo.PushSettingVo;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -60,14 +60,14 @@ public class PushSettingController {
     @ResponseBody
     public String listEventGroup(Integer platform) {
         Map<String, String> stringStringMap = msgEventGroupService.listAllEventGroup(platform);
-        return JSONObject.toJSONString(stringStringMap);
+        return JSON.toJSONString(stringStringMap);
     }
 
     @RequestMapping("listprocessorclassbytype")
     @ResponseBody
     public String listProcessorClassByType(Integer type, Integer subType){
         Map<String, String> stringStringMap = msgProcessClassService.listProcessClass(type, subType);
-        return JSONObject.toJSONString(stringStringMap);
+        return JSON.toJSONString(stringStringMap);
     }
     //deletepushsettings
     @RequestMapping(value = "/deletepushsettings")
