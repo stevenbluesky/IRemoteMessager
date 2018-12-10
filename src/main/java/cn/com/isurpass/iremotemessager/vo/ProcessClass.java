@@ -4,7 +4,7 @@ public class ProcessClass
 {
 	private String targetdecisionclass;
 	private String methoddecisionclass;
-	private String[] parseclass = new String[5];
+	//private String[] parseclass = new String[5];
 	private String[] sendclass = new String[5];
 	private String[][] messagetemplate = new String[5][];
 
@@ -28,15 +28,15 @@ public class ProcessClass
 		this.methoddecisionclass = methoddecisionclass;
 	}
 
-	public String[] getParseclass()
-	{
-		return parseclass;
-	}
-
-	public void setParseclass(String[] parseclass)
-	{
-		this.parseclass = parseclass;
-	}
+//	public String[] getParseclass()
+//	{
+//		return parseclass;
+//	}
+//
+//	public void setParseclass(String[] parseclass)
+//	{
+//		this.parseclass = parseclass;
+//	}
 
 	public String[] getSendclass()
 	{

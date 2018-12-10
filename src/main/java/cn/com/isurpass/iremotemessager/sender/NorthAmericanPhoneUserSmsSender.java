@@ -3,6 +3,8 @@ package cn.com.isurpass.iremotemessager.sender;
 import cn.com.isurpass.iremotemessager.common.constant.ErrorCodeDefine;
 import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
 import cn.com.isurpass.iremotemessager.framework.ISmsMessageSender;
+import cn.com.isurpass.iremotemessager.messageparser.SmsParser;
+
 import com.alibaba.fastjson.JSON;
 import com.plivo.helper.api.client.RestAPI;
 import com.plivo.helper.api.response.message.MessageResponse;
@@ -69,6 +71,12 @@ public class NorthAmericanPhoneUserSmsSender implements ISmsMessageSender {
 
 	public String getAuthToken() {
 		return authToken;
+	}
+
+	@Override
+	public String getMessageParserClassName()
+	{
+		return SmsParser.class.getName();
 	}
 
 }

@@ -3,6 +3,7 @@ package cn.com.isurpass.iremotemessager.sender;
 import cn.com.isurpass.iremotemessager.common.util.EmailUtils;
 import cn.com.isurpass.iremotemessager.framework.IMessageSender;
 import cn.com.isurpass.iremotemessager.jms.JSMTaskManager;
+import cn.com.isurpass.iremotemessager.messageparser.MailParser;
 import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.MailData;
 import cn.com.isurpass.iremotemessager.vo.SendResult;
@@ -21,4 +22,9 @@ public class MailSender implements IMessageSender<MailData>{
 
         return null;
     }
+	@Override
+	public String getMessageParserClassName()
+	{
+		return MailParser.class.getName();
+	}
 }

@@ -3,6 +3,8 @@ package cn.com.isurpass.iremotemessager.sender;
 import cn.com.isurpass.iremotemessager.common.constant.ErrorCodeDefine;
 import cn.com.isurpass.iremotemessager.common.util.HttpUtil;
 import cn.com.isurpass.iremotemessager.framework.ISmsMessageSender;
+import cn.com.isurpass.iremotemessager.messageparser.SmsParser;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -64,6 +66,12 @@ public class TencentSender implements ISmsMessageSender
 		}
 		
 		return 0;
+	}
+
+	@Override
+	public String getMessageParserClassName()
+	{
+		return SmsParser.class.getName();
 	}
 
 }

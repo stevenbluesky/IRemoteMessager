@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import cn.com.isurpass.iremotemessager.framework.IMessageSender;
+import cn.com.isurpass.iremotemessager.messageparser.JPushMessageParser;
 import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
 import cn.com.isurpass.iremotemessager.vo.SendResult;
@@ -18,6 +19,12 @@ public class JPushMessageSender implements IMessageSender<JPushMessageData>
 	{
 		PushMessage.push(targetdata.getPayload(), data.getPlatform());
 		return null;
+	}
+
+	@Override
+	public String getMessageParserClassName()
+	{
+		return JPushMessageParser.class.getName();
 	}
 
 }

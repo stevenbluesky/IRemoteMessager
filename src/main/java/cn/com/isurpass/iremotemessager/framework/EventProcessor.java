@@ -23,7 +23,7 @@ import java.util.Map;
 @Component
 @Scope("prototype")
 public class EventProcessor implements Runnable{
-	private static Log log = LogFactory.getLog(OwnerTargetDecision.class);
+	private static Log log = LogFactory.getLog(EventProcessor.class);
 
 	private EventData eventdata;
 	private ProcessClass processclass;
@@ -76,15 +76,16 @@ public class EventProcessor implements Runnable{
 	{
 		if ( lst == null || lst.size() == 0 )
 			return ;
-		IMessageParser<T> pmdparser = createMessageParser(parsertype);
+		//IMessageParser<T> pmdparser = createMessageParser(parsertype);
 		IMessageSender<T> pmdsender = createSender(sendertype);
-
+		IMessageParser<T> pmdparser = createMessageParser(pmdsender.getMessageParserClassName());
+		
 		for (T pmd : lst)
 		{
 			List<T> ls = pmdparser.parse(eventdata, pmd);
 			if ( ls == null )
 				continue;
-			for (T p : ls)
+			for (T p : ls)  
 				pmdsender.send(eventdata, p);
 		}
 	}
@@ -110,12 +111,12 @@ public class EventProcessor implements Runnable{
 			return false;
 		}
 
-		Map<Integer, String> parserMap = msgPushSettingService.findParserMap(eventdata.getEventtype(), eventdata.getPlatform());
-		Iterator<Map.Entry<Integer, String>> parserIterator = parserMap.entrySet().iterator();
-		while (parserIterator.hasNext()) {
-			Map.Entry<Integer, String> next = parserIterator.next();
-			processclass.getParseclass()[next.getKey()] = next.getValue();
-		}
+//		Map<Integer, String> parserMap = msgPushSettingService.findParserMap(eventdata.getEventtype(), eventdata.getPlatform());
+//		Iterator<Map.Entry<Integer, String>> parserIterator = parserMap.entrySet().iterator();
+//		while (parserIterator.hasNext()) {
+//			Map.Entry<Integer, String> next = parserIterator.next();
+//			processclass.getParseclass()[next.getKey()] = next.getValue();
+//		}
 
 		Map<Integer, String> senderMap = msgPushSettingService.findSenderMap(eventdata.getEventtype(), eventdata.getPlatform());
 		Iterator<Map.Entry<Integer, String>> senderIterator = senderMap.entrySet().iterator();
@@ -145,14 +146,22 @@ public class EventProcessor implements Runnable{
 			return null;
 		return (IMessageTargetDecision) instance;
 	}
-
-	private <T> IMessageParser<T> createMessageParser(int type)
+	
+	private <T> IMessageParser<T> createMessageParser(String classname)
 	{
-		Object instance = createclassinstance(processclass.getParseclass()[type]);
+		Object instance = createclassinstance(classname);
 		if (instance == null)
 			return null;
 		return (IMessageParser) instance;
 	}
+
+//	private <T> IMessageParser<T> createMessageParser(int type)
+//	{
+//		Object instance = createclassinstance(processclass.getParseclass()[type]);
+//		if (instance == null)
+//			return null;
+//		return (IMessageParser) instance;
+//	}
 
 	private <T> IMessageSender<T> createSender(int type)
 	{

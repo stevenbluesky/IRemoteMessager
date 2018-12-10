@@ -8,4 +8,5 @@ import cn.com.isurpass.iremotemessager.vo.SendResult;
 public interface IMessageSender<T> 
 {
 	List<SendResult> send(EventData data,T targetdata);
+	String getMessageParserClassName();
 }
