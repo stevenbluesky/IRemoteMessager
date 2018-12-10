@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
+import com.alibaba.fastjson.JSON;
 
 import cn.com.isurpass.iremotemessager.common.constant.MsgTemplateType;
 import cn.com.isurpass.iremotemessager.freemarker.DBTemplateLoader;
@@ -27,6 +28,7 @@ public class MessageParser
 	{
 		freemarkercfg = new Configuration(Configuration.VERSION_2_3_28);
 		freemarkercfg.setTemplateLoader(new DBTemplateLoader());
+		freemarkercfg.setNumberFormat("#");
 	}
 	
 	public MessageParser(EventData data , String language,MsgTemplateType type)
@@ -47,6 +49,7 @@ public class MessageParser
 			String tn = FreeMarkerTemplateUtils.processTemplateIntoString(template, createtemplatename());
 			
 			template = freemarkercfg.getTemplate(tn);
+			//template.setNumberFormat("#");
 			
 			return FreeMarkerTemplateUtils.processTemplateIntoString(template, createparameter());
 		}
@@ -86,6 +89,8 @@ public class MessageParser
 			for ( String k : data.getDomainobjects().keySet())
 				m.put(k, data.getDomainobjects().get(k));
 		
+		if ( log.isInfoEnabled())
+			log.info(JSON.toJSONString(m));
 		return m ;
 	}
 	
