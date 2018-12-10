@@ -51,7 +51,9 @@ public class IRemoteUtils {
                 sb.append(dest);
             }
         }
-        sb.deleteCharAt(sb.lastIndexOf(dest));
+        int i = sb.lastIndexOf(dest);
+        if ( i != -1 )
+        	sb.deleteCharAt(i);
         return sb.toString();
     }
 }
