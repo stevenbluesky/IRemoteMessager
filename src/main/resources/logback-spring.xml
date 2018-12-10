@@ -28,25 +28,32 @@
 		</triggeringPolicy>
 	</appender>
 
-	<logger name="jdbc.sqlonly" level="WARN" />
-	<logger name="jdbc.sqltiming" level="INFO" />
-	<logger name="jdbc.resultsettable" level="INFO" />
-	<logger name="jdbc.resultset" level="WARN" />
-	<logger name="jdbc.connection" level="WARN" />
-	<logger name="jdbc.audit" level="WARN" />
-
 	<!-- 日志输出级别 -->
 	<springProfile name="dev">
 		<root level="INFO">
 			<appender-ref ref="STDOUT" />
 			<appender-ref ref="FILE" />
 		</root>
+		<Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="trace" additivity="false">
+			<appender-ref ref="STDOUT" />
+			<appender-ref ref="FILE" />
+		</Logger>
+		<Logger name="org.hibernate.SQL" level="trace" additivity="false">
+			<appender-ref ref="STDOUT" />
+			<appender-ref ref="FILE" />
+		</Logger>
 	</springProfile>
 	
 	<springProfile name="prod">
 		<root level="INFO">
 			<appender-ref ref="FILE" />
 		</root>
+		<Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="trace" additivity="false">
+			<appender-ref ref="FILE" />
+		</Logger>
+		<Logger name="org.hibernate.SQL" level="trace" additivity="false">
+			<appender-ref ref="FILE" />
+		</Logger>
 	</springProfile>
 	
 </configuration>
