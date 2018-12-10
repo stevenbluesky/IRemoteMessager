@@ -1,7 +1,6 @@
 <#include "../_head0.ftl"/>
-<div class="col-md-1"></div>
     <div class="row-horizontal">
-        <div class="col-md-10">
+        <div class="col-md-11">
             <form id="defaultForm" action="addeventgroupdata" method="POST" class="form-horizontal">
                 <div class="text-center"><h1>新增事件组</h1></div>
                 <hr>
@@ -9,7 +8,7 @@
                     <div  class="form-group" align="right">
                         <label for="platform"  class="col-xs-4 col-sm-4 col-md-4 control-label">厂商*</label>
                         <div class="col-xs-5 col-sm-5 col-md-5">
-                            <select name="platform" class="col-xs-12 col-sm-12 col-md-12 form-control" id="platform">
+                            <select name="platform" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true" id="platform">
 
                             </select>
                         </div>
@@ -68,5 +67,6 @@
                     str += "<option value='" + platform[i].platformValue +"'>" + platform[i].platformName + "</option>";
                 }
                 $("#platform").append(str);
+                $("#platform").selectpicker('refresh');
             }
         </script>

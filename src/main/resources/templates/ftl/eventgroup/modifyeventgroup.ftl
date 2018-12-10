@@ -1,7 +1,6 @@
 <#include "../_head0.ftl"/>
-<div class="col-md-1"></div>
     <div class="row-horizontal">
-        <div class="col-md-10">
+        <div class="col-md-11">
             <form id="defaultForm" class="form-horizontal">
                 <div class="text-center"><h1>修改事件组</h1></div>
                 <hr>
@@ -10,7 +9,7 @@
                         <label for="platform"  class="col-xs-4 col-sm-4 col-md-4 control-label">厂商*</label>
                         <div class="col-xs-5 col-sm-5 col-md-5">
                             <input type="hidden" name="msgeventgroupid" <#if eventgroup??>value="${eventgroup.msgeventgroupid?c}"</#if>>
-                            <select name="platform" class="col-xs-12 col-sm-12 col-md-12 form-control" id="platform">
+                            <select name="platform" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true" id="platform">
 
                             </select>
                         </div>
@@ -96,5 +95,6 @@
                     }
                 }
                 $("#platform").append(str);
+                $("#platform").selectpicker('refresh');
             }
         </script>

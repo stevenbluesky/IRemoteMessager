@@ -1,7 +1,6 @@
 <#include "../_head0.ftl"/>
-<div class="col-md-1"></div>
     <div class="row-horizontal">
-        <div class="col-md-10">
+        <div class="col-md-11">
             <form id="defaultForm" class="form-horizontal">
                 <div class="text-center"><h1>修改事件</h1></div>
                 <hr>

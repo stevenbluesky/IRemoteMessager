@@ -72,17 +72,11 @@
         <#if person??>${person.phonenumber}</#if>
         <a href="logout">安全退出</a>
     </div>
-        <div class="col-xs-1 col-sm-1 col-md-1">
-            &nbsp;&nbsp;
-        </div>
+    <div class="col-xs-1 col-sm-1 col-md-1">
+            &nbsp;
+    </div>
     <div id="wrap" class="col-xs-2 col-sm-2 col-md-2" >
-        <div class="">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div id="treeview12" class=""></div>
-                </div>
-            </div>
-        </div>
+        <div id="treeview12" class=""></div>
     </div>
 <#--height: 800px;-->
     <div class="col-xs-10 col-sm-10 col-md-10" id="framediv" >

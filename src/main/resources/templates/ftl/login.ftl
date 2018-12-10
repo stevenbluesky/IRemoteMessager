@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html>
 <head>
-    <title>登录</title>
+    <title>管理员登录</title>
 </head>
 <link href="static/css/loginstyle.css" rel="stylesheet" type="text/css" media="all" />
 <#--<script>var __links = document.querySelectorAll('a');function __linkClick(e) { parent.window.postMessage(this.href, '*');} ;for (var i = 0, l = __links.length; i < l; i++) {if ( __links[i].getAttribute('data-t') == '_blank' ) { __links[i].addEventListener('click', __linkClick, false);}}</script>-->
@@ -34,7 +34,6 @@
             </div>
         </form>
     </div>
-</div>
 </div>
 <div class="clear"> </div>
 <!--- footer --->

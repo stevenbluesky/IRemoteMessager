@@ -1,7 +1,6 @@
 <#include "../_head0.ftl"/>
-<div class="col-md-1"></div>
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-11">
             <form id="defaultForm" action="addeventdata" method="POST" class="form-horizontal">
                 <div class="text-center"><h1>修改消息推送设置</h1></div>
                 <hr>
@@ -9,7 +8,7 @@
                     <div  class="form-group" align="right" id="platformtr">
                         <label  class="col-xs-4 col-sm-4 col-md-4 control-label">厂商*</label>
                         <div class="col-xs-5 col-sm-5 col-md-5">
-                            <select name="platform" class="col-xs-12 col-sm-12 col-md-12 form-control" id="platform">
+                            <select name="platform" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true" id="platform">
 
                             </select>
                             <input type="hidden" name="msgpushsettingid" <#if pushsettingvo??>value="${pushsettingvo.msgpushsettingid}"</#if>>
@@ -20,7 +19,7 @@
                     <div  class="form-group" align="right">
                         <label class="col-xs-4 col-sm-4 col-md-4 control-label">事件组*</label>
                         <div class="col-xs-5 col-sm-5 col-md-5">
-                            <select name="eventgroupname" class="col-xs-12 col-sm-12 col-md-12 form-control" id="eventgroupname">
+                            <select name="eventgroupname" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true"  id="eventgroupname">
 
                             </select>
                         </div>
@@ -30,7 +29,7 @@
                     <div  class="form-group" align="right">
                         <label for="pushtargetclass"  class="col-xs-4 col-sm-4 col-md-4 control-label">推送对象决策类*</label>
                         <div class="col-xs-5 col-sm-5 col-md-5">
-                            <select name="pushtargetclass" class="col-xs-12 col-sm-12 col-md-12 form-control" id="pushtargetclass">
+                            <select name="pushtargetclass" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true"  id="pushtargetclass">
 
                             </select>
                         </div>
@@ -40,7 +39,7 @@
                     <div  class="form-group" align="right">
                         <label for="pushmethodclass"  class="col-xs-4 col-sm-4 col-md-4 control-label">推送方式决策类*</label>
                         <div class="col-xs-5 col-sm-5 col-md-5">
-                            <select name="pushmethodclass" class="col-xs-12 col-sm-12 col-md-12 form-control" id="pushmethodclass">
+                            <select name="pushmethodclass" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true"  id="pushmethodclass">
 
                             </select>
                         </div>
@@ -50,7 +49,7 @@
                     <div  class="form-group" align="right">
                         <label for="apppushclass"  class="col-xs-4 col-sm-4 col-md-4 control-label">APP消息推送类*</label>
                         <div class="col-xs-5 col-sm-5 col-md-5">
-                            <select name="apppushclass" class="col-xs-12 col-sm-12 col-md-12 form-control" id="apppushclass">
+                            <select name="apppushclass" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true"  id="apppushclass">
 
                             </select>
                         </div>
@@ -60,7 +59,7 @@
                     <div  class="form-group" align="right">
                         <label for="smspushclass"  class="col-xs-4 col-sm-4 col-md-4 control-label">短信推送类*</label>
                         <div class="col-xs-5 col-sm-5 col-md-5">
-                            <select name="smspushclass" class="col-xs-12 col-sm-12 col-md-12 form-control" id="smspushclass">
+                            <select name="smspushclass" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true"  id="smspushclass">
 
                             </select>
                         </div>
@@ -70,7 +69,7 @@
                     <div  class="form-group" align="right">
                         <label for="emailpushclass"  class="col-xs-4 col-sm-4 col-md-4 control-label">邮件推送类*</label>
                         <div class="col-xs-5 col-sm-5 col-md-5">
-                            <select name="emailpushclass" class="col-xs-12 col-sm-12 col-md-12 form-control" id="emailpushclass">
+                            <select name="emailpushclass" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true"  id="emailpushclass">
 
                             </select>
                         </div>
@@ -147,6 +146,7 @@
                     }
                 }
                 $("#platform").append(str);
+                $("#platform").selectpicker('refresh');
             }
             function addEventGroup() {
                 var platform = $("#platform").val();
@@ -171,6 +171,7 @@
                             }
                         }
                         $("#eventgroupname").append(str);
+                        $("#eventgroupname").selectpicker('refresh');
                     },
                     error: function (data) {
                         spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
@@ -197,6 +198,7 @@
                             }
                         }
                         $("#pushtargetclass").append(str);
+                        $("#pushtargetclass").selectpicker('refresh');
                     },
                     error: function (data) {
                         spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
@@ -222,6 +224,7 @@
                             }
                         }
                         $("#pushmethodclass").append(str);
+                        $("#pushmethodclass").selectpicker('refresh');
                     },
                     error: function (data) {
                         spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
@@ -248,6 +251,7 @@
                             }
                         }
                         $("#apppushclass").append(str);
+                        $("#apppushclass").selectpicker('refresh');
                     },
                     error: function (data) {
                         spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
@@ -274,6 +278,7 @@
                             }
                         }
                         $("#smspushclass").append(str);
+                        $("#smspushclass").selectpicker('refresh');
                     },
                     error: function (data) {
                         spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
@@ -300,6 +305,7 @@
                             }
                         }
                         $("#emailpushclass").append(str);
+                        $("#emailpushclass").selectpicker('refresh');
                     },
                     error: function (data) {
                         spop({template: '操作失败！', position: 'top-center', style: 'error', autoclose: 2000});
