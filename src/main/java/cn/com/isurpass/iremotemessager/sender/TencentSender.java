@@ -33,6 +33,10 @@ public class TencentSender implements ISmsMessageSender
 	@Override
 	public int sendSMS(String countrycode, String phonenumber, String message)
 	{
+		if (!check(countrycode)) {
+			return 0;
+		}
+
 		long random = System.currentTimeMillis();
 		
 		String url = BASE_URL + String.valueOf(random);
@@ -64,6 +68,10 @@ public class TencentSender implements ISmsMessageSender
 		}
 		
 		return 0;
+	}
+
+	protected boolean check(String countryCode) {
+		return true;
 	}
 
 }
