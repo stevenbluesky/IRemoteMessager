@@ -19,7 +19,7 @@ public class SmsMethodDecision extends MethodDecisionBase{
     public List<SmsData> getSmsData() {
         HashMap<String, SmsData> dataHashMap = new HashMap<>();
         for (User user : msguser) {
-            if(!checkUserSmsCount(user)){
+            if(!check(user) || !checkUserSmsCount(user)){
                 continue;
             }
 
@@ -40,11 +40,18 @@ public class SmsMethodDecision extends MethodDecisionBase{
         return new ArrayList<>(dataHashMap.values());
     }
 
-    private boolean checkUserSmsCount(User user) {
-        if ((user.getSmscount() == null || user.getSmscount() == 0)) {
-            log.warn(user.getPhoneuserid() +": sms count is exhausted");
-            return false;
-        }
+    protected boolean check(User user) {
         return true;
     }
+
+    private boolean checkUserSmsCount(User user) {
+        if ((user.getSmscount() == null || user.getSmscount() <= 0)) {
+            log.warn(user.getPhoneuserid() + ": sms count is exhausted");
+            return false;
+        }
+        user.setSmscount(user.getSmscount() - 1);
+        return true;
+    }
+
+
 }
