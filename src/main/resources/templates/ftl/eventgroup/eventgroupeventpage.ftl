@@ -128,7 +128,7 @@
             $.confirm({
                 title: '确认',
                 content: '确定执行删除操作吗？',
-                //type: 'green',
+                type: 'blue',
                 icon: 'glyphicon glyphicon-question-sign',
                 buttons: {
                     ok: {
