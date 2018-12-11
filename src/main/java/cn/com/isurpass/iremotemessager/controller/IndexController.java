@@ -1,24 +1,13 @@
 package cn.com.isurpass.iremotemessager.controller;
 
 import cn.com.isurpass.iremotemessager.domain.PhoneUser;
-import cn.com.isurpass.iremotemessager.framework.EventProcessor;
-import cn.com.isurpass.iremotemessager.init.AppInit;
-import cn.com.isurpass.iremotemessager.jms.JMSUtil;
-import cn.com.isurpass.iremotemessager.jms.TextMessageBaseListener;
-import cn.com.isurpass.iremotemessager.service.PhoneUserAttributeService;
 import cn.com.isurpass.iremotemessager.service.PhoneUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.annotation.Resource;
-import javax.jms.JMSException;
-import javax.jms.MessageConsumer;
-import javax.jms.Topic;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 
 /**
  * @author liwenxiang
@@ -29,10 +18,6 @@ import java.util.Arrays;
 public class IndexController {
     @Autowired
     private PhoneUserService pus;
-    @Autowired
-    private PhoneUserAttributeService puas;
-    @Autowired
-    private AppInit appInit;
 
     @RequestMapping(value = "/index")
     public ModelAndView toDemo(ModelAndView mv) {
