@@ -45,27 +45,6 @@
             $("#btn-submit").click(function (e) {
                 document.getElementById("btn-submit").setAttribute("disabled", true);
                 $('#defaultForm').submit();
-                /*$.ajax({
-                    type: "POST",
-                    dataType: "html",
-                    async: false,
-                    url: "../event/importmsgtemplatefile",
-                    data: $('#defaultForm').serialize(),
-                    success: function (data) {
-                        var jsonObj = eval('(' + data + ')');
-                        if (jsonObj['status'] == 1) {
-                            spop({template: '导入成功！', position: 'top-center', style: 'success', autoclose: 1500,onClose: function() {
-                                    //parent.location.href = parent.location.href;
-                                    self.location=document.referrer;
-                                }});
-                        } else {
-                            spop({template: '新增失败！', position: 'top-center', style: 'error', autoclose: 2000});
-                        }
-                    },
-                    error: function (data) {
-                        spop({template: '新增失败！', position: 'top-center', style: 'error', autoclose: 2000});
-                    }
-                });*/
             });
 
             function addPlatform() {

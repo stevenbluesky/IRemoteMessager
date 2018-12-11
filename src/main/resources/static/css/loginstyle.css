@@ -51,7 +51,7 @@ body{
 	margin: 0 23px;
 }
 form {
-	padding: 3em 2em;
+	padding: 2em 1em;
 	background: #F2F2F2;
 	
 }
@@ -84,7 +84,7 @@ form li{
 
 input[type="text"], input[type="password"] {
 	font-family: 'Droid Sans', sans-serif;
-	width:70%;
+	width:80%;
 	padding: 0.5em 2em 0.5em 1em;
 	color: #B8B8B8;
 	font-size:20px;
