@@ -1,5 +1,5 @@
 <#include "../_head0.ftl"/>
-    <div class="col-md-11">
+    <div class="col-md-12">
         <div class="row">
       <div class="text-center"><h1>新增事件组事件</h1></div>
       <hr>
@@ -67,7 +67,6 @@
             <div class="col-xs-4 col-sm-4 col-md-4"></div>
         </div>
     </div>
-    <div class="col-md-1"></div>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -195,7 +194,7 @@
             $.confirm({
                 title: '确认',
                 content: '确定执行删除操作吗？',
-                //type: 'green',
+                type: 'blue',
                 icon: 'glyphicon glyphicon-question-sign',
                 buttons: {
                     ok: {

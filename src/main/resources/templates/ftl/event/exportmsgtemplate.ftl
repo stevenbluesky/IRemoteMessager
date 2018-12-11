@@ -44,25 +44,6 @@
         var platform = $("#platform").val();
         var language = $("#language").val();
         window.location.href="../event/exportmessagetemplate?platform="+platform+"&language="+language;
-/*        $.ajax({
-            type: "POST",
-            dataType: "html",
-            url: "../event/exportmessagetemplate",
-            data: $('#defaultForm').serialize(),
-            success: function (data) {
-                var jsonObj = eval('(' + data + ')');
-                if (jsonObj['status'] == 1) {
-                    spop({template: jsonObj['msg'], position: 'top-center', style: 'success', autoclose: 3000,onClose: function() {
-                            self.location=document.referrer;
-                        }});
-                } else {
-                    spop({template: '导出失败！', position: 'top-center', style: 'error', autoclose: 2000});
-                }
-            },
-            error: function (data) {
-                spop({template: '导出失败！', position: 'top-center', style: 'error', autoclose: 2000});
-            }
-        });*/
     });
     function addPlatform() {
         var str = "";

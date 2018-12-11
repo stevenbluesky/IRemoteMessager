@@ -17,15 +17,15 @@
         </div>
         <form id="defaultForm">
             <li>
-                <input type="text" name="account" class="text" placeholder = '账号'><a class=" icon user"></a>
+                <input type="text" name="account" class="text" placeholder = '账号' style="padding-left: 5px;padding-right: 5px;"><a class=" icon user"></a>
             </li>
             <div class="clear"> </div>
             <li>
-                <input type="password" name="password" placeholder = '密码' onkeydown=KeyDown() > <a class="icon lock"></a>
+                <input type="password" name="password" placeholder = '密码' style="padding-left: 5px;padding-right: 5px;" onkeydown=KeyDown() > <a class="icon lock"></a>
             </li>
             <div class="clear"> </div>
             <li>
-                <input type="text" name="platform" class="text" placeholder = '厂商' onkeydown=KeyDown() onkeydown=KeyDown()><a class="icon lock"></a>
+                <input type="text" name="platform" class="text" placeholder = '厂商' style="padding-left: 5px;padding-right: 5px;" onkeydown=KeyDown() onkeydown=KeyDown()><a class="icon lock"></a>
             </li>
             <div class="clear"> </div>
             <div class="submit">
