@@ -16,8 +16,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public class IndexController {
-    @Autowired
+
     private PhoneUserService pus;
+    @Autowired
+    public void setPus(PhoneUserService pus) {
+        this.pus = pus;
+    }
 
     @RequestMapping(value = "/index")
     public ModelAndView toDemo(ModelAndView mv) {

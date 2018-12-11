@@ -15,10 +15,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.annotation.Resource;
 import java.util.Map;
 
@@ -69,7 +67,7 @@ public class PushSettingController {
         Map<String, String> stringStringMap = msgProcessClassService.listProcessClass(type, subType);
         return JSON.toJSONString(stringStringMap);
     }
-    //deletepushsettings
+
     @RequestMapping(value = "/deletepushsettings")
     @ResponseBody
     public JsonResult deleteEvents(@RequestBody String[] ids) {
@@ -81,9 +79,9 @@ public class PushSettingController {
             return new JsonResult(-1, "删除失败！");
         }
     }
-    //modifypushsettingpage
+
     @RequestMapping(value = "/modifypushsettingpage")
-    public ModelAndView toModifyEventGroupPage(@RequestParam(required = true) Integer msgpushsettingid, ModelAndView mv) {
+    public ModelAndView toModifyEventGroupPage(Integer msgpushsettingid, ModelAndView mv) {
         mv.setViewName("pushsetting/modifypushsettingpage");
         PushSettingVo pushsettingvo = pss.findByMsgpushsettingid(msgpushsettingid);
         if (pushsettingvo != null) {
@@ -91,10 +89,10 @@ public class PushSettingController {
         }
         return mv;
     }
-    //addpushsettingdata
+
     @RequestMapping(value = "/addpushsettingdata")
     @ResponseBody
-    public JsonResult addPushSettingData(PushSettingVo pushsettingvo, ModelAndView mv) {
+    public JsonResult addPushSettingData(PushSettingVo pushsettingvo) {
         try {
             if(StringUtils.isBlank(pushsettingvo.getEventgroupname())){
                 return new JsonResult(-1, "事件组必选！");
@@ -108,10 +106,10 @@ public class PushSettingController {
             return new JsonResult(-1, "新增失败！");
         }
     }
-    //modifypushsettingdata
+
     @RequestMapping(value = "/modifypushsettingdata")
     @ResponseBody
-    public JsonResult modifyPushSettingData(PushSettingVo pushsettingvo, ModelAndView mv) {
+    public JsonResult modifyPushSettingData(PushSettingVo pushsettingvo) {
         try {
             boolean b = pss.modifyPushSettingData(pushsettingvo);
             if(!b){
