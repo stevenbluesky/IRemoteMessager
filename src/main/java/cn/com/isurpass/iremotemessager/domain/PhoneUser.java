@@ -13,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="phoneuser")
-public class PhoneUser{
+public class PhoneUser {
 
 	private int phoneuserid;
 	private String countrycode;

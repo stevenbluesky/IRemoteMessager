@@ -26,4 +26,8 @@ public class NotificationSettingService
 		}
 		return dao.findByPhoneuseridAndNotificationtype(phoneuserid, notificationType);
 	}
+
+	public NotificationSetting findById(Integer id) {
+		return dao.findById(id).orElse(new NotificationSetting());
+	}
 }

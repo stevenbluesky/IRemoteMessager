@@ -22,7 +22,7 @@ public class UserService
 	protected UserShareService userShareService;
 	
 	public User findById(Integer phoneuserid){
-		return userdao.findById(phoneuserid).orElse(null);
+		return userdao.findById(phoneuserid).orElse(new User());
 	}
 	
 	public List<User> findByFamilyid(Integer familyid){

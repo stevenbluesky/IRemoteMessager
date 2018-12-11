@@ -39,7 +39,7 @@ public class CanOperatePeopleTargetDecision extends FamilyandFriendsTargetDecisi
             return getDeviceUsersByIdAndType(lst, infrareddevice.getInfrareddeviceid(), IRemoteConstantDefine.DEVICE_TYPE_INFRARED_DEVICE);
         }
         if (eventparameters.containsKey("cameraid")) {
-            Camera camera = (Camera) domainobjects.get("cameraid");
+            Camera camera = (Camera) domainobjects.get("camera");
 
             return getDeviceUsersByIdAndType(lst, camera.getCameraid(), IRemoteConstantDefine.DEVICE_TYPE_CAMERA);
         }

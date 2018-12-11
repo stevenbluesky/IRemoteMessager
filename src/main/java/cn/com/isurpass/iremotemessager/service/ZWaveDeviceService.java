@@ -13,6 +13,6 @@ public class ZWaveDeviceService {
     private ZWaveDeviceDao dao;
 
     public ZWaveDevice findById(Integer zwavedeviceid) {
-        return dao.findById(zwavedeviceid).orElse(null);
+        return dao.findById(zwavedeviceid).orElse(new ZWaveDevice());
     }
 }

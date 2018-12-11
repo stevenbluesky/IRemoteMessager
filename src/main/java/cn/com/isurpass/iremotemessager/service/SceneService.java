@@ -12,6 +12,6 @@ public class SceneService {
     private SceneDao sceneDao;
 
     public Scene findById(Integer scenedbid) {
-        return sceneDao.findById(scenedbid).orElse(null);
+        return sceneDao.findById(scenedbid).orElse(new Scene());
     }
 }

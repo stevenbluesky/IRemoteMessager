@@ -15,6 +15,6 @@ public class GatewayService
 	
 	public Gateway findById(String deviceid)
 	{
-		return dao.findById(deviceid).orElse(null);
+		return dao.findById(deviceid).orElse(new Gateway());
 	}
 }

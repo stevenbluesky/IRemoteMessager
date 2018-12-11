@@ -1,5 +1,7 @@
 package cn.com.isurpass.iremotemessager.common.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import org.apache.commons.lang.StringUtils;
 
 import java.text.ParseException;
@@ -55,5 +57,17 @@ public class IRemoteUtils {
         if ( i != -1 )
         	sb.deleteCharAt(i);
         return sb.toString();
+    }
+
+    public static int[] jsontoIntArray(String ary){
+        if ( ary == null || ary.length() == 0 )
+            ary = "[]";
+        JSONArray ja = JSON.parseArray(ary);
+        Integer[] ia = ja.toArray(new Integer[0]);
+
+        int[] ita = new int[ia.length];
+        for ( int i = 0 ; i < ia.length; i ++ )
+            ita[i] = ia[i] ;
+        return ita;
     }
 }
