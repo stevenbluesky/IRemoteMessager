@@ -1,9 +1,12 @@
 package cn.com.isurpass.iremotemessager.targetdecision;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import cn.com.isurpass.iremotemessager.domain.*;
 import cn.com.isurpass.iremotemessager.service.*;
 import org.apache.commons.logging.Log;
@@ -71,15 +74,15 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 	protected abstract List<User> descision();
 
 	protected void initDomainObject() {
-		if (eventparameters.containsKey("phoneuserid")) {
+		if (eventparameters.containsKey("phoneuserid") && eventparameters.getInteger("phoneuserid") != 0) {
 			phoneuser = userservice.findById(eventparameters.getInteger("phoneuserid"));
 		}
-		if (eventparameters.containsKey("zwavedeviceid")) {
+		if (eventparameters.containsKey("zwavedeviceid") && eventparameters.getInteger("zwavedeviceid") != 0) {
 			zwaveDevice = zwavedeviceservice.findById(eventparameters.getInteger("zwavedeviceid"));
 			gateway = gatewayservice.findById(zwaveDevice.getDeviceid());
 			phoneuser = userservice.findById(gateway.getPhoneuserid());
 		}
-		if (eventparameters.containsKey("zwavesubdeviceid")) {
+		if (eventparameters.containsKey("zwavesubdeviceid") && eventparameters.getInteger("zwavesubdeviceid") != 0) {
 			subZwaveDevice = zwaveSubDeviceService.findById(eventparameters.getInteger("zwavesubdeviceid"));
 			zwaveDevice = subZwaveDevice.getZwavedevice();
 			if (zwaveDevice != null) {
@@ -87,40 +90,40 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 				phoneuser = userservice.findById(gateway.getPhoneuserid());
 			}
 		}
-		if (eventparameters.containsKey("infrareddeviceid")) {
+		if (eventparameters.containsKey("infrareddeviceid") && eventparameters.getInteger("infrareddeviceid") != 0) {
 			infraredDevice = infraredDeviceService.findById(eventparameters.getInteger("infrareddeviceid"));
 			gateway = gatewayservice.findById(infraredDevice.getDeviceid());
 			phoneuser = userservice.findById(gateway.getPhoneuserid());
 		}
-		if (eventparameters.containsKey("cameraid")) {
+		if (eventparameters.containsKey("cameraid") && eventparameters.getInteger("cameraid") != 0) {
 			camera = cameraService.findById(eventparameters.getInteger("cameraid"));
 			gateway = gatewayservice.findById(camera.getDeviceid());
 			phoneuser = userservice.findById(gateway.getPhoneuserid());
 		}
-		if (eventparameters.containsKey("deviceid")) {
+		if (eventparameters.containsKey("deviceid") && eventparameters.getInteger("deviceid") != 0) {
 			gateway = gatewayservice.findById(eventparameters.getString("deviceid"));
 			phoneuser = userservice.findById(gateway.getPhoneuserid());
 		}
-		if (eventparameters.containsKey("scenedbid")) {
+		if (eventparameters.containsKey("scenedbid") && eventparameters.getInteger("scenedbid") != 0) {
 			scene = sceneService.findById(eventparameters.getInteger("scenedbid"));
 			phoneuser = userservice.findById(scene.getPhoneuserid());
 		}
-		if (eventparameters.containsKey("roomdbid")) {
+		if (eventparameters.containsKey("roomdbid") && eventparameters.getInteger("roomdbid") != 0) {
 			room = roomService.findById(eventparameters.getInteger("roomdbid"));
 			phoneuser = userservice.findById(room.getPhoneuserid());
 		}
-		if (eventparameters.containsKey("devicegroupid")) {
+		if (eventparameters.containsKey("devicegroupid") && eventparameters.getInteger("devicegroupid") != 0) {
 			devicegroup = deviceGroupService.findById(eventparameters.getInteger("devicegroupid"));
 			phoneuser = userservice.findById(devicegroup.getPhoneuserid());
 		}
-		if (eventparameters.containsKey("partitionid")) {
+		if (eventparameters.containsKey("partitionid") && eventparameters.getInteger("partitionid") != 0) {
 			partition = partitionService.findById(eventparameters.getInteger("partitionid"));
 			if (partition.getZwavedevice() != null) {
 				gateway = gatewayservice.findById(partition.getZwavedevice().getDeviceid());
 				phoneuser = userservice.findById(gateway.getPhoneuserid());
 			}
 		}
-		if (eventparameters.containsKey("notificationsettingid")) {
+		if (eventparameters.containsKey("notificationsettingid") && eventparameters.getInteger("notificationsettingid") != 0) {
 			notificationSetting = notificationSettingService.findById(eventparameters.getInteger("notificationsettingid"));
 			phoneuser = userservice.findById(notificationSetting.getPhoneuserid());
 		}
@@ -137,5 +140,17 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 		domainobjects.put("securitypartition", partition);
 		domainobjects.put("notificationsetting", notificationSetting);
 
+	}
+
+	protected List<User> copyUser(List<User> userList, List<User> ul) {
+		if (IRemoteUtils.isBlank(userList)) {
+			userList = new ArrayList<>();
+		}
+
+		if (IRemoteUtils.isNotBlank(ul)) {
+			userList.addAll(ul);
+		}
+
+		return userList;
 	}
 }

@@ -1,6 +1,5 @@
 package cn.com.isurpass.iremotemessager.targetdecision;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.isurpass.iremotemessager.domain.User;
@@ -34,7 +33,7 @@ public class FamilyMemeberTargetDecision extends OwnerTargetDecision
 		
 		List<User> ul = super.userservice.findByFamilyid(super.phoneuser.getFamilyid());
 
-		lst = addFamilyUser(lst, ul);
+		lst = copyUser(lst, ul);
 		return lst;
 	}
 
@@ -45,17 +44,5 @@ public class FamilyMemeberTargetDecision extends OwnerTargetDecision
 				|| eventparameters.containsKey("cameraid")
 				|| eventparameters.containsKey("deviceid")
 				|| eventparameters.containsKey("partitionid");
-	}
-
-	protected List<User> addFamilyUser(List<User> userList, List<User> ul) {
-		if (IRemoteUtils.isBlank(userList)) {
-			userList = new ArrayList<>();
-		}
-
-		if (IRemoteUtils.isNotBlank(ul)) {
-			userList.addAll(ul);
-		}
-
-		return userList;
 	}
 }
