@@ -67,13 +67,10 @@
 <body style="overflow-x: hidden;">
 <br/>
 <div class="row">
-    <div class="col-xs-11 col-sm-11 col-md-11" align="right">
+    <div class="col-xs-12 col-sm-12 col-md-12" align="right">
         欢迎您：
         <#if person??>${person.phonenumber}</#if>
-        <a href="logout">安全退出</a>
-    </div>
-    <div class="col-xs-1 col-sm-1 col-md-1">
-            &nbsp;
+        <a href="logout">安全退出</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </div>
     <div id="wrap" class="col-xs-2 col-sm-2 col-md-2" >
         <div id="treeview12" class=""></div>

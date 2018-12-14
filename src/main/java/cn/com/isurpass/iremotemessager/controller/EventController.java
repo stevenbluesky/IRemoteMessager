@@ -124,12 +124,11 @@ public class EventController {
         String sheetName = "消息模板_"+msgvo.getPlatform()+"_"+msgvo.getLanguage();
         String titleName = "消息模板_"+msgvo.getPlatform()+"_"+msgvo.getLanguage()+sdf.format(new Date());
         String fileName = "消息模板_"+msgvo.getPlatform()+"_"+msgvo.getLanguage()+sdf.format(new Date());
-        int columnNumber = 6;
-        int[] columnWidth = { 10, 20, 30,10,10,80 };
-        String[] columnName = { "platform", "msgeventtypeid", "eventcode" ,"language","type","contenttemplate"};
+        int columnNumber = 5;
+        int[] columnWidth = { 20, 30,10,10,80 };
+        String[] columnName = { "platform", "eventcode" ,"language","type","contenttemplate"};
         try {
-            HSSFWorkbook wb = new ExportExcelUtil().ExportNoResponse(sheetName, titleName, fileName, columnNumber, columnWidth, columnName, dataset);
-            //HSSFWorkbook wb = new ExportExcelUtil().ExportWithResponse(sheetName, titleName, fileName, columnNumber, columnWidth, columnName, dataset, response);
+            HSSFWorkbook wb = new ExportExcelUtil().exportNoResponse(sheetName, titleName, columnNumber, columnWidth, columnName, dataset);
             if(wb==null){
                 return "系统错误！";
             }

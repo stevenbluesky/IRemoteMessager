@@ -29,29 +29,28 @@
         </form>
         <hr>
     </div>
+
+
+<button style="float: right;" type="button" class='btn btn-default' onclick='deletePushSetting()'>删除</button>
+
+<button style="float: right;" type="button" class='btn btn-default' onclick='modifyPushSetting()'>修改</button>
+
+<button style="float: right;" type="button" class='btn btn-default' onclick="window.location.href='../pushsetting/addpushsettingpage'">增加</button>
+
+<table id="table" data-toggle="table" style="table-layout: fixed;">
+    <thead>
+    <tr>
+        <th data-field="id">复选框</th>
+        <th data-field="msgpushsettingid" data-visible="false">主键</th>
+        <th data-field="paltform" data-formatter="formatter_platform" class="text-center col-md-2" >厂商</th>
+        <th data-field="eventgroupname" class="text-center col-md-3" >事件组</th>
+        <th data-field="pushtargetclass" class="text-center col-md-3">推送对象决策类</th>
+        <th data-field="pushmethodclass"  class="text-center col-md-3" >推送方式决策类</th>
+        <th data-field="pushclass"  class="text-center col-md-5" >推送类</th>
+    </tr>
+    </thead>
+</table>
 </div>
-
-    <button style="float: right;" type="button" class='btn btn-default' onclick='deletePushSetting()'>删除</button>
-
-    <button style="float: right;" type="button" class='btn btn-default' onclick='modifyPushSetting()'>修改</button>
-
-    <button style="float: right;" type="button" class='btn btn-default' onclick="window.location.href='../pushsetting/addpushsettingpage'">增加</button>
-
-	<table id="table" data-toggle="table" style="table-layout: fixed;">
-        <thead>
-        <tr>
-            <th data-field="id">复选框</th>
-            <th data-field="msgpushsettingid" data-visible="false">主键</th>
-            <th data-field="paltform" data-formatter="formatter_platform" class="text-center col-md-2" >厂商</th>
-            <th data-field="eventgroupname" class="text-center col-md-3" >事件组</th>
-            <th data-field="pushtargetclass" class="text-center col-md-3">推送对象决策类</th>
-            <th data-field="pushmethodclass"  class="text-center col-md-3" >推送方式决策类</th>
-            <th data-field="pushclass"  class="text-center col-md-5" >推送类</th>
-        </tr>
-        </thead>
-    </table>
-      </div>
-    </div>
 
     <script type="text/javascript">
         $(document).ready(function() {

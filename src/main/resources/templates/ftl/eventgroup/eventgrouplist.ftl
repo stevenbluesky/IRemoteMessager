@@ -29,7 +29,6 @@
           </form>
           <hr>
       </div>
-    </div>
 
     <button style="float: right;" type="button" class='btn btn-default' onclick='deleteEventGroup()'>删除</button>
 
@@ -51,7 +50,6 @@
         </tr>
         </thead>
     </table>
-      </div>
     </div>
 
     <script type="text/javascript">

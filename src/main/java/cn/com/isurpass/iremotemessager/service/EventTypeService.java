@@ -189,7 +189,7 @@ public class EventTypeService {
         for(MsgContentTemplate m : list){
             ExportMessageTemplateVo msg = new ExportMessageTemplateVo();
             msg.setPlatform(m.getPlatform());
-            msg.setMsgeventtypeid(m.getMsgEventType().getMsgeventtypeid());
+            //msg.setMsgeventtypeid(m.getMsgEventType().getMsgeventtypeid());
             msg.setEventcode(m.getEventcode());
             msg.setContenttemplate(m.getContenttemplate());
             msg.setLanguage(m.getLanguage());
@@ -212,20 +212,20 @@ public class EventTypeService {
             for(List l : datalist){
                 MsgContentTemplate m = new MsgContentTemplate();
                 m.setPlatform(Integer.parseInt((String) l.get(0)));
-                m.setMsgEventType(eventtypedao.findByEventcode((String) l.get(2)));
-                m.setEventcode((String) l.get(2));
-                m.setLanguage((String) l.get(3));
-                m.setType(Integer.parseInt((String) l.get(4)));
-                m.setContenttemplate((String) l.get(5));
+                m.setMsgEventType(eventtypedao.findByEventcode((String) l.get(1)));
+                m.setEventcode((String) l.get(1));
+                m.setLanguage((String) l.get(2));
+                m.setType(Integer.parseInt((String) l.get(3)));
+                m.setContenttemplate((String) l.get(4));
                 m.setCreatetime(new Date());
                 m.setLastupdatetime(new Date());
-                List<MsgContentTemplate> dblist = msgdao.findByEventcodeAndPlatformAndLanguageInAndType((String) l.get(2), Integer.parseInt((String) l.get(0)), (String) l.get(3), Integer.parseInt((String) l.get(4)));
+                List<MsgContentTemplate> dblist = msgdao.findByEventcodeAndPlatformAndLanguageInAndType((String) l.get(1), Integer.parseInt((String) l.get(0)), (String) l.get(2), Integer.parseInt((String) l.get(3)));
                 if(dblist!=null&&dblist.size()>0){
                     continue;
                 }
                 msgdao.save(m);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

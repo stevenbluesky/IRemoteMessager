@@ -3,6 +3,7 @@ package cn.com.isurpass.iremotemessager.common.util;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 
@@ -44,9 +45,10 @@ public class ExcelUtil {
      */
     @SuppressWarnings({ "static-access", "deprecation" })
     public static String getHValue(HSSFCell hssfCell){
-        if (hssfCell.getCellType() == hssfCell.CELL_TYPE_BOOLEAN) {
+        if (hssfCell.getCellType() == HSSFCell.CELL_TYPE_BOOLEAN) {
+
             return String.valueOf(hssfCell.getBooleanCellValue());
-        } else if (hssfCell.getCellType() == hssfCell.CELL_TYPE_NUMERIC) {
+        } else if (hssfCell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
             String cellValue = "";
             if(HSSFDateUtil.isCellDateFormatted(hssfCell)){
                 Date date = HSSFDateUtil.getJavaDate(hssfCell.getNumericCellValue());
