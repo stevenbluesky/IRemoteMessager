@@ -34,6 +34,8 @@ public class AmetaPhoneUserSmsSender extends NorthAmericanPhoneUserSmsSender {
 
 	public static void main(String arg[])
 	{
+		AmetaPhoneUserSmsSender as = new AmetaPhoneUserSmsSender();
+		as.sendSMS("+86", "15080960773", "Master Huang shulang ,Are You OK !");
 //		MessageParser mp = new MessageParser("hello ameta" , null , null);
 //
 //		AmetaPhoneUserSmsSender as = new AmetaPhoneUserSmsSender();

@@ -6,7 +6,7 @@
           <div class="form-group">
               <div class="col-xs-5 col-sm-5 col-md-5">
                   <label class="col-xs-4 col-sm-4 col-md-4  control-label" align="right">厂商：</label>
-                  <div class="col-xs-8 col-sm-8 col-md-8" align="center">
+                  <div class="col-xs-8 col-sm-8 col-md-8">
                       <span id="platform"></span>
                   </div>
               </div>
@@ -66,7 +66,9 @@
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4"></div>
         </div>
+        <br>
     </div>
+
 
     <script type="text/javascript">
         $(document).ready(function() {

@@ -1,57 +1,56 @@
 <#include "../_head0.ftl"/>
-    <div class="col-md-12">
-      <div class="row">
-          <div class="text-center"><h1>消息推送设置列表</h1></div>
-          <hr>
-          <form id="searchForm" class="form-horizontal">
-              <div class="form-group">
-                  <div class="col-xs-5 col-sm-5 col-md-5">
-                      <label class="col-xs-4 col-sm-4 col-md-4  control-label" >厂商</label>
-                      <div class="col-xs-8 col-sm-8 col-md-8">
-                          <select name="searchplatform" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true" id="searchplatform">
+<div class="col-md-12">
+    <div class="row">
+        <div class="text-center"><h1>消息推送设置</h1></div>
+        <hr>
+        <form id="searchForm" class="form-horizontal">
+          <div class="form-group">
+              <div class="col-xs-5 col-sm-5 col-md-5">
+                  <label class="col-xs-4 col-sm-4 col-md-4  control-label" >厂商</label>
+                  <div class="col-xs-8 col-sm-8 col-md-8">
+                      <select name="searchplatform" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true" id="searchplatform">
 
-                          </select>
-                      </div>
+                      </select>
                   </div>
-                  <div class="col-xs-5 col-sm-5 col-md-5">
-                      <label class="col-xs-4 col-sm-4 col-md-4 control-label" >事件组名称</label>
-                      <div class="col-xs-8 col-sm-8 col-md-8">
-                          <input type="text" class="form-control" id="searcheventgroupname" name="searcheventgroupname" placeholder="事件组名称" >
-                      </div>
+              </div>
+              <div class="col-xs-5 col-sm-5 col-md-5">
+                  <label class="col-xs-4 col-sm-4 col-md-4 control-label" >事件组名称</label>
+                  <div class="col-xs-8 col-sm-8 col-md-8">
+                      <input type="text" class="form-control" id="searcheventgroupname" name="searcheventgroupname" placeholder="事件组名称" >
                   </div>
-                  <div class="col-xs-2 col-sm-2 col-md-2" align="right">
-                      <#--<div class="col-md-5"></div>-->
-                      <div class="col-xs-12 col-sm-12 col-md-12">
-                          <button type="button" id="searchsubmit" class="btn btn-default"
-                                  style="width:100%;">查询</button>
-                      </div>
+              </div>
+              <div class="col-xs-2 col-sm-2 col-md-2" align="right">
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                      <button type="button" id="searchsubmit" class="btn btn-default"
+                              style="width:100%;">查询</button>
                   </div>
-
-          </form>
-      </div>
+              </div>
+          </div>
+        </form>
+        <hr>
     </div>
-      <hr>
-    <button style="float: right;" type="button" class='btn btn-default' onclick='deletePushSetting()'>删除</button>
 
-    <button style="float: right;" type="button" class='btn btn-default' onclick='modifyPushSetting()'>修改</button>
 
-    <button style="float: right;" type="button" class='btn btn-default' onclick="window.location.href='../pushsetting/addpushsettingpage'">增加</button>
+<button style="float: right;" type="button" class='btn btn-default' onclick='deletePushSetting()'>删除</button>
 
-	<table id="table" data-toggle="table" style="table-layout: fixed;">
-        <thead>
-        <tr>
-            <th data-field="id">复选框</th>
-            <th data-field="msgpushsettingid" data-visible="false">主键</th>
-            <th data-field="paltform" data-formatter="formatter_platform" class="text-center col-md-2" >厂商</th>
-            <th data-field="eventgroupname" class="text-center col-md-3" >事件组</th>
-            <th data-field="pushtargetclass" class="text-center col-md-3">推送对象决策类</th>
-            <th data-field="pushmethodclass"  class="text-center col-md-3" >推送方式决策类</th>
-            <th data-field="pushclass"  class="text-center col-md-5" >推送类</th>
-        </tr>
-        </thead>
-    </table>
-      </div>
-    </div>
+<button style="float: right;" type="button" class='btn btn-default' onclick='modifyPushSetting()'>修改</button>
+
+<button style="float: right;" type="button" class='btn btn-default' onclick="window.location.href='../pushsetting/addpushsettingpage'">增加</button>
+
+<table id="table" data-toggle="table" style="table-layout: fixed;">
+    <thead>
+    <tr>
+        <th data-field="id">复选框</th>
+        <th data-field="msgpushsettingid" data-visible="false">主键</th>
+        <th data-field="paltform" data-formatter="formatter_platform" class="text-center col-md-2" >厂商</th>
+        <th data-field="eventgroupname" class="text-center col-md-3" >事件组</th>
+        <th data-field="pushtargetclass" class="text-center col-md-3">推送对象决策类</th>
+        <th data-field="pushmethodclass"  class="text-center col-md-3" >推送方式决策类</th>
+        <th data-field="pushclass"  class="text-center col-md-5" >推送类</th>
+    </tr>
+    </thead>
+</table>
+</div>
 
     <script type="text/javascript">
         $(document).ready(function() {

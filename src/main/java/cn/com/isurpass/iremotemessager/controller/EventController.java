@@ -1,6 +1,9 @@
 package cn.com.isurpass.iremotemessager.controller;
 
-import cn.com.isurpass.iremotemessager.common.util.*;
+import cn.com.isurpass.iremotemessager.common.util.ExportExcelUtil;
+import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
+import cn.com.isurpass.iremotemessager.common.util.JsonResult;
+import cn.com.isurpass.iremotemessager.common.util.PageResult;
 import cn.com.isurpass.iremotemessager.domain.MsgContentTemplate;
 import cn.com.isurpass.iremotemessager.domain.MsgEventType;
 import cn.com.isurpass.iremotemessager.service.EventTypeService;
@@ -9,20 +12,17 @@ import cn.com.isurpass.iremotemessager.vo.ExportMessageTemplateVo;
 import cn.com.isurpass.iremotemessager.vo.MessageTemplateVo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -37,8 +37,12 @@ import java.util.Map;
 @RequestMapping(value = "/event")
 public class EventController {
 
-    @Autowired
     private EventTypeService eventtypeservice;
+
+    @Autowired
+    public void setEventtypeservice(EventTypeService eventtypeservice) {
+        this.eventtypeservice = eventtypeservice;
+    }
 
     @RequestMapping(value = "/addeventpage")
     public ModelAndView toaddeventpage(ModelAndView mv) {
@@ -47,7 +51,7 @@ public class EventController {
     }
 
     @RequestMapping(value = "/addmsgtemplatepage")
-    public ModelAndView toaddmsgtemplatepage(@RequestParam(required = true) Integer msgeventtypeid, ModelAndView mv) {
+    public ModelAndView toaddmsgtemplatepage(Integer msgeventtypeid, ModelAndView mv) {
         MsgEventType event = eventtypeservice.findByMsgEventTypeId(msgeventtypeid);
         if (event != null) {
             mv.addObject("event", event);
@@ -57,7 +61,7 @@ public class EventController {
     }
 
     @RequestMapping(value = "/modifyeventpage")
-    public ModelAndView toModifyEventPage(@RequestParam(required = true) Integer msgeventtypeid, ModelAndView mv) {
+    public ModelAndView toModifyEventPage(Integer msgeventtypeid, ModelAndView mv) {
         mv.setViewName("event/modifyevent");
         MsgEventType event = eventtypeservice.findByMsgEventTypeId(msgeventtypeid);
         if (event != null) {
@@ -67,7 +71,7 @@ public class EventController {
     }
 
     @RequestMapping(value = "/messagetemplatepage")
-    public ModelAndView toMessageTemplatePage(@RequestParam(required = true) Integer msgeventtypeid, ModelAndView mv) {
+    public ModelAndView toMessageTemplatePage(Integer msgeventtypeid, ModelAndView mv) {
         MsgEventType event = eventtypeservice.findByMsgEventTypeId(msgeventtypeid);
         if (event != null) {
             mv.addObject("event", event);
@@ -111,7 +115,7 @@ public class EventController {
 
     @RequestMapping(value = "/exportmessagetemplate")
     @ResponseBody
-    public String exportMessageTemplate(MessageTemplateVo msgvo, HttpServletRequest request, HttpServletResponse response) {
+    public String exportMessageTemplate(MessageTemplateVo msgvo,HttpServletResponse response) {
         List<ExportMessageTemplateVo> dataset = eventtypeservice.exportMessageTemplate(msgvo);
         if(dataset==null||dataset.size()==0){
             return "无数据！";
@@ -120,12 +124,11 @@ public class EventController {
         String sheetName = "消息模板_"+msgvo.getPlatform()+"_"+msgvo.getLanguage();
         String titleName = "消息模板_"+msgvo.getPlatform()+"_"+msgvo.getLanguage()+sdf.format(new Date());
         String fileName = "消息模板_"+msgvo.getPlatform()+"_"+msgvo.getLanguage()+sdf.format(new Date());
-        int columnNumber = 6;
-        int[] columnWidth = { 10, 20, 30,10,10,80 };
-        String[] columnName = { "platform", "msgeventtypeid", "eventcode" ,"language","type","contenttemplate"};
+        int columnNumber = 5;
+        int[] columnWidth = { 20, 30,10,10,80 };
+        String[] columnName = { "platform", "eventcode" ,"language","type","contenttemplate"};
         try {
-            HSSFWorkbook wb = new ExportExcelUtil().ExportNoResponse(sheetName, titleName, fileName, columnNumber, columnWidth, columnName, dataset);
-            //HSSFWorkbook wb = new ExportExcelUtil().ExportWithResponse(sheetName, titleName, fileName, columnNumber, columnWidth, columnName, dataset, response);
+            HSSFWorkbook wb = new ExportExcelUtil().exportNoResponse(sheetName, titleName, columnNumber, columnWidth, columnName, dataset);
             if(wb==null){
                 return "系统错误！";
             }
@@ -139,8 +142,11 @@ public class EventController {
         }
         return "导出成功！";
     }
-    //发送响应流方法
-    public void setResponseHeader(HttpServletResponse response, String fileName) {
+
+    /**
+     * 发送响应流方法
+     */
+    private void setResponseHeader(HttpServletResponse response, String fileName) {
         try {
             try {
                 fileName = new String(fileName.getBytes(),"ISO8859-1");
@@ -170,7 +176,7 @@ public class EventController {
 
     @RequestMapping(value = "/showmessagetemplatelist")
     @ResponseBody
-    public Map<String, Object> showmessagetemplatelist(PageResult pr, @RequestParam(required = true) Integer msgeventtypeid) {
+    public Map<String, Object> showmessagetemplatelist(PageResult pr, Integer msgeventtypeid) {
         Pageable pageable = PageRequest.of(pr.getPage() - 1, pr.getRows(), Sort.Direction.DESC, "msgcontenttemplateid");
         return eventtypeservice.listMessageTemplate(pageable, msgeventtypeid);
     }
@@ -202,7 +208,7 @@ public class EventController {
 
     @RequestMapping(value = "/modifyeventdata")
     @ResponseBody
-    public JsonResult modifyeventdata(EventtypeVo eventtype, ModelAndView mv) {
+    public JsonResult modifyeventdata(EventtypeVo eventtype) {
         if (IRemoteUtils.isBlank(eventtype.getMsgeventtypeid())) {
             return new JsonResult(-1, "修改失败！");
         } else if (StringUtils.isBlank(eventtype.getEventname()) || StringUtils.isBlank(eventtype.getEventcode())) {
@@ -236,7 +242,7 @@ public class EventController {
     }
 
     @RequestMapping(value = "/modifymsgpage")
-    public ModelAndView modifymsgpage(@RequestParam(required = true) Integer msgcontenttemplateid, ModelAndView mv) {
+    public ModelAndView modifymsgpage(Integer msgcontenttemplateid, ModelAndView mv) {
         MsgContentTemplate msg = eventtypeservice.findByMsgTemplateTemplateId(msgcontenttemplateid);
         if (msg != null) {
             mv.addObject("msg", msg);
@@ -251,7 +257,7 @@ public class EventController {
 
     @RequestMapping(value = "/addmsgtemplatedata")
     @ResponseBody
-    public JsonResult addmsgtemplatedata(MessageTemplateVo messagetemplatevo, ModelAndView mv) {
+    public JsonResult addmsgtemplatedata(MessageTemplateVo messagetemplatevo) {
         if (IRemoteUtils.isBlank(messagetemplatevo.getMsgeventtypeid())) {
             return new JsonResult(-1, "新增失败！");
         } else if (StringUtils.isBlank(messagetemplatevo.getContenttemplate())) {
@@ -268,10 +274,10 @@ public class EventController {
         }
     }
     @RequestMapping(value = "importmsgtemplatefile", method = RequestMethod.POST)
-    public ModelAndView batchimport(@RequestParam(value="filename") MultipartFile file,String platform,
-                              HttpServletRequest request,HttpServletResponse response,ModelAndView mv){
+    public ModelAndView batchimport(@RequestParam(value="filename") MultipartFile file,String platform, ModelAndView mv){
         if(file==null||file.getSize()==0) {
             mv.setViewName("failed");
+            return mv;
         }
         String originalFilename = file.getOriginalFilename();
         boolean b = eventtypeservice.msgImport(platform,file);

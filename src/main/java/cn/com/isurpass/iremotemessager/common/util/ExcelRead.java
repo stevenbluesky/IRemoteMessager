@@ -28,7 +28,7 @@ public class ExcelRead {
      * @return
      * @throws IOException
      */
-    public List<ArrayList<String>> readExcel(MultipartFile file) throws IOException {
+    public List<ArrayList<String>> readExcel(MultipartFile file) throws Exception {
         if(file==null||ExcelUtil.EMPTY.equals(file.getOriginalFilename().trim())){
             return null;
         }else{

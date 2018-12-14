@@ -9,19 +9,10 @@ import java.util.Date;
  */
 public class ExportMessageTemplateVo {
     private Integer platform;
-    private Integer msgeventtypeid;
     private String eventcode;
     private String language;
     private Integer type;
     private String contenttemplate;
-
-    public Integer getMsgeventtypeid() {
-        return msgeventtypeid;
-    }
-
-    public void setMsgeventtypeid(Integer msgeventtypeid) {
-        this.msgeventtypeid = msgeventtypeid;
-    }
 
     public Integer getPlatform() {
         return platform;

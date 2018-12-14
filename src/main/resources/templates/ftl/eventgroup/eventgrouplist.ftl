@@ -1,7 +1,7 @@
 <#include "../_head0.ftl"/>
     <div class="col-md-12">
       <div class="row">
-          <div class="text-center"><h1>事件组定义列表</h1></div>
+          <div class="text-center"><h1>事件组列表</h1></div>
           <hr>
           <form id="searchForm" class="form-horizontal">
               <div class="form-group">
@@ -25,11 +25,11 @@
                                   style="width:100%;">查询</button>
                       </div>
                   </div>
-
+              </div>
           </form>
+          <hr>
       </div>
-    </div>
-      <hr>
+
     <button style="float: right;" type="button" class='btn btn-default' onclick='deleteEventGroup()'>删除</button>
 
     <button style="float: right;" type="button" class='btn btn-default' onclick='modifyEventGroup()'>修改</button>
@@ -44,13 +44,12 @@
             <th data-field="id">复选框</th>
             <th data-field="msgeventgroupid" data-visible="false">主键</th>
             <th data-field="paltform" data-formatter="formatter_platform" class="text-center col-xs-2 col-sm-2 col-md-2" >厂商</th>
-            <th data-field="eventgroupname" class="text-center col-md-3" >事件组事件</th>
-            <th data-field="eventliststr" class="text-center col-md-3">事件</th>
-            <th data-field="description"  class="text-center col-xs-4 col-sm-4 col-md-4" >说明</th>
+            <th data-field="eventgroupname" class="text-center col-md-2" >事件组事件</th>
+            <th data-field="eventliststr" class="text-center col-md-5">事件</th>
+            <th data-field="description"  class="text-center col-xs-3 col-sm-3 col-md-3" >说明</th>
         </tr>
         </thead>
     </table>
-      </div>
     </div>
 
     <script type="text/javascript">

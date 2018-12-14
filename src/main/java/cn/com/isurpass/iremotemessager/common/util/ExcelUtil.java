@@ -3,6 +3,7 @@ package cn.com.isurpass.iremotemessager.common.util;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 
@@ -44,9 +45,10 @@ public class ExcelUtil {
      */
     @SuppressWarnings({ "static-access", "deprecation" })
     public static String getHValue(HSSFCell hssfCell){
-        if (hssfCell.getCellType() == hssfCell.CELL_TYPE_BOOLEAN) {
+        if (hssfCell.getCellType() == HSSFCell.CELL_TYPE_BOOLEAN) {
+
             return String.valueOf(hssfCell.getBooleanCellValue());
-        } else if (hssfCell.getCellType() == hssfCell.CELL_TYPE_NUMERIC) {
+        } else if (hssfCell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
             String cellValue = "";
             if(HSSFDateUtil.isCellDateFormatted(hssfCell)){
                 Date date = HSSFDateUtil.getJavaDate(hssfCell.getNumericCellValue());
@@ -74,8 +76,8 @@ public class ExcelUtil {
             return String.valueOf(xssfCell.getBooleanCellValue());
         } else if (xssfCell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
             String cellValue = "";
-            if(XSSFDateUtil.isCellDateFormatted(xssfCell)){
-                Date date = XSSFDateUtil.getJavaDate(xssfCell.getNumericCellValue());
+            if(DateUtil.isCellDateFormatted(xssfCell)){
+                Date date = DateUtil.getJavaDate(xssfCell.getNumericCellValue());
                 cellValue = sdf.format(date);
             }else{
                 DecimalFormat df = new DecimalFormat("#.##");
@@ -91,8 +93,4 @@ public class ExcelUtil {
         }
     }
 }
-class XSSFDateUtil extends DateUtil {
-    protected static int absoluteDay(Calendar cal, boolean use1904windowing) {
-        return DateUtil.absoluteDay(cal, use1904windowing);
-    }
-}
+
