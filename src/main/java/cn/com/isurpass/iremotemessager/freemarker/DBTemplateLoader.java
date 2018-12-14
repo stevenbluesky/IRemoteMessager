@@ -23,21 +23,22 @@ public class DBTemplateLoader implements TemplateLoader
 	private static  MsgContentTemplate TEMPLATE_KEY_TEMPLATE = new MsgContentTemplate(TEMPLATE__NAME_TEMPLATE , new Date());
 	
 	@Override
-	public Object findTemplateSource(String name) throws IOException
-	{
+	public Object findTemplateSource(String name) {
         name = splitName(name);
-		if ( TEMPLATE_KEY_TEMPLATE_NAME.equals(name) )
+		if ( TEMPLATE_KEY_TEMPLATE_NAME.equals(name) ) {
 			return TEMPLATE_KEY_TEMPLATE;
-		
-		if ( StringUtils.isBlank(name))
-			return null ;
-		
+		}
+
+		if ( StringUtils.isBlank(name)) {
+			return null;
+		}
 		JSONObject json = JSON.parseObject(name);
 		if ( !json.containsKey("eventcode")
 			|| !json.containsKey("platform")
 			|| !json.containsKey("language")
-			|| !json.containsKey("type"))
+			|| !json.containsKey("type")){
 			return null ;
+		}
 		String eventcode = json.getString("eventcode");
 		int platform = json.getIntValue("platform");
 		String language = json.getString("language");
@@ -58,16 +59,18 @@ public class DBTemplateLoader implements TemplateLoader
     @Override
 	public long getLastModified(Object templateSource)
 	{
-		if ( templateSource == null )
-			return 0 ;
+		if ( templateSource == null ) {
+			return 0;
+		}
 		return ((MsgContentTemplate)templateSource).getLastupdatetime().getTime();
 	}
 
 	@Override
 	public Reader getReader(Object templateSource, String encoding) throws IOException
 	{
-		if ( templateSource == null )
-			return null ;
+		if ( templateSource == null ) {
+			return null;
+		}
 		return new StringReader(((MsgContentTemplate) templateSource).getContenttemplate());
 	}
 

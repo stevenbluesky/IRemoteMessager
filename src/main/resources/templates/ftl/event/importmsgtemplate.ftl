@@ -2,7 +2,7 @@
 <script src="../static/js/fileinput.js"></script>
 <link href="../static/css/fileinput.css" rel="stylesheet">
     <div class="row-horizontal">
-        <div class="col-md-11">
+        <div class="col-md-12">
             <div class="text-center"><h1>导入消息模板</h1></div>
             <form id="defaultForm" class="form-horizontal" action="../event/importmsgtemplatefile" method="POST" enctype="multipart/form-data">
                 <hr>
@@ -34,7 +34,6 @@
             </div>
 
     </div>
-<div class="col-md-1"></div>
         <script type="text/javascript">
             $(document).ready(function() {
                 document.getElementById("platformtr").style.visibility="hidden";

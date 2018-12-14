@@ -45,11 +45,11 @@
                     href:"pushsetting/pushsettinglistpage"
                 },
                 {
-                    text: "事件组定义",
+                    text: "事件组列表",
                     href:"eventgroup/eventgrouplistpage"
                 },
                 {
-                    text: "事件定义",
+                    text: "事件列表",
                     href:"event/eventlistpage"
                 }
             ];

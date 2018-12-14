@@ -4,10 +4,8 @@ import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import cn.com.isurpass.iremotemessager.common.util.JsonResult;
 import cn.com.isurpass.iremotemessager.common.util.PageResult;
 import cn.com.isurpass.iremotemessager.domain.MsgEventGroup;
-import cn.com.isurpass.iremotemessager.domain.MsgEventType;
 import cn.com.isurpass.iremotemessager.service.MsgEventGroupService;
 import cn.com.isurpass.iremotemessager.vo.EventGroupVo;
-import cn.com.isurpass.iremotemessager.vo.EventtypeVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -16,10 +14,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.Map;
 
 /**
@@ -30,8 +26,11 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/eventgroup")
 public class EventGroupController {
-    @Autowired
     private MsgEventGroupService egs;
+    @Autowired
+    public void setEgs(MsgEventGroupService egs) {
+        this.egs = egs;
+    }
 
     @RequestMapping(value = "/eventgrouplistpage")
     public ModelAndView toeventlistpage(ModelAndView mv) {
@@ -76,7 +75,7 @@ public class EventGroupController {
         return mv;
     }
     @RequestMapping(value = "/modifyeventgrouppage")
-    public ModelAndView toModifyEventGroupPage(@RequestParam(required = true) Integer msgeventgroupid, ModelAndView mv) {
+    public ModelAndView toModifyEventGroupPage(Integer msgeventgroupid, ModelAndView mv) {
         mv.setViewName("eventgroup/modifyeventgroup");
         MsgEventGroup eventg = egs.findByMsgEventGroupId(msgeventgroupid);
         if (eventg != null) {
@@ -86,7 +85,7 @@ public class EventGroupController {
     }
     @RequestMapping(value = "/modifyeventgroupdata")
     @ResponseBody
-    public JsonResult modifyeventdata(EventGroupVo eventgroup, ModelAndView mv) {
+    public JsonResult modifyeventdata(EventGroupVo eventgroup) {
         if (IRemoteUtils.isBlank(eventgroup.getMsgeventgroupid())) {
             return new JsonResult(-1, "修改失败！");
         } else if (StringUtils.isBlank(eventgroup.getEventgroupname())) {
@@ -111,7 +110,7 @@ public class EventGroupController {
         }
     }
     @RequestMapping(value = "/eventgroupevent")
-    public ModelAndView toEventGroupEventPage(@RequestParam(required = true) Integer msgeventgroupid, ModelAndView mv) {
+    public ModelAndView toEventGroupEventPage(Integer msgeventgroupid, ModelAndView mv) {
         MsgEventGroup eventg = egs.findByMsgEventGroupId(msgeventgroupid);
         if (eventg != null) {
             mv.addObject("eventgroup", eventg);
@@ -119,23 +118,23 @@ public class EventGroupController {
         mv.setViewName("eventgroup/eventgroupeventpage");
         return mv;
     }
-    //showeventgroupeventlist
+
     @ResponseBody
     @RequestMapping(value = "/showeventgroupeventlist")
     public Map<String, Object> showEventGroupEventList(PageResult pr, Integer msgeventgroupid) {
         Pageable pageable = PageRequest.of(pr.getPage() - 1, pr.getRows(), Sort.Direction.DESC, "msgeventgroupid");
         return egs.listEventGroupEvent(pageable, msgeventgroupid);
     }
-    //showaddeventgroupeventlist
+
     @ResponseBody
     @RequestMapping(value = "/showaddeventgroupeventlist")
     public Map<String, Object> showAddEventGroupEventList(PageResult pr, String eventname,String eventcode,Integer msgeventgroupid) {
         Pageable pageable = PageRequest.of(pr.getPage() - 1, pr.getRows(), Sort.Direction.DESC, "msgeventgroupid");
         return egs.listAddEventGroupEvent(pageable, msgeventgroupid,eventname,eventcode);
     }
-    //addeventgroupeventpage
+
     @RequestMapping(value = "/addeventgroupeventpage")
-    public ModelAndView toAddEventGroupEventPage(@RequestParam(required = true) Integer msgeventgroupid, ModelAndView mv) {
+    public ModelAndView toAddEventGroupEventPage(Integer msgeventgroupid, ModelAndView mv) {
         MsgEventGroup eventg = egs.findByMsgEventGroupId(msgeventgroupid);
         if (eventg != null) {
             mv.addObject("eventgroup", eventg);
@@ -143,7 +142,7 @@ public class EventGroupController {
         mv.setViewName("eventgroup/addeventgroupeventpage");
         return mv;
     }
-    //addeventgroupeventtogroup
+
     @RequestMapping(value = "/addeventgroupeventtogroup")
     @ResponseBody
     public JsonResult addEventGroupEventToGroup(@RequestBody String[] ids,Integer msgeventgroupid) {//msgeventtypeid
