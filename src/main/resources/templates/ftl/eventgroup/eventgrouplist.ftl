@@ -44,9 +44,9 @@
             <th data-field="id">复选框</th>
             <th data-field="msgeventgroupid" data-visible="false">主键</th>
             <th data-field="paltform" data-formatter="formatter_platform" class="text-center col-xs-2 col-sm-2 col-md-2" >厂商</th>
-            <th data-field="eventgroupname" class="text-center col-md-3" >事件组事件</th>
-            <th data-field="eventliststr" class="text-center col-md-3">事件</th>
-            <th data-field="description"  class="text-center col-xs-4 col-sm-4 col-md-4" >说明</th>
+            <th data-field="eventgroupname" class="text-center col-md-2" >事件组事件</th>
+            <th data-field="eventliststr" class="text-center col-md-5">事件</th>
+            <th data-field="description"  class="text-center col-xs-3 col-sm-3 col-md-3" >说明</th>
         </tr>
         </thead>
     </table>
