@@ -27,7 +27,6 @@
           </form>
           <hr>
       </div>
-    </div>
 
     <button style="float: right;" type="button" id='deletePhonecard' class='btn btn-default' onclick='deleteEvent()'>删除</button>
 
@@ -53,8 +52,7 @@
         </tr>
         </thead>
     </table>
-      </div>
-    </div>
+</div>
 
     <script type="text/javascript">
         var temp;
