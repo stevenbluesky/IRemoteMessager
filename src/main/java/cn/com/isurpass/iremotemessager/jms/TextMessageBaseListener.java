@@ -18,6 +18,7 @@ public class TextMessageBaseListener implements MessageListener {
 
 	private static Log log = LogFactory.getLog(TextMessageBaseListener.class);
 	private static final String DEFAULT_TASK_QUEUE = "defaulttaskqueue";
+	private static final String EVENT_TYPE = "eventtype";
 	private static final String TYPE = "type";
 	private static final String PLATFORM = "platform";
 	private static final String DEVICE_ID = "deviceid";
@@ -49,15 +50,26 @@ public class TextMessageBaseListener implements MessageListener {
 				log.error(e.getMessage(), e);
 				return;
 			}
-			if (!json.containsKey(TYPE) || !json.containsKey(PLATFORM)) {
-				if (log.isInfoEnabled()) {
-					log.info("type or platform is null: "+tm.getText());
+
+			String type;
+			if (!json.containsKey(EVENT_TYPE)) {
+				if (log.isWarnEnabled()) {
+					log.warn("eventtype is null");
 				}
-				return;
+				if (!json.containsKey(TYPE) || !json.containsKey(PLATFORM)) {
+					if (log.isInfoEnabled()) {
+						log.info("type or platform is null: " + tm.getText());
+					}
+					return;
+				} else {
+					type = json.getString(TYPE);
+				}
+			} else {
+				type = json.getString(EVENT_TYPE);
 			}
 
 			EventData eventData = new EventData();
-			eventData.setEventtype(json.getString(TYPE));
+			eventData.setEventtype(type);
 			eventData.setPlatform(json.getInteger(PLATFORM));
 			eventData.setEventparameters(json);
 

@@ -100,7 +100,7 @@ public class Partition {
 		this.zwavedevice = zwavedevice;
 	}
 	@JSONField(serialize = false)
-	@OneToMany(targetEntity=ZWaveSubDevice.class,cascade={CascadeType.ALL, CascadeType.REMOVE},orphanRemoval=true,fetch= FetchType.LAZY,mappedBy="securitypartition")
+	@OneToMany(targetEntity=ZWaveSubDevice.class,cascade={CascadeType.ALL, CascadeType.REMOVE},orphanRemoval=true,fetch= FetchType.LAZY,mappedBy="partition")
 	@BatchSize(size=300)
 	public List<ZWaveSubDevice> getzWaveSubDevices() {
 		return zWaveSubDevices;
