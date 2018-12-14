@@ -1,7 +1,7 @@
 <#include "../_head0.ftl"/>
     <div class="col-md-12">
       <div class="row">
-          <div class="text-center"><h1>事件组定义列表</h1></div>
+          <div class="text-center"><h1>事件组列表</h1></div>
           <hr>
           <form id="searchForm" class="form-horizontal">
               <div class="form-group">
@@ -25,11 +25,12 @@
                                   style="width:100%;">查询</button>
                       </div>
                   </div>
-
+              </div>
           </form>
+          <hr>
       </div>
     </div>
-      <hr>
+
     <button style="float: right;" type="button" class='btn btn-default' onclick='deleteEventGroup()'>删除</button>
 
     <button style="float: right;" type="button" class='btn btn-default' onclick='modifyEventGroup()'>修改</button>

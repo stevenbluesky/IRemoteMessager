@@ -109,6 +109,7 @@ public class EventTypeService {
         event.setEventcode(eventtype.getEventcode());
         event.setDecription(eventtype.getDescription());
         eventtypedao.save(event);
+        JMSUtil.regist(Arrays.asList(eventtype.getEventcode()));
     }
 
     @Transactional
@@ -208,13 +209,11 @@ public class EventTypeService {
                 return false;
             }
 
-            ArrayList<String> eventCodeList = new ArrayList<>();
             for(List l : datalist){
-                String eventCode;
                 MsgContentTemplate m = new MsgContentTemplate();
                 m.setPlatform(Integer.parseInt((String) l.get(0)));
                 m.setMsgEventType(eventtypedao.findByEventcode((String) l.get(2)));
-                m.setEventcode(eventCode = (String) l.get(2));
+                m.setEventcode((String) l.get(2));
                 m.setLanguage((String) l.get(3));
                 m.setType(Integer.parseInt((String) l.get(4)));
                 m.setContenttemplate((String) l.get(5));
@@ -225,10 +224,7 @@ public class EventTypeService {
                     continue;
                 }
                 msgdao.save(m);
-                eventCodeList.add(eventCode);
             }
-
-            JMSUtil.regist(eventCodeList);
         } catch (IOException e) {
             e.printStackTrace();
             return false;

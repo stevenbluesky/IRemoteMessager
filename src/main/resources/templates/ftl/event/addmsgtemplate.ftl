@@ -1,6 +1,5 @@
 <#include "../_head0.ftl"/>
-    <div class="row-horizontal">
-        <div class="col-md-11">
+        <div class="col-md-12">
             <div class="row">
                 <div class="text-center"><h1>新增消息模板</h1></div>
                 <hr>
@@ -27,7 +26,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group" align="right">
                         <label for="platform"  class="col-xs-4 col-sm-4 col-md-4 control-label">厂商*</label>
-                        <div class="col-xs-5 col-sm-5 col-md-5">
+                        <div class="col-xs-4 col-sm-4 col-md-4">
                             <input type="hidden" name="msgeventtypeid" <#if event??>value="${event.msgeventtypeid?c}"</#if>>
                             <select name="platform" class="col-xs-12 col-sm-12 selectpicker col-md-12 form-control" data-live-search="true" id="platform">
 
@@ -38,7 +37,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group" align="right">
                         <label for="language"  class="col-xs-4 col-sm-4 col-md-4 control-label">语言*</label>
-                        <div class="col-xs-5 col-sm-5 col-md-5">
+                        <div class="col-xs-4 col-sm-4 col-md-4">
                             <select name="language" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true" id="language">
 
                             </select>
@@ -48,7 +47,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group" align="right">
                         <label for="type"  class="col-xs-4 col-sm-4 col-md-4 control-label">类型*</label>
-                        <div class="col-xs-5 col-sm-5 col-sm-5">
+                        <div class="col-xs-4 col-sm-4 col-sm-4">
                             <select name="type" class="col-xs-12 col-sm-12 col-md-12 selectpicker form-control" data-live-search="true" id="type">
 
                             </select>
@@ -58,7 +57,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group" align="right">
                         <label for="description"  class="col-xs-4 col-sm-4 col-md-4 control-label">模板*</label>
-                        <div class="col-xs-5 col-sm-5 col-md-5">
+                        <div class="col-xs-4 col-sm-4 col-md-4">
                             <textarea class="col-xs-12 col-sm-12 col-md-12 form-control" name="contenttemplate" id="contenttemplate"></textarea>
                         </div>
                     </div>
@@ -71,12 +70,11 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12" align="center">
                     <button id="btn-submit" class="btn btn-default"
-                            style="width:20%">确定</button>
+                            style="width:31%">确定</button>
                 </div>
             </div>
 
     </div>
-<div class="col-md-1"></div>
         <script type="text/javascript">
             $(document).ready(function() {
                 addPlatform();

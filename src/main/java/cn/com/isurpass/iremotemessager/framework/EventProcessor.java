@@ -158,7 +158,7 @@ public class EventProcessor implements Runnable{
 //	private <T> IMessageParser<T> createMessageParser(int type)
 //	{
 //		Object instance = createclassinstance(processclass.getParseclass()[type]);
-//		if (instance == null)
+//		if (instance == null)messageTarget
 //			return null;
 //		return (IMessageParser) instance;
 //	}

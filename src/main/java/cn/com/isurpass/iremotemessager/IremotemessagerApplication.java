@@ -14,7 +14,6 @@ import javax.servlet.MultipartConfigElement;
 @EnableJpaRepositories(basePackages = "cn.com.isurpass.iremotemessager.dao")
 @EntityScan(basePackages = "cn.com.isurpass.iremotemessager.domain")
 @SpringBootApplication
-@ComponentScan
 public class IremotemessagerApplication
 {
 	@SuppressWarnings("unused")
@@ -33,10 +32,10 @@ public class IremotemessagerApplication
 	@Bean
 	public MultipartConfigElement multipartConfigElement() {
 		MultipartConfigFactory factory = new MultipartConfigFactory();
-		//文件最大
-		factory.setMaxFileSize("10240KB"); //KB,MB
+		//文件最大20M
+		factory.setMaxFileSize("20480KB"); //KB,MB
 		/// 设置总上传数据总大小
-		factory.setMaxRequestSize("102400KB");
+		factory.setMaxRequestSize("20480KB");
 		return factory.createMultipartConfig();
 	}
 }

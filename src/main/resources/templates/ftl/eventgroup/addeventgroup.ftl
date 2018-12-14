@@ -1,6 +1,5 @@
 <#include "../_head0.ftl"/>
-    <div class="row-horizontal">
-        <div class="col-md-11">
+        <div class="col-md-12">
             <form id="defaultForm" action="addeventgroupdata" method="POST" class="form-horizontal">
                 <div class="text-center"><h1>新增事件组</h1></div>
                 <hr>
@@ -36,20 +35,20 @@
                 </div>
             </form>
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2"></div>
-                <div class="col-xs-3 col-sm-3 col-md-3" align="right">
+                <div class="col-xs-4 col-sm-4 col-md-4"></div>
+                <div class="col-xs-2 col-sm-2 col-md-2" align="right">
                     <button id="btn-submit" class="btn btn-default"
-                            style="width:30%">确定</button>
+                            style="width:100%">确定</button>
                 </div>
-                <div class="col-xs-3 col-sm-3 col-md-3" align="right">
+                <div class="col-xs-1 col-sm-1 col-md-1"></div>
+                <div class="col-xs-2 col-sm-2 col-md-2" align="right">
                     <button id="btn-cancel" class="btn btn-default"
-                            style="width:30%">取消</button>
+                            style="width:100%">取消</button>
                 </div>
                 <div class="col-xs-4 col-sm-4 col-md-4"></div>
             </div>
 
     </div>
-<div class="col-md-1"></div>
         <script type="text/javascript">
             $(document).ready(function() {
                 addPlatform();

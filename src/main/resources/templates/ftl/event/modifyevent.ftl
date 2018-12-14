@@ -1,6 +1,6 @@
 <#include "../_head0.ftl"/>
     <div class="row-horizontal">
-        <div class="col-md-11">
+        <div class="col-md-12">
             <form id="defaultForm" class="form-horizontal">
                 <div class="text-center"><h1>修改事件</h1></div>
                 <hr>
@@ -35,18 +35,18 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-2 col-sm-2 col-md-2"></div>
-                    <div class="col-xs-3 col-sm-3 col-md-3" align="right">
-                        <button id="btn-submit" class="btn btn-default" style="width:30%">确定</button>
+                    <div class="col-xs-4 col-sm-4 col-md-4"></div>
+                    <div class="col-xs-2 col-sm-2 col-md-2" align="right">
+                        <button id="btn-submit" class="btn btn-default" style="width:100%">确定</button>
                     </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3" align="right">
-                        <button id="btn-cancel" class="btn btn-default" style="width:30%">取消</button>
+                    <div class="col-xs-1 col-sm-1 col-md-1"></div>
+                    <div class="col-xs-2 col-sm-2 col-md-2" align="right">
+                        <button id="btn-cancel" class="btn btn-default" style="width:100%">取消</button>
                     </div>
                     <div class="col-xs-4 col-sm-4 col-md-4"></div>
                 </div>
             </form>
     </div>
-<div class="col-md-1"></div>
         <script type="text/javascript">
             $("#btn-cancel").click(function(r){
                 $("input").val("");
