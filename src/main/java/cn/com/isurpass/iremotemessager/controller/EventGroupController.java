@@ -155,11 +155,12 @@ public class EventGroupController {
     }
     @RequestMapping(value = "/deleteeventgroupevents")
     @ResponseBody
-    public JsonResult deleteEventGroupEvents(@RequestBody String[] ids) {//msgeventtypeid
+    public JsonResult deleteEventGroupEvents(@RequestBody String[] ids) {
         try {
             egs.deleteEventGroupEvents(ids);
             return new JsonResult(1, "删除成功！");
         } catch (Exception e) {
+            e.printStackTrace();
             return new JsonResult(-1, "删除失败！");
         }
     }
