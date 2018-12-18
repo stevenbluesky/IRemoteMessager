@@ -5,14 +5,6 @@ MySQL - 5.5.49
 */
 /*!40101 SET NAMES utf8 */;
 
-CREATE TABLE `msg_eventtype` (
-  `msgeventtypeid` int(9) NOT NULL AUTO_INCREMENT,
-  `eventtypename` varchar(256) NOT NULL,
-  `eventcode` varchar(128) NOT NULL,
-  `decription` varchar(1024) DEFAULT NULL,
-  `createtime` datetime NOT NULL,
-  PRIMARY KEY (`msgeventtypeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8; 
 insert into `msg_eventtype` (`msgeventtypeid`, `eventtypename`, `eventcode`, `decription`, `createtime`) values('18','手机注册和重置密码随机码','phoneuserrandcode','手机注册和重置密码随机码','2018-11-23 15:11:38');
 insert into `msg_eventtype` (`msgeventtypeid`, `eventtypename`, `eventcode`, `decription`, `createtime`) values('19','邮箱注册随机码','mailuserrandcode','邮箱注册随机码','2018-11-23 15:12:13');
 insert into `msg_eventtype` (`msgeventtypeid`, `eventtypename`, `eventcode`, `decription`, `createtime`) values('20','邮箱用户密码找回','mailresetpassword','邮箱用户密码找回','2018-11-23 15:12:53');

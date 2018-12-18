@@ -5,15 +5,6 @@ MySQL - 5.5.49
 */
 /*!40101 SET NAMES utf8 */;
 
-CREATE TABLE `msg_eventgroupevent` (
-  `msgeventgroupeventid` int(9) NOT NULL AUTO_INCREMENT,
-  `msgeventgroupid` int(9) NOT NULL,
-  `platform` int(9) NOT NULL,
-  `msgeventtypeid` int(9) NOT NULL,
-  `eventcode` varchar(128) NOT NULL,
-  `createtime` datetime NOT NULL,
-  PRIMARY KEY (`msgeventgroupeventid`)
-) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8;
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('37','16','0','21','passwordchanged','2018-12-14 16:55:37');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('38','16','0','22','userinfochanged','2018-12-14 16:55:37');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('39','16','0','23','phoneuserattributechanged','2018-12-14 16:55:37');
@@ -25,12 +16,8 @@ insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `p
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('45','30','0','123','partitionarmwithcode','2018-12-14 17:11:29');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('46','30','0','116','arm','2018-12-14 17:12:03');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('47','30','0','117','inhomearm','2018-12-14 17:12:03');
-insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('48','29','0','18','phoneuserrandcode','2018-12-14 17:16:23');
-insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('49','29','0','19','mailuserrandcode','2018-12-14 17:16:24');
-insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('50','29','0','20','mailresetpassword','2018-12-14 17:16:24');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('51','29','0','24','invation','2018-12-14 17:16:24');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('52','29','0','94','bulliedopenlock','2018-12-14 17:16:45');
-insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('53','29','0','124','smsrunout','2018-12-14 17:16:54');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('54','21','0','38','battery','2018-12-14 17:21:00');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('55','21','0','98','lowbattery','2018-12-14 17:21:00');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('56','17','0','25','remoteonline','2018-12-14 17:23:59');
@@ -87,7 +74,6 @@ insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `p
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('108','28','0','90','passworderror5times','2018-12-14 17:43:13');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('109','28','0','91','lockkeyerror','2018-12-14 17:43:13');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('110','28','0','92','lockkeyevent','2018-12-14 17:43:13');
-insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('111','28','0','95','dscalarm','2018-12-14 17:43:13');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('112','22','0','34','devicestatus','2018-12-14 17:48:09');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('113','22','0','42','subdevicestatus','2018-12-14 17:48:09');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('114','22','0','47','disabledevice','2018-12-14 17:48:09');
@@ -117,3 +103,8 @@ insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `p
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('138','22','0','110','unalarmbulliedopenlock','2018-12-14 17:50:41');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('139','22','0','111','unalarmlocklockerror','2018-12-14 17:50:41');
 insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('140','22','0','112','unalarmlockkeyevent','2018-12-14 17:50:41');
+insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('141','31','0','18','phoneuserrandcode','2018-12-17 10:06:02');
+insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('142','32','0','19','mailuserrandcode','2018-12-17 10:07:22');
+insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('143','32','0','20','mailresetpassword','2018-12-17 10:07:22');
+insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('144','31','0','124','smsrunout','2018-12-17 10:07:48');
+insert into `msg_eventgroupevent` (`msgeventgroupeventid`, `msgeventgroupid`, `platform`, `msgeventtypeid`, `eventcode`, `createtime`) values('145','22','0','99','recovery','2018-12-17 10:56:33');

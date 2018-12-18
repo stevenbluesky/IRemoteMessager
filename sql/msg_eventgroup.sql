@@ -5,14 +5,6 @@ MySQL - 5.5.49
 */
 /*!40101 SET NAMES utf8 */;
 
-CREATE TABLE `msg_eventgroup` (
-  `msgeventgroupid` int(9) NOT NULL AUTO_INCREMENT,
-  `platform` int(9) NOT NULL,
-  `eventgroupname` varchar(256) NOT NULL,
-  `decription` varchar(1024) DEFAULT NULL,
-  `createtime` datetime NOT NULL,
-  PRIMARY KEY (`msgeventgroupid`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8; 
 insert into `msg_eventgroup` (`msgeventgroupid`, `platform`, `eventgroupname`, `decription`, `createtime`) values('16','0','用户信息事件组','','2018-12-14 16:51:37');
 insert into `msg_eventgroup` (`msgeventgroupid`, `platform`, `eventgroupname`, `decription`, `createtime`) values('17','0','设备信息事件组','','2018-12-14 16:57:58');
 insert into `msg_eventgroup` (`msgeventgroupid`, `platform`, `eventgroupname`, `decription`, `createtime`) values('18','0','二级告警事件组','','2018-12-14 16:58:08');
@@ -28,3 +20,5 @@ insert into `msg_eventgroup` (`msgeventgroupid`, `platform`, `eventgroupname`, `
 insert into `msg_eventgroup` (`msgeventgroupid`, `platform`, `eventgroupname`, `decription`, `createtime`) values('28','0','一级告警事件组','','2018-12-14 17:02:52');
 insert into `msg_eventgroup` (`msgeventgroupid`, `platform`, `eventgroupname`, `decription`, `createtime`) values('29','0','短信邮件事件组','','2018-12-14 17:04:08');
 insert into `msg_eventgroup` (`msgeventgroupid`, `platform`, `eventgroupname`, `decription`, `createtime`) values('30','0','安防状态事件组','','2018-12-14 17:04:19');
+insert into `msg_eventgroup` (`msgeventgroupid`, `platform`, `eventgroupname`, `decription`, `createtime`) values('31','0','短信事件组','','2018-12-17 10:03:42');
+insert into `msg_eventgroup` (`msgeventgroupid`, `platform`, `eventgroupname`, `decription`, `createtime`) values('32','0','邮件事件组','','2018-12-17 10:03:52');
