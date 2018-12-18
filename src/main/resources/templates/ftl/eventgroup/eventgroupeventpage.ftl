@@ -29,7 +29,7 @@
         <thead>
         <tr>
             <th data-field="id">复选框</th>
-            <th data-field="msgeventtypeid" data-visible="false">主键</th>
+            <th data-field="msgeventgroupeventid" data-visible="false">主键</th>
             <th data-field="eventname" class="text-center">事件名称</th>
             <th data-field="eventcode" class="text-center">事件代码</th>
             <th data-field="description"  class="text-center">说明</th>
@@ -105,7 +105,7 @@
             var pid = $("#table").bootstrapTable('getSelections');
             var ids = [];
             for (var index in pid) {
-                ids.push(pid[index].msgeventtypeid);
+                ids.push(pid[index].msgeventgroupeventid);
             }
             if (ids.length == 0) {
                 return new Array("-1");
