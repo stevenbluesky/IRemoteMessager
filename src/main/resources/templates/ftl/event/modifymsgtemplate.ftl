@@ -59,7 +59,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group" align="right">
                         <label for="description"  class="col-xs-4 col-sm-4 col-md-4 control-label">模板*</label>
-                        <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="col-xs-8 col-sm-8 col-md-8">
                             <textarea class="col-xs-12 col-sm-12 col-md-12 form-control" name="contenttemplate" id="contenttemplate" ><#if msg??>${msg.contenttemplate}</#if></textarea>
                         </div>
                     </div>

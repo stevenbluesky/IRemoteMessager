@@ -130,6 +130,7 @@ public class MsgEventGroupService {
             event.setEventname(et.getEventtypename());
             event.setEventcode(et.getEventcode());
             event.setDescription(et.getDecription());
+            event.setMsgeventgroupeventid(m.getMsgeventgroupeventid());
             resultlist.add(event);
         }
         Map<String, Object> map = new HashMap<>();
@@ -141,8 +142,7 @@ public class MsgEventGroupService {
     public void deleteEventGroupEvents(String[] ids) {
         if(ids!=null&&ids.length>0){
             for(String id:ids){
-                MsgEventType event = eventdao.findByMsgeventtypeid(Integer.parseInt(id));
-                MsgEventGroupEvent ege = msgEventGroupEventDao.findByMsgEventType(event);
+                MsgEventGroupEvent ege = msgEventGroupEventDao.findByMsgeventgroupeventid(Integer.parseInt(id));
                 msgEventGroupEventDao.delete(ege);
             }
         }

@@ -32,11 +32,11 @@
         <tr>
             <th data-field="id">复选框</th>
             <th data-field="msgcontenttemplateid" data-visible="false">主键</th>
-            <th data-field="platform" data-formatter="formatter_platform" class="text-center">厂商</th>
-            <th data-field="type" data-formatter="formatter_type" class="text-center">类型</th>
-            <th data-field="language" data-formatter="formatter_language" class="text-center">语言</th>
-            <th data-field="contenttemplate" class="text-center">模板</th>
-            <th data-field="createtime" data-formatter="formatter_date" class="text-center">创建时间</th>
+            <th data-field="platform" data-formatter="formatter_platform" class="text-center col-md-1">厂商</th>
+            <th data-field="type" data-formatter="formatter_type" class="text-center col-md-1">类型</th>
+            <th data-field="language" data-formatter="formatter_language" class="text-center  col-md-1">语言</th>
+            <th data-field="contenttemplate" class="text-center col-md-7">模板</th>
+            <th data-field="createtime" data-formatter="formatter_date" class="text-center col-md-2">创建时间</th>
         </tr>
         </thead>
     </table>

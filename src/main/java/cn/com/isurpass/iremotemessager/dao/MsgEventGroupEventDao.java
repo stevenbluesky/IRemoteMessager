@@ -26,4 +26,6 @@ public interface MsgEventGroupEventDao extends CrudRepository<MsgEventGroupEvent
     Integer findMsgPushMethodId(@Param("eventcode")String eventCode, @Param("platform")Integer platform);
 
     MsgEventGroupEvent findByMsgEventType(MsgEventType event);
+
+    MsgEventGroupEvent findByMsgeventgroupeventid(int id);
 }

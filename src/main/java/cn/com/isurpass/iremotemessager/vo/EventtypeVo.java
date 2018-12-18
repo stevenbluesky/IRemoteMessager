@@ -13,6 +13,7 @@ public class EventtypeVo {
     private String eventcode;
     private Date createtime;
     private String description;
+    private Integer msgeventgroupeventid;
 
     public Integer getMsgeventtypeid() {
         return msgeventtypeid;
@@ -52,5 +53,13 @@ public class EventtypeVo {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    public Integer getMsgeventgroupeventid() {
+        return msgeventgroupeventid;
+    }
+
+    public void setMsgeventgroupeventid(Integer msgeventgroupeventid) {
+        this.msgeventgroupeventid = msgeventgroupeventid;
     }
 }
