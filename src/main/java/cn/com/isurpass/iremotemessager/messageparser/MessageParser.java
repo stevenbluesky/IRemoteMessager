@@ -1,8 +1,15 @@
 package cn.com.isurpass.iremotemessager.messageparser;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
+import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
+import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
+import freemarker.template.TemplateNotFoundException;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
@@ -18,11 +25,14 @@ import freemarker.template.Template;
 public class MessageParser
 {
 	private static Log log = LogFactory.getLog(MessageParser.class);
-	
+    private static final String REPORT_TIME = "reporttime";
+    private static final String TIME = "time";
+
 	private static Configuration freemarkercfg ;
 	private String language ;
 	private EventData data;
 	private MsgTemplateType type ;
+	private JPushNotificationData jPushNotificationData;
 	
 	static 
 	{
@@ -38,24 +48,29 @@ public class MessageParser
 		this.language = language;
 		this.type = type;
 	}
-	
-	
+
+	public MessageParser(EventData data, String language, MsgTemplateType type, JPushNotificationData jPushNotificationData) {
+		this(data, language, type);
+		this.jPushNotificationData = jPushNotificationData;
+	}
+
 	public String getMessage()
 	{
-		try
-		{
+		try {
 			Template template = freemarkercfg.getTemplate(DBTemplateLoader.TEMPLATE_KEY_TEMPLATE_NAME);
-			
+
 			String tn = FreeMarkerTemplateUtils.processTemplateIntoString(template, createtemplatename());
-			
+
 			template = freemarkercfg.getTemplate(tn);
 			//template.setNumberFormat("#");
-			
-			return FreeMarkerTemplateUtils.processTemplateIntoString(template, createparameter());
-		}
-		catch (Throwable t)
-		{
-			log.error(t.getMessage() , t);
+
+			return IRemoteUtils.replaceBlank(FreeMarkerTemplateUtils.processTemplateIntoString(template, createparameter()));
+		} catch (TemplateNotFoundException e) {
+			if (log.isWarnEnabled()) {
+				log.warn("TemplateNotFoundException:" + e.getTemplateName());
+			}
+		} catch (Throwable t) {
+			log.error(t.getMessage(), t);
 		}
 		
 		return null;
@@ -74,27 +89,56 @@ public class MessageParser
 	
 	private Map<String , Object> createparameter()
 	{
-		Map<String , Object> m = new HashMap<String , Object>() ;
+		Map<String , Object> m = new HashMap<>() ;
 		
 		m.put("eventcode",data.getEventtype());
 		m.put("platform",String.valueOf(data.getPlatform()));
 		m.put("language",language);
 		m.put("type",String.valueOf(type.ordinal()));
-		
+
+        appendParameterTime(m);
+
 		if ( data.getEventparameters() != null )
-			for ( String k : data.getEventparameters().keySet())
-				m.put(k, data.getEventparameters().get(k));
-		
+            for (Map.Entry<String, Object> entry : data.getEventparameters().entrySet()) {
+                m.put(entry.getKey(), entry.getValue());
+            }
+
 		if ( data.getDomainobjects() != null )
-			for ( String k : data.getDomainobjects().keySet())
-				m.put(k, data.getDomainobjects().get(k));
-		
+			for (Map.Entry<String, Object> entry : data.getDomainobjects().entrySet()) {
+				if (entry.getValue() != null) {
+					m.put(entry.getKey(), entry.getValue());
+				}
+			}
+
 		if ( log.isInfoEnabled())
 			log.info(JSON.toJSONString(m));
 		return m ;
 	}
-	
-	public String getMessageforLog()
+
+    private void appendParameterTime(Map<String, Object> m) {
+	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+	    Iterator<Map.Entry<String, Object>> iterator = data.getEventparameters().entrySet().iterator();
+	    while (iterator.hasNext()) {
+            Map.Entry<String, Object> entry = iterator.next();
+            if (REPORT_TIME.equals(entry.getKey())) {
+                String value = new String(entry.getValue().toString());
+                if ("0".equals(value)) {
+                    m.put(TIME, format.format(new Date()));
+                } else {
+                    m.put(TIME,
+                            StringUtils.isNumeric(value)
+                            ? format.format(new Date(Long.valueOf(value.length() == 10 ? value + "000" : value)))
+                            : value
+                    );
+                }
+                return;
+            }
+        }
+        m.put(TIME, format.format(new Date()));
+    }
+
+    public String getMessageforLog()
 	{
 		return getMessage();
 	}

@@ -2,6 +2,7 @@ package cn.com.isurpass.iremotemessager.targetdecision;
 
 
 import cn.com.isurpass.iremotemessager.domain.User;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author jwzh
  */
 @Component("cn.com.isurpass.iremotemessager.targetdecision.GatewayOwnerTargetDecision")
+@Scope("prototype")
 public class GatewayOriginalOwnerTargetDecision extends TargetDecisionBase {
 
     @Override

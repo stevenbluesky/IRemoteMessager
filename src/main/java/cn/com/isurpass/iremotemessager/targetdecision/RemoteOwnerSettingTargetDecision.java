@@ -4,17 +4,20 @@ import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import cn.com.isurpass.iremotemessager.domain.Gateway;
 import cn.com.isurpass.iremotemessager.domain.User;
 import cn.com.isurpass.iremotemessager.service.ZwaveDeviceShareService;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 设置网关主人目标决策类
  */
 @Component("cn.com.isurpass.iremotemessager.targetdecision.RemoteOwnerSettingTargetDecision")
+@Scope("prototype")
 public class RemoteOwnerSettingTargetDecision extends TargetDecisionBase {
     @Resource
     private ZwaveDeviceShareService zwaveDeviceShareService;

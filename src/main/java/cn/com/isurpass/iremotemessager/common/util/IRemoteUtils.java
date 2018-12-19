@@ -7,6 +7,8 @@ import org.apache.commons.lang.StringUtils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class IRemoteUtils {
     public static boolean isNotBlank(Integer values){
@@ -69,5 +71,16 @@ public class IRemoteUtils {
         for ( int i = 0 ; i < ia.length; i ++ )
             ita[i] = ia[i] ;
         return ita;
+    }
+
+    public static String replaceBlank(String str) {
+        String dest = "";
+        if (str != null) {
+            Pattern p = Pattern.compile("\t|\r|\n");
+            Matcher m = p.matcher(str);
+            dest = m.replaceAll("");
+        }
+
+        return dest;
     }
 }

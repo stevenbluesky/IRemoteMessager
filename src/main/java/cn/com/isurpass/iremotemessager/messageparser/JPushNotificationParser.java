@@ -35,7 +35,7 @@ public class JPushNotificationParser implements IMessageParser<JPushNotification
 		String alart = mp.getMessage();
 		
 
-		mp = new MessageParser(data,targetdata.getLanguage(),MsgTemplateType.json);
+		mp = new MessageParser(data,targetdata.getLanguage(),MsgTemplateType.json, targetdata);
 		String extdata = mp.getMessage();
 		
 		Payload py = JPushHelper.createNotification(targetdata.getAliases(), alart ,JSONObject.parseObject(extdata),targetdata);

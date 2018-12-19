@@ -1,5 +1,6 @@
 package cn.com.isurpass.iremotemessager.methoddecision;
 
+import cn.com.isurpass.iremotemessager.SpringUtil;
 import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
 import cn.com.isurpass.iremotemessager.domain.Gateway;
 import cn.com.isurpass.iremotemessager.domain.NotificationSetting;
@@ -8,6 +9,7 @@ import cn.com.isurpass.iremotemessager.service.GatewayService;
 import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -18,15 +20,17 @@ import java.util.List;
  * @author jwzh
  */
 @Component("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationByPowerStatusMethodDecision")
+@Scope("prototype")
 public class JPushNotificationByPowerStatusMethodDecision extends MethodDecisionBase {
     private String deviceid;
-    @Resource
     private InnerNotification innerNotification;
 
     @Override
     public void setMsgInfo(EventData data, List<User> msguser) {
         deviceid = data.getEventparameters().getString("deviceid");
         super.setMsgInfo(data, msguser);
+
+        innerNotification = (InnerNotification) SpringUtil.getBean("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationByPowerStatusMethodDecision$InnerNotification");
 
         innerNotification.setMsgInfo(data, msguser);
     }
@@ -42,6 +46,7 @@ public class JPushNotificationByPowerStatusMethodDecision extends MethodDecision
     }
 
     @Component
+    @Scope("prototype")
     private class InnerNotification extends JPushNotificationMethodDecision {
         @Resource
         private GatewayService gatewayService;

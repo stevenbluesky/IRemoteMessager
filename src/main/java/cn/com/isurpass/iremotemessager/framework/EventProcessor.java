@@ -45,7 +45,7 @@ public class EventProcessor implements Runnable{
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional
 	public void run()
 	{
 		if (!initProcessclass()) {

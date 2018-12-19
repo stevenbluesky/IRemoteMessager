@@ -1,21 +1,21 @@
 package cn.com.isurpass.iremotemessager.targetdecision;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Resource;
-
 import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import cn.com.isurpass.iremotemessager.domain.*;
+import cn.com.isurpass.iremotemessager.framework.IMessageTargetDecision;
 import cn.com.isurpass.iremotemessager.service.*;
+import cn.com.isurpass.iremotemessager.vo.EventData;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.alibaba.fastjson.JSONObject;
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 
-import cn.com.isurpass.iremotemessager.framework.IMessageTargetDecision;
-import cn.com.isurpass.iremotemessager.vo.EventData;
 
 public abstract class TargetDecisionBase implements IMessageTargetDecision 
 {
@@ -64,11 +64,11 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 	{
 		this.data = data;
 		this.eventparameters = data.getEventparameters();
-		data.setDomainobjects(domainobjects);;
+		data.setDomainobjects(domainobjects);
 		
 		initDomainObject();
 
-		return descision();
+		return distinctUserListById(descision());
 	}
 
 	protected abstract List<User> descision();
@@ -100,7 +100,7 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 			gateway = gatewayservice.findById(camera.getDeviceid());
 			phoneuser = userservice.findById(gateway.getPhoneuserid());
 		}
-		if (eventparameters.containsKey("deviceid") && eventparameters.getInteger("deviceid") != 0) {
+		if (gateway == null && eventparameters.containsKey("deviceid") && StringUtils.isNotBlank(eventparameters.getString("deviceid"))) {
 			gateway = gatewayservice.findById(eventparameters.getString("deviceid"));
 			phoneuser = userservice.findById(gateway.getPhoneuserid());
 		}
@@ -152,5 +152,25 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 		}
 
 		return userList;
+	}
+
+	private List<User> distinctUserListById(List<User> userList){
+		HashSet<String> set = new HashSet();
+		ArrayList<User> list = new ArrayList<>();
+
+		Iterator<User> iterator = userList.iterator();
+		String key;
+		while (iterator.hasNext()) {
+			User user = iterator.next();
+			if (!set.contains(key = distinctKey(user))) {
+				list.add(user);
+				set.add(key);
+			}
+		}
+		return list;
+	}
+
+	private String distinctKey(User user){
+		return user.getPhoneuserid() + user.getCountrycode() + user.getPhonenumber()+user.getMail();
 	}
 }

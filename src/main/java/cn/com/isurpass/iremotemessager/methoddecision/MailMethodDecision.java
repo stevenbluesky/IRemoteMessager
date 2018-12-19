@@ -2,6 +2,7 @@ package cn.com.isurpass.iremotemessager.methoddecision;
 
 import cn.com.isurpass.iremotemessager.domain.User;
 import cn.com.isurpass.iremotemessager.vo.MailData;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Component("cn.com.isurpass.iremotemessager.methoddecision.MailMethodDecision")
+@Scope("prototype")
 public class MailMethodDecision extends MethodDecisionBase {
     private boolean globalCheck = false;
 

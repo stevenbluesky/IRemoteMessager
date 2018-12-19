@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.com.isurpass.iremotemessager.domain.User;
 import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
  * @author jwzh
  */
 @Component("cn.com.isurpass.iremotemessager.targetdecision.FamilyandFriendsTargetDecision")
+@Scope("prototype")
 public class FamilyandFriendsTargetDecision extends FamilyMemeberTargetDecision
 {
 

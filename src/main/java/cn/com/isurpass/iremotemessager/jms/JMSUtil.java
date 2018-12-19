@@ -11,19 +11,17 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.MessageConsumer;
-import javax.jms.Session;
+import javax.jms.*;
 import java.util.Collection;
+import java.util.Iterator;
 
 public class JMSUtil {
 
     private static Log log = LogFactory.getLog(JMSUtil.class);
     private static final TextMessageBaseListener textMessageBaseListener = new TextMessageBaseListener(EventProcessor.class);
-    private static final String BROKER_URL = "failover://tcp://192.168.5.144:61616";
-    private static final String ACTIVEMQ_USER_NAME = "jwzh908";
-    private static final String ACTIVEMQ_PASSWORD = "jwzh@321";
+    private static final String BROKER_URL = "failover://tcp://192.168.5.145:61616";
+    private static final String ACTIVEMQ_USER_NAME = "jwzh";
+    private static final String ACTIVEMQ_PASSWORD = "JWZH1109testsvr";
     private static PooledConnection conn;
     private static PooledConnectionFactory poolFactory;
     private static Session session;
@@ -57,20 +55,38 @@ public class JMSUtil {
             if (session == null) {
                 session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
             }
-            regist(IRemoteUtils.toString(destList, ","), session);
+
+            Iterator<String> iterator = destList.iterator();
+            while (iterator.hasNext()) {
+                String dest = iterator.next();
+
+                Destination topic = session.createTopic(dest);
+                MessageConsumer consumer  = session.createConsumer(topic);
+                consumer.setMessageListener(textMessageBaseListener);
+            }
         } catch (JMSException e) {
+            try {
+                session.close();
+            } catch (JMSException e1) {
+                log.warn(e.getMessage(), e);
+            }
             log.warn(e.getMessage(), e);
         }
     }
 
-    private static void regist(String dest, Session session) throws JMSException {
-        if (StringUtils.isBlank(dest)) {
-            return;
-        }
+    public static void commitMessage(String content, String topic){
+        try {
+            if (session == null) {
+                session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            }
+            Destination destination = session.createTopic(topic);
+            MessageProducer producer = session.createProducer(destination);
 
-        Destination topic = session.createTopic(dest);
-        MessageConsumer consumer  = session.createConsumer(topic);
-        consumer.setMessageListener(textMessageBaseListener);
+            TextMessage textMessage = session.createTextMessage(content);
+            producer.send(textMessage);
+        } catch (JMSException e) {
+            log.warn(e.getMessage(), e);
+        }
     }
 
     public static void close(){

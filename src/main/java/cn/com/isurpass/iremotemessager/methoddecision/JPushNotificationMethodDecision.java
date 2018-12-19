@@ -7,6 +7,7 @@ import cn.com.isurpass.iremotemessager.service.NotificationSettingService;
 import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationMethodDecision")
+@Scope("prototype")
 public class JPushNotificationMethodDecision extends MethodDecisionBase {
     private List<NotificationSetting> notificationsettings = new ArrayList<>();
     private List<JPushMessageData> jpushmessagedata = new ArrayList<>();
@@ -56,7 +58,6 @@ public class JPushNotificationMethodDecision extends MethodDecisionBase {
             jpushmessagedata.add(super.createJPushMessageData(msglst));
         }
     }
-
 
     @Override
     public List<JPushMessageData> getJPushMessageData()

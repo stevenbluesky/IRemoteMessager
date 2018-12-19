@@ -1,5 +1,6 @@
 package cn.com.isurpass.iremotemessager.methoddecision;
 
+import cn.com.isurpass.iremotemessager.SpringUtil;
 import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
 import cn.com.isurpass.iremotemessager.domain.NotificationSetting;
 import cn.com.isurpass.iremotemessager.domain.User;
@@ -7,6 +8,11 @@ import cn.com.isurpass.iremotemessager.service.NotificationSettingService;
 import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
+import com.netflix.discovery.converters.Auto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -18,16 +24,18 @@ import java.util.List;
  * @author jwzh
  */
 @Component("cn.com.isurpass.iremotemessager.methoddecision.NotificationTimeWindownSettingMethodDecision")
+@Scope("prototype")
 public class NotificationTimeWindownSettingMethodDecision extends MethodDecisionBase
 {
-	@Resource
 	private InnerNotification innerNotification;
-	@Resource
 	private InnerSms innerSms;
 
 	@Override
 	public void setMsgInfo(EventData data, List<User> msguser) {
 		super.setMsgInfo(data, msguser);
+
+		innerNotification = (InnerNotification) SpringUtil.getBean("cn.com.isurpass.iremotemessager.methoddecision.NotificationTimeWindownSettingMethodDecision$InnerNotification");
+		innerSms = (InnerSms) SpringUtil.getBean("cn.com.isurpass.iremotemessager.methoddecision.NotificationTimeWindownSettingMethodDecision$InnerSms");
 
 		innerNotification.setMsgInfo(data, msguser);
 		innerSms.setMsgInfo(data, msguser);
@@ -46,7 +54,8 @@ public class NotificationTimeWindownSettingMethodDecision extends MethodDecision
 	}
 
 	@Component
-	private class InnerNotification extends JPushNotificationMethodDecision{
+	@Scope("prototype")
+	public class InnerNotification extends JPushNotificationMethodDecision{
 		@Override
 		protected boolean issettingvalid(NotificationSetting ns){
 			return NotificationTimeWindownSettingMethodDecision.this.isSettingValid(ns);
@@ -54,7 +63,8 @@ public class NotificationTimeWindownSettingMethodDecision extends MethodDecision
 	}
 
 	@Component
-	private class InnerSms extends SmsMethodDecision {
+	@Scope("prototype")
+	public class InnerSms extends SmsMethodDecision {
 		@Resource
 		private NotificationSettingService notificationSettingService;
 

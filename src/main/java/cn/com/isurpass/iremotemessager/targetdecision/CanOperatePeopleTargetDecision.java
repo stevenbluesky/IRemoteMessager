@@ -3,6 +3,7 @@ package cn.com.isurpass.iremotemessager.targetdecision;
 import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
 import cn.com.isurpass.iremotemessager.domain.*;
 import cn.com.isurpass.iremotemessager.service.ZwaveDeviceShareService;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import java.util.List;
  * @author jwzh
  */
 @Component("cn.com.isurpass.iremotemessager.targetdecision.CanOperatePeopleTargetDecision")
+@Scope("prototype")
 public class CanOperatePeopleTargetDecision extends FamilyandFriendsTargetDecision {
     @Resource
     protected ZwaveDeviceShareService zwaveDeviceShareService;

@@ -6,6 +6,7 @@ import java.util.List;
 import cn.com.isurpass.iremotemessager.domain.User;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
  * @author jwzh
  */
 @Component("cn.com.isurpass.iremotemessager.targetdecision.OwnerTargetDecision")
+@Scope("prototype")
 public class OwnerTargetDecision extends TargetDecisionBase 
 {
 	private static Log log = LogFactory.getLog(OwnerTargetDecision.class);

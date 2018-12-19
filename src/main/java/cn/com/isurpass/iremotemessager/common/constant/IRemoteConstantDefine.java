@@ -85,4 +85,8 @@ public class IRemoteConstantDefine {
     public static final String SYSTEMPARAMETER_SUPPORT_MAIL_TOADDRESS = "support_mail_toaddress";
 
     public static final String QUARTZ_GROUP_DEVICE_TIMER = "QUARTZ_GROUP_DEVICE_TIMER";
+
+    public static final String SMS_COUNT = "smscount";
+    public static final String KEY_DEFAULT_LANGUAGE = "defaultlanguage";
+    public static final String DEFAULT_LANGUAGE = "en_US";
 }

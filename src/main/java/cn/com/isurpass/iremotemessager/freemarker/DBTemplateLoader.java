@@ -50,10 +50,12 @@ public class DBTemplateLoader implements TemplateLoader
 	}
 
     private String splitName(String name) {
-	    name = name.substring(0, name.lastIndexOf("_"));
-	    name = name.substring(0, name.lastIndexOf("_"));
-
-	    return name;
+		if (name.startsWith(TEMPLATE_KEY_TEMPLATE_NAME)){
+			return TEMPLATE_KEY_TEMPLATE_NAME;
+		}
+        return name.endsWith("}")
+                ? name
+                : splitName(name.substring(0, name.lastIndexOf("_")));
     }
 
     @Override

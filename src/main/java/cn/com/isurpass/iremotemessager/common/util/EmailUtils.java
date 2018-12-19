@@ -4,6 +4,7 @@ import cn.com.isurpass.iremotemessager.SpringUtil;
 import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
 import cn.com.isurpass.iremotemessager.service.SystemParameterService;
 import com.sun.mail.util.MailSSLSocketFactory;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -44,10 +45,26 @@ public class EmailUtils {
     }
 
     public static boolean sendEmail(String[] toUsers, String subject, String content) {
+        if(!checkMails(toUsers) || StringUtils.isBlank(subject) || StringUtils.isBlank(content)){
+            log.info("Send mail failed, toUser, subject or content is null!");
+            return false;
+        }
         return sendEmail(subject, toUsers, null, content, null);
     }
 
-   /**
+    private static boolean checkMails(String[] toUsers) {
+        if (toUsers == null) {
+            return false;
+        }
+        for (String toUser : toUsers) {
+            if (StringUtils.isNotBlank(toUser)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
     * 发送邮件
     * @param subject 主题
     * @param toUsers 收件人

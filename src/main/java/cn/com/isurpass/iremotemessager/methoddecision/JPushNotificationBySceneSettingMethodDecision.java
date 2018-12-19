@@ -1,5 +1,6 @@
 package cn.com.isurpass.iremotemessager.methoddecision;
 
+import cn.com.isurpass.iremotemessager.SpringUtil;
 import cn.com.isurpass.iremotemessager.domain.NotificationSetting;
 import cn.com.isurpass.iremotemessager.domain.Scene;
 import cn.com.isurpass.iremotemessager.domain.User;
@@ -10,6 +11,7 @@ import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
 import cn.com.isurpass.iremotemessager.vo.MailData;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -20,18 +22,20 @@ import java.util.List;
  * @author jwzh
  */
 @Component("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationBySceneSettingMethodDecision")
+@Scope("prototype")
 public class JPushNotificationBySceneSettingMethodDecision extends MethodDecisionBase {
     private Integer scenedbid;
     private Scene scene;
-    @Resource
     private InnerNotification innerNotification;
-    @Resource
     private InnerMail innerMail;
 
     @Override
     public void setMsgInfo(EventData data, List<User> msguser) {
         scenedbid = data.getEventparameters().getInteger("scenedbid");
         super.setMsgInfo(data, msguser);
+
+        innerNotification = (InnerNotification) SpringUtil.getBean("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationBySceneSettingMethodDecision$InnerNotification");
+        innerMail = (InnerMail) SpringUtil.getBean("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationBySceneSettingMethodDecision$InnerMail");
 
         innerNotification.setMsgInfo(data, msguser);
         innerMail.setMsgInfo(data, msguser);
@@ -58,6 +62,7 @@ public class JPushNotificationBySceneSettingMethodDecision extends MethodDecisio
     }
 
     @Component
+    @Scope("prototype")
     private class InnerNotification extends JPushNotificationMethodDecision {
         @Resource
         private SceneService sceneService;
@@ -79,6 +84,7 @@ public class JPushNotificationBySceneSettingMethodDecision extends MethodDecisio
     }
 
     @Component
+    @Scope("prototype")
     private class InnerMail extends MailMethodDecision {
     }
 }

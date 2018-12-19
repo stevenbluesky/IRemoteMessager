@@ -14,6 +14,7 @@ public class JPushNotificationData {
 	private Payload payload;
 	private String iossound;
 	private Integer androidbundlerid;
+	private String sound;
 	
 	public String getLanguage() {
 		return language;
@@ -64,5 +65,11 @@ public class JPushNotificationData {
 		this.payload = payload;
 	}
 
-	
+	public String getSound() {
+		return sound;
+	}
+
+	public void setSound(String sound) {
+		this.sound = sound;
+	}
 }

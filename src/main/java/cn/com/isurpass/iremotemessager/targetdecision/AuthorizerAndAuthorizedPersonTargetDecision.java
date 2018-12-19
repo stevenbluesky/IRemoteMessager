@@ -3,6 +3,7 @@ package cn.com.isurpass.iremotemessager.targetdecision;
 import cn.com.isurpass.iremotemessager.domain.User;
 import cn.com.isurpass.iremotemessager.domain.UserShare;
 import cn.com.isurpass.iremotemessager.service.UserShareService;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -14,6 +15,7 @@ import java.util.List;
  * @author jwzh
  */
 @Component("cn.com.isurpass.iremotemessager.targetdecision.AuthorizerAndAuthorizedPersonTargetDecision")
+@Scope("prototype")
 public class AuthorizerAndAuthorizedPersonTargetDecision extends TargetDecisionBase {
     @Resource
     private UserShareService userShareService;

@@ -98,7 +98,16 @@ insert  into `msg_processclass`(`msgprocessclassid`,`name`,`classname`,`type`,`s
 
 (31,'TencentSender','cn.com.isurpass.iremotemessager.sender.TencentSender0',4,3,'TencentSender0','2018-11-13 11:11:19'),
 
-(32, 'TencentOnlyDomesticSender', 'cn.com.isurpass.iremotemessager.sender.TencentOnlyDomesticSender', 4,3,'TencentOnlyDomesticSender','2018-12-10 18:00:00');
+(32, '腾讯国内短信', 'cn.com.isurpass.iremotemessager.sender.TencentOnlyDomesticSender', 4,3,'TencentOnlyDomesticSender','2018-12-10 18:00:00'),
+
+(33, '邮箱或者手机号码', 'cn.com.isurpass.iremotemessager.targetdecision.MailOrPhoneNumberTargetDecision', 1,NULL,'邮箱或者手机号码二选一,根据推送的参数判断','2018-12-17 11:00:00'),
+
+(34, '设置网关主人', 'cn.com.isurpass.iremotemessager.targetdecision.RemoteOwnerSettingTargetDecision', 1,NULL,'推送给网关主人','2018-12-17 11:00:00'),
+
+(35, '邮箱和短信', 'cn.com.isurpass.iremotemessager.methoddecision.MailAndSmsMethodDecision', 2,NULL,'邮箱和短信','2018-12-18 18:00:00'),
+
+(36, '按通知App和Mail值推送', 'cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationByAppMailSettingMethodDecision', 2,NULL,'按 Notificationsetting.App 和 Notificationsetting.Mail 值推送','2018-12-19 18:00:00');
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

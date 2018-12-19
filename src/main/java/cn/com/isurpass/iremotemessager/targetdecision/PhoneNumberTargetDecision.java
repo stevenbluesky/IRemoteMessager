@@ -1,6 +1,7 @@
 package cn.com.isurpass.iremotemessager.targetdecision;
 
 import cn.com.isurpass.iremotemessager.domain.User;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
  * @author jwzh
  */
 @Component("cn.com.isurpass.iremotemessager.targetdecision.PhoneNumberTargetDecision")
+@Scope("prototype")
 public class PhoneNumberTargetDecision extends TargetDecisionBase {
 
     @Override
@@ -22,6 +24,15 @@ public class PhoneNumberTargetDecision extends TargetDecisionBase {
             User user = new User();
             user.setCountrycode(phonenumbers[i][0]);
             user.setPhonenumber(phonenumbers[i][1]);
+            userList.add(user);
+        }
+
+        String phonenumber = eventparameters.getString("phonenumber");
+        String countrycode = eventparameters.getString("countrycode");
+        if (phonenumber != null && countrycode != null) {
+            User user = new User();
+            user.setCountrycode(countrycode);
+            user.setPhonenumber(phonenumber);
             userList.add(user);
         }
 
