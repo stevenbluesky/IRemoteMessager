@@ -5,20 +5,18 @@
                 <div class="text-center"><h1>修改消息模板</h1></div>
                 <hr>
                 <div class="form-group">
-                    <div class="col-xs-1 col-sm-1 col-md-1"></div>
-                    <div class="col-xs-5 col-sm-5 col-md-5">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
                         <label class="col-xs-4 col-sm-4 col-md-4  control-label">事件名称：</label>
                         <div class="col-xs-8 col-sm-8 col-md-8">
                           <#if event??&&event.eventtypename??>${event.eventtypename}</#if>
                         </div>
                     </div>
-                    <div class="col-xs-5 col-sm-5 col-md-5">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
                         <label class="col-xs-4 col-sm-4 col-md-4 control-label">事件代码：</label>
                         <div class="col-xs-8 col-sm-8 col-md-8">
                             <#if event??&&event.eventcode??>${event.eventcode}</#if>
                         </div>
                     </div>
-                    <div class="col-xs-1 col-sm-1 col-md-1"></div>
                 </div>
 
             </div>
@@ -58,9 +56,9 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div  class="form-group" align="right">
-                        <label for="description"  class="col-xs-4 col-sm-4 col-md-4 control-label">模板*</label>
+                        <label for="description"  class="col-xs-2 col-sm-2 col-md-2 control-label">模板*</label>
                         <div class="col-xs-8 col-sm-8 col-md-8">
-                            <textarea class="col-xs-12 col-sm-12 col-md-12 form-control" name="contenttemplate" id="contenttemplate" ><#if msg??>${msg.contenttemplate}</#if></textarea>
+                            <textarea class="col-xs-12 col-sm-12 col-md-12 form-control" style="height: 130px" name="contenttemplate" id="contenttemplate" ><#if msg??>${msg.contenttemplate}</#if></textarea>
                         </div>
                     </div>
                 </div>

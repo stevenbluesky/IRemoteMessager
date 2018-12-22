@@ -58,7 +58,7 @@
                     <div  class="form-group" align="right">
                         <label for="description"  class="col-xs-4 col-sm-4 col-md-4 control-label">模板*</label>
                         <div class="col-xs-4 col-sm-4 col-md-4">
-                            <textarea class="col-xs-12 col-sm-12 col-md-12 form-control" name="contenttemplate" id="contenttemplate"></textarea>
+                            <textarea class="col-xs-12 col-sm-12 col-md-12 form-control" name="contenttemplate" id="contenttemplate" style="height: 180px"></textarea>
                         </div>
                     </div>
                 </div>
