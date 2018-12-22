@@ -22,7 +22,9 @@ public class UserService
 	protected UserShareService userShareService;
 	
 	public User findById(Integer phoneuserid){
-		return userdao.findById(phoneuserid).orElse(new User());
+		return IRemoteUtils.isBlank(phoneuserid)
+				? new User()
+				: userdao.findById(phoneuserid).orElse(new User());
 	}
 	
 	public List<User> findByFamilyid(Integer familyid){

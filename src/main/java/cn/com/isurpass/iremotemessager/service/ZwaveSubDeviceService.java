@@ -1,5 +1,6 @@
 package cn.com.isurpass.iremotemessager.service;
 
+import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import cn.com.isurpass.iremotemessager.dao.ZwaveSubDeviceDao;
 import cn.com.isurpass.iremotemessager.domain.ZWaveSubDevice;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ public class ZwaveSubDeviceService {
     private ZwaveSubDeviceDao zwaveSubDeviceDao;
 
     public ZWaveSubDevice findById(Integer id) {
-        return zwaveSubDeviceDao.findById(id).orElse(new ZWaveSubDevice());
+        return IRemoteUtils.isBlank(id)
+                ? new ZWaveSubDevice()
+                : zwaveSubDeviceDao.findById(id).orElse(new ZWaveSubDevice());
     }
 }

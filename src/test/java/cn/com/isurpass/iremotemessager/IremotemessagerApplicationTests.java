@@ -117,22 +117,15 @@ public class IremotemessagerApplicationTests {
 
     @Test
     public void testQueryEventCode() {
-        List<String> allEventCode = msgEventTypeService.findAllEventCode();
-        System.out.println(allEventCode);
+//        List<String> allEventCode = msgEventTypeService.findAllEventCode();
+//        System.out.println(allEventCode);
     }
 
     @Test
     public void testSQL(){
 //        MsgPushSetting msgPushSetting = msgPushSettingDao.findById(3).orElse(null);
 //        msgPushSettingDao.delete(msgPushSetting);
-            msgPushSettingDao.deleteById(1);
+//            msgPushSettingDao.deleteById(1);
 //            msgEventGroupDao.deleteById(2);
-    }
-
-    @Test
-    public void testThread(){
-        new Thread(() -> {
-            System.out.println(msgEventGroupDao);
-        }).start();
     }
 }

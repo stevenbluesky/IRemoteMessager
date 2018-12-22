@@ -1,13 +1,14 @@
 package cn.com.isurpass.iremotemessager.jms;
 
 import cn.com.isurpass.iremotemessager.SpringUtil;
+import cn.com.isurpass.iremotemessager.common.util.AES;
 import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
+import cn.com.isurpass.iremotemessager.common.util.Parameter;
 import cn.com.isurpass.iremotemessager.framework.EventProcessor;
 import cn.com.isurpass.iremotemessager.service.MsgEventTypeService;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.pool.PooledConnection;
 import org.apache.activemq.pool.PooledConnectionFactory;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -19,9 +20,9 @@ public class JMSUtil {
 
     private static Log log = LogFactory.getLog(JMSUtil.class);
     private static final TextMessageBaseListener textMessageBaseListener = new TextMessageBaseListener(EventProcessor.class);
-    private static final String BROKER_URL = "failover://tcp://192.168.5.145:61616";
-    private static final String ACTIVEMQ_USER_NAME = "jwzh";
-    private static final String ACTIVEMQ_PASSWORD = "JWZH1109testsvr";
+    private static String brokerUrl;
+    private static String username;
+    private static String password;
     private static PooledConnection conn;
     private static PooledConnectionFactory poolFactory;
     private static Session session;
@@ -30,10 +31,14 @@ public class JMSUtil {
         if (log.isInfoEnabled()) {
             log.info("init JMS...");
         }
-
         try {
-            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ACTIVEMQ_USER_NAME,
-                    ACTIVEMQ_PASSWORD, BROKER_URL);
+            initParameter();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        try {
+            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(username,
+                    password, brokerUrl);
             poolFactory = new PooledConnectionFactory(connectionFactory);
             conn = (PooledConnection) poolFactory.createConnection();
 
@@ -44,6 +49,17 @@ public class JMSUtil {
         } catch (JMSException e) {
             log.error(e.getMessage(), e);
             System.exit(1);
+        }
+    }
+
+    private static void initParameter() throws Exception{
+        Parameter bean = SpringUtil.getBean(Parameter.class);
+        if (IRemoteUtils.isAllNotBlank(bean.brokerUrl, bean.username, bean.password)) {
+            brokerUrl = bean.brokerUrl;
+            username = bean.username;
+            password = AES.decrypt2Str(bean.password);
+        } else {
+            throw new Exception("please configure ActiveMQ's parameters in application.properties");
         }
     }
 

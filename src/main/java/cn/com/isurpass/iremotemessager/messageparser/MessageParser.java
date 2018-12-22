@@ -8,6 +8,7 @@ import java.util.Map;
 
 import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
+import com.sun.org.apache.bcel.internal.generic.PUSH;
 import freemarker.template.TemplateNotFoundException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -27,6 +28,7 @@ public class MessageParser
 	private static Log log = LogFactory.getLog(MessageParser.class);
     private static final String REPORT_TIME = "reporttime";
     private static final String TIME = "time";
+    private static final String PUSH_TIME = "pushtime";
 
 	private static Configuration freemarkercfg ;
 	private String language ;
@@ -96,8 +98,6 @@ public class MessageParser
 		m.put("language",language);
 		m.put("type",String.valueOf(type.ordinal()));
 
-        appendParameterTime(m);
-
 		if ( data.getEventparameters() != null )
             for (Map.Entry<String, Object> entry : data.getEventparameters().entrySet()) {
                 m.put(entry.getKey(), entry.getValue());
@@ -109,13 +109,20 @@ public class MessageParser
 					m.put(entry.getKey(), entry.getValue());
 				}
 			}
+			
+		appendParameterTime(m);
+		appendParameterPushTime(m);
 
 		if ( log.isInfoEnabled())
 			log.info(JSON.toJSONString(m));
 		return m ;
 	}
 
-    private void appendParameterTime(Map<String, Object> m) {
+	private void appendParameterPushTime(Map<String, Object> m) {
+		m.put(PUSH_TIME, System.currentTimeMillis());
+	}
+
+	private void appendParameterTime(Map<String, Object> m) {
 	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 	    Iterator<Map.Entry<String, Object>> iterator = data.getEventparameters().entrySet().iterator();
@@ -124,6 +131,7 @@ public class MessageParser
             if (REPORT_TIME.equals(entry.getKey())) {
                 String value = new String(entry.getValue().toString());
                 if ("0".equals(value)) {
+	                m.put(REPORT_TIME, System.currentTimeMillis());
                     m.put(TIME, format.format(new Date()));
                 } else {
                     m.put(TIME,

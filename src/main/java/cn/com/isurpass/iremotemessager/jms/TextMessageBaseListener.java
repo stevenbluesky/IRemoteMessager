@@ -53,8 +53,8 @@ public class TextMessageBaseListener implements MessageListener {
 
 			String type;
 			if (!json.containsKey(EVENT_TYPE)) {
-				if (log.isWarnEnabled()) {
-					log.warn("eventtype is null");
+				if (log.isInfoEnabled()) {
+					log.info("eventtype is null");
 				}
 				if (!json.containsKey(TYPE) || !json.containsKey(PLATFORM)) {
 					if (log.isInfoEnabled()) {

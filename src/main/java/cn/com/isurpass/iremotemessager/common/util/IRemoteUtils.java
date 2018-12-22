@@ -83,4 +83,13 @@ public class IRemoteUtils {
 
         return dest;
     }
+
+    public static boolean isAllNotBlank(String... str) {
+        for (String s : str) {
+            if (StringUtils.isBlank(s)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

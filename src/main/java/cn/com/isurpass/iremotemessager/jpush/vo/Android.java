@@ -3,7 +3,7 @@ package cn.com.isurpass.iremotemessager.jpush.vo;
 public class Android {
 
 	private String title;
-	private Object extras = new Extras();;
+	private Object extras = new Extras();
 	private int builder_id;
 
 	public int getBuilder_id()

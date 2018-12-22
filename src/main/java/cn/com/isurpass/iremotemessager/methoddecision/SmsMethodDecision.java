@@ -77,11 +77,12 @@ public class SmsMethodDecision extends MethodDecisionBase{
     }
 
     private boolean checkUserSmsCount(User user) {
-        if (SMS_EXHAUSTED_JMS_TOPIC.equals(data.getEventtype())) {
+        if (SMS_EXHAUSTED_JMS_TOPIC.equals(data.getEventtype())
+                || user.getSmscount() == null) {
             return true;
         }
 
-        if ((user.getSmscount() == null || user.getSmscount() <= 0)) {
+        if (user.getSmscount() <= 0) {
             log.warn(user.getPhoneuserid() + ": sms count is exhausted");
             return false;
         }

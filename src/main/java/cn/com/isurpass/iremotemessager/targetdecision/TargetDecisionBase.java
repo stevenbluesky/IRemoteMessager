@@ -74,21 +74,18 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 	protected abstract List<User> descision();
 
 	protected void initDomainObject() {
-		if (eventparameters.containsKey("phoneuserid") && eventparameters.getInteger("phoneuserid") != 0) {
-			phoneuser = userservice.findById(eventparameters.getInteger("phoneuserid"));
-		}
-		if (eventparameters.containsKey("zwavedeviceid") && eventparameters.getInteger("zwavedeviceid") != 0) {
-			zwaveDevice = zwavedeviceservice.findById(eventparameters.getInteger("zwavedeviceid"));
-			gateway = gatewayservice.findById(zwaveDevice.getDeviceid());
-			phoneuser = userservice.findById(gateway.getPhoneuserid());
-		}
-		if (eventparameters.containsKey("zwavesubdeviceid") && eventparameters.getInteger("zwavesubdeviceid") != 0) {
-			subZwaveDevice = zwaveSubDeviceService.findById(eventparameters.getInteger("zwavesubdeviceid"));
+		if (eventparameters.containsKey("subdeviceid") && eventparameters.getInteger("subdeviceid") != 0) {
+			subZwaveDevice = zwaveSubDeviceService.findById(eventparameters.getInteger("subdeviceid"));
 			zwaveDevice = subZwaveDevice.getZwavedevice();
 			if (zwaveDevice != null) {
 				gateway = gatewayservice.findById(zwaveDevice.getDeviceid());
 				phoneuser = userservice.findById(gateway.getPhoneuserid());
 			}
+		}
+		if (eventparameters.containsKey("zwavedeviceid") && eventparameters.getInteger("zwavedeviceid") != 0) {
+			zwaveDevice = zwavedeviceservice.findById(eventparameters.getInteger("zwavedeviceid"));
+			gateway = gatewayservice.findById(zwaveDevice.getDeviceid());
+			phoneuser = userservice.findById(gateway.getPhoneuserid());
 		}
 		if (eventparameters.containsKey("infrareddeviceid") && eventparameters.getInteger("infrareddeviceid") != 0) {
 			infraredDevice = infraredDeviceService.findById(eventparameters.getInteger("infrareddeviceid"));
@@ -98,10 +95,6 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 		if (eventparameters.containsKey("cameraid") && eventparameters.getInteger("cameraid") != 0) {
 			camera = cameraService.findById(eventparameters.getInteger("cameraid"));
 			gateway = gatewayservice.findById(camera.getDeviceid());
-			phoneuser = userservice.findById(gateway.getPhoneuserid());
-		}
-		if (gateway == null && eventparameters.containsKey("deviceid") && StringUtils.isNotBlank(eventparameters.getString("deviceid"))) {
-			gateway = gatewayservice.findById(eventparameters.getString("deviceid"));
 			phoneuser = userservice.findById(gateway.getPhoneuserid());
 		}
 		if (eventparameters.containsKey("scenedbid") && eventparameters.getInteger("scenedbid") != 0) {
@@ -126,6 +119,13 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 		if (eventparameters.containsKey("notificationsettingid") && eventparameters.getInteger("notificationsettingid") != 0) {
 			notificationSetting = notificationSettingService.findById(eventparameters.getInteger("notificationsettingid"));
 			phoneuser = userservice.findById(notificationSetting.getPhoneuserid());
+		}
+		if (gateway == null && eventparameters.containsKey("deviceid") && StringUtils.isNotBlank(eventparameters.getString("deviceid"))) {
+			gateway = gatewayservice.findById(eventparameters.getString("deviceid"));
+			phoneuser = userservice.findById(gateway.getPhoneuserid());
+		}
+		if (eventparameters.containsKey("phoneuserid") && eventparameters.getInteger("phoneuserid") != 0) {
+			phoneuser = userservice.findById(eventparameters.getInteger("phoneuserid"));
 		}
 
 		domainobjects.put("user", phoneuser);
@@ -162,6 +162,9 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 		String key;
 		while (iterator.hasNext()) {
 			User user = iterator.next();
+			if (user.getPhoneuserid() == 0) {
+				continue;
+			}
 			if (!set.contains(key = distinctKey(user))) {
 				list.add(user);
 				set.add(key);

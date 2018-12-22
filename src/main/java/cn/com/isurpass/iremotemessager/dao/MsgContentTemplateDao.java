@@ -26,4 +26,8 @@ public interface MsgContentTemplateDao extends CrudRepository<MsgContentTemplate
     List<MsgContentTemplate> findByEventcodeAndPlatformAndLanguageInAndType(String s, int parseInt, String s1, int parseInt1);
 
     MsgContentTemplate findByPlatformAndMsgEventTypeAndLanguageAndType(Integer platform, MsgEventType event, String language, Integer type);
+
+    List<MsgContentTemplate> findByTypeAndEventcodeIn(Integer type, List<String> list);
+
+    List<MsgContentTemplate> findByType(Integer type);
 }

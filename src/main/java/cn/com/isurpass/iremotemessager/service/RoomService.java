@@ -1,5 +1,6 @@
 package cn.com.isurpass.iremotemessager.service;
 
+import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import cn.com.isurpass.iremotemessager.dao.RoomDao;
 import cn.com.isurpass.iremotemessager.domain.Room;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ public class RoomService {
     private RoomDao roomDao;
 
     public Room findById(Integer id) {
-        return roomDao.findById(id).orElse(null);
+        return IRemoteUtils.isBlank(id)
+                ? new Room()
+                : roomDao.findById(id).orElse(new Room());
     }
 }

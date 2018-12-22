@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import org.springframework.stereotype.Component;
 
 import cn.com.isurpass.iremotemessager.dao.NotificationSettingDao;
@@ -28,6 +29,9 @@ public class NotificationSettingService
 	}
 
 	public NotificationSetting findById(Integer id) {
+		if (IRemoteUtils.isBlank(id)) {
+			return new NotificationSetting();
+		}
 		return dao.findById(id).orElse(new NotificationSetting());
 	}
 }
