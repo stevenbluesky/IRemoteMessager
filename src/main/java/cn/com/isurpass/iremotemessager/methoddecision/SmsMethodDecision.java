@@ -23,7 +23,7 @@ import java.util.List;
 public class SmsMethodDecision extends MethodDecisionBase{
     private static Log log = LogFactory.getLog(SmsMethodDecision.class);
     private static final int SMS_COUNT_EXHAUSTED = 0;
-    private static final String SMS_EXHAUSTED_JMS_TOPIC = "smscount";
+    private static final String SMS_EXHAUSTED_JMS_TOPIC = "smsrunout";
 
     @Resource
     private SystemParameterService systemParameterService;
@@ -38,6 +38,7 @@ public class SmsMethodDecision extends MethodDecisionBase{
             if(!check(user) || !checkUserSmsCount(user)){
                 continue;
             }
+            sendRemainingNumber(user);
             sendSMSExhaustedJMS(user);
 
             String language = getLanguage(user);
@@ -55,6 +56,19 @@ public class SmsMethodDecision extends MethodDecisionBase{
         }
 
         return new ArrayList<>(dataHashMap.values());
+    }
+
+    private void sendRemainingNumber(User user) {
+        if (IRemoteConstantDefine.REMAINING_NUMBER.equals(data.getEventtype())) {
+            return;
+        }
+        JSONObject json = new JSONObject();
+        json.put("eventtype", IRemoteConstantDefine.REMAINING_NUMBER);
+        json.put("platform", data.getPlatform());
+        json.put("type", IRemoteConstantDefine.REMAINING_NUMBER);
+        json.put("smsnumber", user.getSmscount());
+        json.put("phoneuserid", user.getPhoneuserid());
+        JMSUtil.commitMessage(json.toJSONString(), IRemoteConstantDefine.REMAINING_NUMBER);
     }
 
     private String getLanguage(User user) {
@@ -91,7 +105,8 @@ public class SmsMethodDecision extends MethodDecisionBase{
     }
 
     private void sendSMSExhaustedJMS(User user) {
-        if (SMS_EXHAUSTED_JMS_TOPIC.equals(data.getEventtype())) {
+        if (SMS_EXHAUSTED_JMS_TOPIC.equals(data.getEventtype())
+                || IRemoteConstantDefine.REMAINING_NUMBER.equals(data.getEventtype())) {
             return;
         }
         if (user.getSmscount() != SMS_COUNT_EXHAUSTED) {
@@ -100,7 +115,7 @@ public class SmsMethodDecision extends MethodDecisionBase{
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("phonenumbers", new String[][]{{user.getCountrycode(), user.getPhonenumber()}});
-        jsonObject.put("eventtype", IRemoteConstantDefine.SMS_COUNT);
+        jsonObject.put("eventtype", IRemoteConstantDefine.SMS_RUN_OUT);
         jsonObject.put("platform", data.getPlatform());
         JMSUtil.commitMessage(jsonObject.toJSONString(), SMS_EXHAUSTED_JMS_TOPIC);
     }

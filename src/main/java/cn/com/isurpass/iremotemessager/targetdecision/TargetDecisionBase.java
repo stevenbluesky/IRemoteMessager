@@ -162,7 +162,8 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 		String key;
 		while (iterator.hasNext()) {
 			User user = iterator.next();
-			if (user.getPhoneuserid() == 0) {
+			if (user.getPhoneuserid() == 0 && StringUtils.isBlank(user.getPhonenumber())
+					&& StringUtils.isBlank(user.getMail())) {
 				continue;
 			}
 			if (!set.contains(key = distinctKey(user))) {

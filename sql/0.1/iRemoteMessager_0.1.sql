@@ -31,7 +31,7 @@ CREATE TABLE `msg_contenttemplate` (
   `createtime` datetime NOT NULL,
   `lastupdatetime` datetime NOT NULL,
   PRIMARY KEY (`msgcontenttemplateid`)
-) ENGINE=InnoDB AUTO_INCREMENT=314 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=317 DEFAULT CHARSET=utf8;
 
 /*Data for the table `msg_contenttemplate` */
 
@@ -334,7 +334,10 @@ insert  into `msg_contenttemplate`(`msgcontenttemplateid`,`platform`,`msgeventty
 (310,0,136,'efenceshortcircuit','en_US',2,'Your device ${name} were in short out alarm, Exercise caution. ','2018-12-20 11:19:50','2018-12-20 11:19:50'),
 (311,0,135,'efencedisconnection','zh_CN',2,'你的设备${name},发出了断线报警，请注意居家安全。','2018-12-20 11:20:16','2018-12-20 11:20:16'),
 (312,0,135,'efencedisconnection','fr_CA',2,'Votre appareil ${name} Vérifier alarme de ligne cassée, S\\\'il vous plaît prêter attention à la sécurité à la maison.','2018-12-20 11:20:35','2018-12-20 11:20:35'),
-(313,0,135,'efencedisconnection','en_US',2,'Your device ${name} were in broken line alarm, Exercise caution.','2018-12-20 11:20:49','2018-12-20 11:20:49');
+(313,0,135,'efencedisconnection','en_US',2,'Your device ${name} were in broken line alarm, Exercise caution.','2018-12-20 11:20:49','2018-12-20 11:20:49'),
+(314,0,21,'passwordchanged','zh_CN',1,'{\r\n	\"tokenid\": ${tokenid!},\r\n	<#if reporttime??>\r\n		\"reporttime\": ${reporttime},\r\n	</#if>\r\n	<#if pushtime??>\r\n		\"pushtime\": ${pushtime},\r\n	</#if>\r\n	\"type\": \"passwordchanged\"\r\n}','2018-12-24 10:39:59','2018-12-24 10:40:31'),
+(315,0,22,'userinfochanged','zh_CN',1,'{\r\n	\"tokenid\": ${tokenid!},\r\n	<#if reporttime??>\r\n		\"reporttime\": ${reporttime},\r\n	</#if>\r\n	<#if pushtime??>\r\n		\"pushtime\": ${pushtime},\r\n	</#if>\r\n	\"type\": \"userinfochanged\"\r\n}','2018-12-24 10:41:16','2018-12-24 10:41:16'),
+(316,0,149,'remainingnumber','zh_CN',1,'{\r\n	<#if smsnumber??>\r\n		\"smsnumber\":${smsnumber},\r\n	</#if>\r\n	<#if callnumber??>\r\n		\"callnumber\":${callnumber},\r\n	</#if>\r\n	<#if reporttime??>\r\n		\"reporttime\": ${reporttime},\r\n	</#if>\r\n	<#if pushtime??>\r\n		\"pushtime\": ${pushtime},\r\n	</#if>\r\n	\"type\": \"remainingnumber\"\r\n}','2018-12-24 10:46:41','2018-12-24 10:46:41');
 
 /*Table structure for table `msg_defaultprocessclass` */
 
@@ -411,7 +414,7 @@ CREATE TABLE `msg_eventgroupevent` (
   `eventcode` varchar(128) NOT NULL,
   `createtime` datetime NOT NULL,
   PRIMARY KEY (`msgeventgroupeventid`)
-) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=utf8;
 
 /*Data for the table `msg_eventgroupevent` */
 
@@ -541,7 +544,8 @@ insert  into `msg_eventgroupevent`(`msgeventgroupeventid`,`msgeventgroupid`,`pla
 (165,28,0,138,'efenceinstrusion','2018-12-20 11:11:42'),
 (166,28,0,139,'efencecontact','2018-12-20 11:11:42'),
 (167,28,0,140,'efencesamelineshortcircuit','2018-12-20 11:11:42'),
-(168,28,0,141,'efencepoweroff','2018-12-20 11:11:42');
+(168,28,0,141,'efencepoweroff','2018-12-20 11:11:42'),
+(170,16,0,149,'remainingnumber','2018-12-24 10:48:27');
 
 /*Table structure for table `msg_eventtype` */
 
@@ -554,7 +558,7 @@ CREATE TABLE `msg_eventtype` (
   `decription` varchar(1024) DEFAULT NULL,
   `createtime` datetime NOT NULL,
   PRIMARY KEY (`msgeventtypeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=150 DEFAULT CHARSET=utf8;
 
 /*Data for the table `msg_eventtype` */
 
@@ -688,7 +692,8 @@ insert  into `msg_eventtype`(`msgeventtypeid`,`eventtypename`,`eventcode`,`decri
 (145,'电子围栏解除入侵告警','unalarmefenceinstrusion','','2018-12-20 11:02:12'),
 (146,'电子围栏解除同线短路告警','unalarmefencesamelineshortcircuit','','2018-12-20 11:03:01'),
 (147,'电子围栏解除断电告警','unalarmefencepoweroff','','2018-12-20 11:04:07'),
-(148,'电子围栏解除触网告警','unalarmefencecontact','','2018-12-20 11:05:25');
+(148,'电子围栏解除触网告警','unalarmefencecontact','','2018-12-20 11:05:25'),
+(149,'告知短信数量','remainingnumber','','2018-12-24 10:44:44');
 
 /*Table structure for table `msg_processclass` */
 
