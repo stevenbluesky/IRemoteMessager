@@ -59,7 +59,8 @@ public class SmsMethodDecision extends MethodDecisionBase{
     }
 
     private void sendRemainingNumber(User user) {
-        if (IRemoteConstantDefine.REMAINING_NUMBER.equals(data.getEventtype())) {
+        if (IRemoteConstantDefine.REMAINING_NUMBER.equals(data.getEventtype())
+                || user.getSmscount() == null) {
             return;
         }
         JSONObject json = new JSONObject();
