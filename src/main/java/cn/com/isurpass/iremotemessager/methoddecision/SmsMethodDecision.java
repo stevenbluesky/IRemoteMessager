@@ -109,7 +109,7 @@ public class SmsMethodDecision extends MethodDecisionBase{
                 || IRemoteConstantDefine.REMAINING_NUMBER.equals(data.getEventtype())) {
             return;
         }
-        if (user.getSmscount() != SMS_COUNT_EXHAUSTED) {
+        if (user.getSmscount() == null || user.getSmscount() != SMS_COUNT_EXHAUSTED) {
             return;
         }
 
