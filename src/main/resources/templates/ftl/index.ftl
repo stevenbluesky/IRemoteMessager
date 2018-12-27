@@ -74,7 +74,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12" align="right">
         欢迎您：
         <#if person??>${person.phonenumber}</#if>
-        <a href="logout">安全退出</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="logout" title="${version!}">安全退出</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </div>
     <div id="wrap" class="col-xs-2 col-sm-2 col-md-2" >
         <div id="treeview12" class=""></div>
