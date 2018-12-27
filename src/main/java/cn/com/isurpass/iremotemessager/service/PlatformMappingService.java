@@ -10,7 +10,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import sun.plugin.services.PlatformService;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ import java.util.Map;
 
 @Service
 public class PlatformMappingService {
-    private Log log = LogFactory.getLog(PlatformService.class);
+    private Log log = LogFactory.getLog(PlatformMappingService.class);
     @Resource
     private PlatformMappingDao platformMappingDao;
 
