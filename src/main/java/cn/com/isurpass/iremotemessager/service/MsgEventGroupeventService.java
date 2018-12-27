@@ -3,7 +3,6 @@ package cn.com.isurpass.iremotemessager.service;
 import cn.com.isurpass.iremotemessager.common.constant.IRemoteConstantDefine;
 import cn.com.isurpass.iremotemessager.dao.MsgEventGroupEventDao;
 import cn.com.isurpass.iremotemessager.dao.MsgProcessClassDao;
-import cn.com.isurpass.iremotemessager.domain.MsgDefaultProcessClass;
 import cn.com.isurpass.iremotemessager.domain.MsgEventGroupEvent;
 import cn.com.isurpass.iremotemessager.domain.MsgProcessClass;
 import org.springframework.stereotype.Service;
@@ -18,6 +17,8 @@ public class MsgEventGroupeventService {
     private MsgProcessClassDao msgProcessClassDao;
     @Resource
     private MsgDefaultProcessClassService msgDefaultProcessClassService;
+    @Resource
+    private PlatformMappingService platformMappingService;
 
     public MsgEventGroupEvent findByEventCodeAndPlatform(String eventCode, Integer platform) {
         return msgEventGroupEventDao.findByMsgEventType_EventcodeAndPlatform(eventCode, platform);
@@ -44,38 +45,44 @@ public class MsgEventGroupeventService {
     public String findMsgPushTargetDecisionClassName(String eventCode, Integer platform) {
         MsgProcessClass msgPushTargetDecision = findMsgPushTargetDecision(eventCode, platform);
         if (msgPushTargetDecision == null) {
-            String className = msgDefaultProcessClassService.findDefaultTargetDesicionName(platform, eventCode);
-            if (className == null) {
-                className = msgDefaultProcessClassService.findDefaultTargetDesicionName(IRemoteConstantDefine.DEFAULT_PLATFORM, eventCode);
+            Integer mappingPlatform = platformMappingService.getPlatformMapping(platform);
+            msgPushTargetDecision = findMsgPushTargetDecision(eventCode, mappingPlatform);
+            if (msgPushTargetDecision == null) {
+                String className = msgDefaultProcessClassService.findDefaultTargetDesicionName(platform, eventCode);
                 if (className == null) {
-                    className = msgDefaultProcessClassService.findDefaultTargetDesicionName(platform, IRemoteConstantDefine.DEFAULT_EVENT_CODE);
+                    className = msgDefaultProcessClassService.findDefaultTargetDesicionName(IRemoteConstantDefine.DEFAULT_PLATFORM, eventCode);
                     if (className == null) {
-                        className = msgDefaultProcessClassService.findDefaultTargetDesicionName(IRemoteConstantDefine.DEFAULT_PLATFORM, IRemoteConstantDefine.DEFAULT_EVENT_CODE);
+                        className = msgDefaultProcessClassService.findDefaultTargetDesicionName(platform, IRemoteConstantDefine.DEFAULT_EVENT_CODE);
+                        if (className == null) {
+                            className = msgDefaultProcessClassService.findDefaultTargetDesicionName(IRemoteConstantDefine.DEFAULT_PLATFORM, IRemoteConstantDefine.DEFAULT_EVENT_CODE);
+                        }
                     }
                 }
+                return className;
             }
-            return className;
         }
-
-        return  msgPushTargetDecision.getClassname();
+        return msgPushTargetDecision.getClassname();
     }
 
     public String findMsgPushMethodClassName(String eventCode, Integer platform) {
         MsgProcessClass pushMethod = findMsgPushMethod(eventCode, platform);
         if (pushMethod == null) {
-            String className = msgDefaultProcessClassService.findDefaultPushMethod(platform, eventCode);
-            if (className == null) {
-                className = msgDefaultProcessClassService.findDefaultPushMethod(IRemoteConstantDefine.DEFAULT_PLATFORM, eventCode);
+            Integer mappingPlatform = platformMappingService.getPlatformMapping(platform);
+            pushMethod = findMsgPushMethod(eventCode, mappingPlatform);
+            if (pushMethod == null) {
+                String className = msgDefaultProcessClassService.findDefaultPushMethod(platform, eventCode);
                 if (className == null) {
-                    className = msgDefaultProcessClassService.findDefaultPushMethod(platform, IRemoteConstantDefine.DEFAULT_EVENT_CODE);
+                    className = msgDefaultProcessClassService.findDefaultPushMethod(IRemoteConstantDefine.DEFAULT_PLATFORM, eventCode);
                     if (className == null) {
-                        className = msgDefaultProcessClassService.findDefaultPushMethod(IRemoteConstantDefine.DEFAULT_PLATFORM, IRemoteConstantDefine.DEFAULT_EVENT_CODE);
+                        className = msgDefaultProcessClassService.findDefaultPushMethod(platform, IRemoteConstantDefine.DEFAULT_EVENT_CODE);
+                        if (className == null) {
+                            className = msgDefaultProcessClassService.findDefaultPushMethod(IRemoteConstantDefine.DEFAULT_PLATFORM, IRemoteConstantDefine.DEFAULT_EVENT_CODE);
+                        }
                     }
                 }
+                return className;
             }
-            return className;
         }
-
         return  pushMethod.getClassname();
     }
 }

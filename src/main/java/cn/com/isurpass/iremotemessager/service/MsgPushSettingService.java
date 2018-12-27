@@ -56,12 +56,20 @@ public class MsgPushSettingService {
 
         for (int i = 1; i < 5; i++) {
             if (!pusherMap.containsKey(i) || pusherMap.get(i) == null) {
-                pusherMap.put(i, msgDefaultProcessClassService.findDefaultProcessorClassNameBySubtype(platform, eventcode, type, i));
+                pusherMap.put(i, findProcessorClassNameBySubType(platform, eventcode, type, i));
             }
         }
-
         return pusherMap;
     }
+
+    private String findProcessorClassNameBySubType(Integer platform, String eventcode, Integer type, Integer subType) {
+        MsgPushSettingDtl settingDtl = msgPushSettingDtlDao.findByTypeAndSubtypeAndMsgPushSetting_Platform(type, subType, platform);
+        if (settingDtl != null && settingDtl.getMsgProcessClass() != null && settingDtl.getMsgProcessClass().getClassname() != null) {
+            return settingDtl.getMsgProcessClass().getClassname();
+        }
+        return msgDefaultProcessClassService.findDefaultProcessorClassNameBySubtype(platform, eventcode, type, subType);
+    }
+
     public Map<String, Object> listPushSetting(Pageable pageable, PushSettingVo pushsettingvo) {
         Map<String, Object> map = new HashMap<>();
         List<MsgEventGroup> eventgroup = eventgroupdao.findByEventgroupnameContaining(pushsettingvo.getEventgroupname());

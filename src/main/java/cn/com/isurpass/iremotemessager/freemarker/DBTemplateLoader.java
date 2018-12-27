@@ -45,7 +45,7 @@ public class DBTemplateLoader implements TemplateLoader
 		int type = json.getIntValue("type");
 		
 		MsgContentTemplateService svr = SpringUtil.getBean(MsgContentTemplateService.class);
-		
+
 		return svr.findContentTemplate(eventcode, platform, language, MsgTemplateType.values()[type]);
 	}
 

@@ -11,4 +11,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface MsgPushSettingDtlDao extends CrudRepository<MsgPushSettingDtl,Integer> {
 
     MsgPushSettingDtl findByMsgpushsettingdtlid(int parseInt);
+
+    MsgPushSettingDtl findByTypeAndSubtypeAndMsgPushSetting_Platform(Integer type, Integer subType, Integer platform);
 }

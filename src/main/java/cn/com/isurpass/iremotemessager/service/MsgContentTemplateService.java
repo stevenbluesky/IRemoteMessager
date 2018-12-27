@@ -20,6 +20,8 @@ public class MsgContentTemplateService
 	
 	@Resource
 	private MsgContentTemplateDao dao ;
+	@Resource
+	private PlatformMappingService platformMappingService;
 	
 	public List<MsgContentTemplate> findByEventcodeAndLanguageAndType(String eventcode ,int platform ,String language , MsgTemplateType type)
 	{
@@ -35,9 +37,17 @@ public class MsgContentTemplateService
 	public MsgContentTemplate findContentTemplate(String eventcode ,int platform ,String language , MsgTemplateType type)
 	{
 		List<MsgContentTemplate> lst = this.findByEventcodeAndLanguageAndType(eventcode, platform, language, type);
-		
-		if ( lst == null || lst.size() == 0 )
-			return null ;
+
+		if (lst == null || lst.size() == 0) {
+			Integer mappingPlatform = platformMappingService.getPlatformMapping(platform);
+			if (mappingPlatform == null) {
+				return null;
+			}
+			lst = this.findByEventcodeAndLanguageAndType(eventcode, mappingPlatform, language, type);
+			if (lst == null || lst.size() == 0) {
+				return null;
+			}
+		}
 		
 		for ( MsgContentTemplate mct : lst)   // language + platform
 			if ( StringUtils.isNotBlank(mct.getLanguage()) 

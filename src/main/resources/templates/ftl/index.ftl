@@ -51,6 +51,10 @@
                 {
                     text: "事件列表",
                     href:"event/eventlistpage"
+                },
+                {
+                    text: "平台映射",
+                    href:"other/mappingplatform"
                 }
             ];
             var jsontree = JSON.stringify(obj);
