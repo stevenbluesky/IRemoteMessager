@@ -11,7 +11,7 @@
 	</appender>
 	<!-- 按照每天生成日志文件 -->
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOG_HOME}/securityplatformeventprocess.log</file>
+		<file>${LOG_HOME}/iremotemesaer.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
 			<fileNamePattern>${LOG_HOME}/iremotemessager.log.%i</fileNamePattern>
 			<minIndex>1</minIndex>

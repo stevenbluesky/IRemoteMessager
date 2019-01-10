@@ -36,29 +36,18 @@ public class IRemoteUtils {
     public static Date parseTime(String time)
     {
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date d = null ;
         try {
-            d = sf.parse(time);
+            return sf.parse(time);
         } catch (ParseException e) {
             return null;
         }
-        return d ;
     }
 
-    public static String toString(Collection<String> destList, String dest) {
-        StringBuilder sb = new StringBuilder();
-        Iterator<String> iterator = destList.iterator();
-        while (iterator.hasNext()) {
-            String s = iterator.next();
-            if (StringUtils.isNotBlank(s)) {
-                sb.append(s);
-                sb.append(dest);
-            }
+    public static String join(Collection<String> destList, String dest) {
+        if (destList == null || destList.size() == 0) {
+            return null;
         }
-        int i = sb.lastIndexOf(dest);
-        if ( i != -1 )
-        	sb.deleteCharAt(i);
-        return sb.toString();
+        return String.join(dest, destList);
     }
 
     public static int[] jsontoIntArray(String ary){

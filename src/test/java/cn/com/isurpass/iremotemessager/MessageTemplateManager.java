@@ -122,6 +122,20 @@ public class MessageTemplateManager {
         }
     }
 
+//    @Test
+    public void revise(){
+        List<MsgContentTemplate> list = msgContentTemplateDao.findByType(1);
+        for (MsgContentTemplate msgContentTemplate : list) {
+            if (msgContentTemplate.getContenttemplate().contains("”")) {
+                System.out.println("========");
+                System.out.println(msgContentTemplate.getMsgcontenttemplateid());
+                System.out.println(msgContentTemplate.getContenttemplate().substring(1, 100));
+            }
+//            msgContentTemplate.setContenttemplate(msgContentTemplate.getContenttemplate().replace("","\""));
+//            msgContentTemplateDao.save(msgContentTemplate);
+        }
+    }
+
     private boolean hasDirectlyMessage(String content) {
         return content.contains(MESSAGE_3);
     }
