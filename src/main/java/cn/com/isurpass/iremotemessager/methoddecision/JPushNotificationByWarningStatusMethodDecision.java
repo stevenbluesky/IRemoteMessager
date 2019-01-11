@@ -7,6 +7,7 @@ import cn.com.isurpass.iremotemessager.common.util.IRemoteUtils;
 import cn.com.isurpass.iremotemessager.vo.EventData;
 import cn.com.isurpass.iremotemessager.vo.JPushMessageData;
 import cn.com.isurpass.iremotemessager.vo.JPushNotificationData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,6 @@ public class JPushNotificationByWarningStatusMethodDecision extends MethodDecisi
     @Override
     public void setMsgInfo(EventData data, List<User> msguser) {
         super.setMsgInfo(data, msguser);
-        warningstatus = data.getEventparameters().getInteger("warningstatus");
 
         innerNotification = (InnerNotification) SpringUtil.getBean("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationByWarningStatusMethodDecision$InnerNotification");
 
@@ -48,7 +48,7 @@ public class JPushNotificationByWarningStatusMethodDecision extends MethodDecisi
     private class InnerNotification extends JPushNotificationMethodDecision {
         @Override
         protected boolean issettingvalid(NotificationSetting ns) {
-            return IRemoteUtils.isNotBlank(JPushNotificationByWarningStatusMethodDecision.this.warningstatus);
+            return IRemoteUtils.isNotBlank(data.getEventparameters().getInteger("warningstatus"));
         }
     }
 }

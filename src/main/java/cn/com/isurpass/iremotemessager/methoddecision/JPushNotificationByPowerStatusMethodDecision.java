@@ -22,12 +22,11 @@ import java.util.List;
 @Component("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationByPowerStatusMethodDecision")
 @Scope("prototype")
 public class JPushNotificationByPowerStatusMethodDecision extends MethodDecisionBase {
-    private String deviceid;
     private InnerNotification innerNotification;
 
     @Override
     public void setMsgInfo(EventData data, List<User> msguser) {
-        deviceid = data.getEventparameters().getString("deviceid");
+
         super.setMsgInfo(data, msguser);
 
         innerNotification = (InnerNotification) SpringUtil.getBean("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationByPowerStatusMethodDecision$InnerNotification");
@@ -53,6 +52,7 @@ public class JPushNotificationByPowerStatusMethodDecision extends MethodDecision
 
         @Override
         protected boolean issettingvalid(NotificationSetting ns) {
+            String deviceid = data.getEventparameters().getString("deviceid");
             if (deviceid != null) {
                 Gateway gateway = gatewayService.findById(deviceid);
 

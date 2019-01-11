@@ -91,4 +91,6 @@ public class JPushNotificationMethodDecision extends MethodDecisionBase {
     protected boolean issettingvalid(NotificationSetting ns) {
         return true;
     }
+
+
 }

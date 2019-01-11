@@ -139,6 +139,7 @@ public abstract class TargetDecisionBase implements IMessageTargetDecision
 		domainobjects.put("devicegroup", devicegroup);
 		domainobjects.put("securitypartition", partition);
 		domainobjects.put("notificationsetting", notificationSetting);
+		domainobjects.put("partition", partition);
 
 	}
 

@@ -28,10 +28,15 @@ public class JPushNotificationBySceneSettingMethodDecision extends MethodDecisio
     private Scene scene;
     private InnerNotification innerNotification;
     private InnerMail innerMail;
+    @Resource
+    private SceneService sceneService;
 
     @Override
     public void setMsgInfo(EventData data, List<User> msguser) {
         scenedbid = data.getEventparameters().getInteger("scenedbid");
+        if (IRemoteUtils.isNotBlank(scenedbid)) {
+            scene = sceneService.findById(scenedbid);
+        }
         super.setMsgInfo(data, msguser);
 
         innerNotification = (InnerNotification) SpringUtil.getBean("cn.com.isurpass.iremotemessager.methoddecision.JPushNotificationBySceneSettingMethodDecision$InnerNotification");
@@ -66,14 +71,16 @@ public class JPushNotificationBySceneSettingMethodDecision extends MethodDecisio
     private class InnerNotification extends JPushNotificationMethodDecision {
         @Resource
         private SceneService sceneService;
-
+        private Integer scenedbid;
+        private Scene scene;
         @Override
         protected boolean issettingvalid(NotificationSetting ns) {
-            if (IRemoteUtils.isNotBlank(scenedbid)) {
-                scene = sceneService.findById(scenedbid);
+            this.scenedbid = data.getEventparameters().getInteger("scenedbid");
+            if (IRemoteUtils.isNotBlank(this. scenedbid)) {
+                this.scene = sceneService.findById(this.scenedbid);
 
-                if (scene != null && scene.getScenenotification() != null) {
-                    if (IRemoteUtils.isNotBlank(scene.getScenenotification().getApp())) {
+                if (this.scene != null && this.scene.getScenenotification() != null) {
+                    if (IRemoteUtils.isNotBlank(this.scene.getScenenotification().getApp())) {
                         return true;
                     }
                 }
