@@ -28,10 +28,14 @@ public class MsgPushSettingService {
     private MsgEventTypeDao eventdao;
     @Resource
     private MsgPushSettingDtlDao msgPushSettingDtlDao;
+    @Resource
+    private PlatformMappingService platformMappingService;
 
     public MsgPushSetting findPushSetting(String eventcode, Integer platform) {
-        MsgPushSetting msgPushSetting = msgPushSettingDao.findMsgPushSetting(eventcode, platform);
-        return msgPushSetting;
+        if (platform == null) {
+            return null;
+        }
+        return msgPushSettingDao.findMsgPushSetting(eventcode, platform);
     }
 
     public Map<Integer, String> findParserMap(String eventcode, Integer platform) {
@@ -54,19 +58,32 @@ public class MsgPushSettingService {
             }
         }
 
+        MsgPushSetting mappingPushSetting = null;
         for (int i = 1; i < 5; i++) {
             if (!pusherMap.containsKey(i) || pusherMap.get(i) == null) {
-                pusherMap.put(i, findProcessorClassNameBySubType(platform, eventcode, type, i));
+                mappingPushSetting = findPushSetting(eventcode, platformMappingService.getPlatformMapping(platform));
+                break;
+            }
+        }
+
+        for (int i = 1; i < 5; i++) {
+            if (!pusherMap.containsKey(i) || pusherMap.get(i) == null) {
+                pusherMap.put(i, findProcessorClassNameBySubType(platform, eventcode, type, i, mappingPushSetting));
             }
         }
         return pusherMap;
     }
 
-    private String findProcessorClassNameBySubType(Integer platform, String eventcode, Integer type, Integer subType) {
-        MsgPushSettingDtl settingDtl = msgPushSettingDtlDao.findByTypeAndSubtypeAndMsgPushSetting_Platform(type, subType, platform);
-        if (settingDtl != null && settingDtl.getMsgProcessClass() != null && settingDtl.getMsgProcessClass().getClassname() != null) {
-            return settingDtl.getMsgProcessClass().getClassname();
+    private String findProcessorClassNameBySubType(Integer platform, String eventcode, Integer type, Integer subType, MsgPushSetting pushSetting) {
+        if (pushSetting != null && pushSetting.getMsgPushSettingDtlList() != null && pushSetting.getMsgPushSettingDtlList().size() != 0) {
+            for (MsgPushSettingDtl msgPushSettingDtl : pushSetting.getMsgPushSettingDtlList()) {
+                if (msgPushSettingDtl.getType() == type && msgPushSettingDtl.getSubtype() == subType
+                        && msgPushSettingDtl.getMsgProcessClass() != null && msgPushSettingDtl.getMsgProcessClass().getClassname() != null) {
+                    return msgPushSettingDtl.getMsgProcessClass().getClassname();
+                }
+            }
         }
+
         return msgDefaultProcessClassService.findDefaultProcessorClassNameBySubtype(platform, eventcode, type, subType);
     }
 
@@ -75,22 +92,23 @@ public class MsgPushSettingService {
         List<MsgEventGroup> eventgroup = eventgroupdao.findByEventgroupnameContaining(pushsettingvo.getEventgroupname());
         List<MsgPushSetting> pushsettinglist = null;
         long count = 0;
-        int platform = pushsettingvo.getPlatform()==null?888888:pushsettingvo.getPlatform();
-        if(platform==888888){
-            pushsettinglist = msgPushSettingDao.findByMsgEventGroupIn(eventgroup,pageable);
+        int platform = pushsettingvo.getPlatform() == null ? 888888 : pushsettingvo.getPlatform();
+        if (platform == 888888) {
+            pushsettinglist = msgPushSettingDao.findByMsgEventGroupIn(eventgroup, pageable);
             count = msgPushSettingDao.countByMsgEventGroupIn(eventgroup);
-        }else{
-            pushsettinglist = msgPushSettingDao.findByPlatformAndMsgEventGroupIn(pushsettingvo.getPlatform(),eventgroup,pageable);
-            count = msgPushSettingDao.countByPlatformAndMsgEventGroupIn(pushsettingvo.getPlatform(),eventgroup);
+        } else {
+            pushsettinglist = msgPushSettingDao.findByPlatformAndMsgEventGroupIn(pushsettingvo.getPlatform(), eventgroup, pageable);
+            count = msgPushSettingDao.countByPlatformAndMsgEventGroupIn(pushsettingvo.getPlatform(), eventgroup);
         }
 
-        map.put("total",count);
+        map.put("total", count);
         map.put("rows", pushsettinglistdbtransfer2vo(pushsettinglist));
         return map;
     }
+
     private List<PushSettingVo> pushsettinglistdbtransfer2vo(List<MsgPushSetting> pushsettinglist) {
         List<PushSettingVo> pushsettinglistvo = new ArrayList<>();
-        for(MsgPushSetting p : pushsettinglist){
+        for (MsgPushSetting p : pushsettinglist) {
             PushSettingVo pushsettingvo = new PushSettingVo();
             pushsettingvo.setMsgpushsettingid(p.getMsgpushsettingid());
             pushsettingvo.setPlatform(p.getPlatform());
@@ -102,21 +120,23 @@ public class MsgPushSettingService {
         }
         return pushsettinglistvo;
     }
-    private String getPushClassStr(MsgPushSetting p){
+
+    private String getPushClassStr(MsgPushSetting p) {
         StringBuffer sb = new StringBuffer();
         List<MsgPushSettingDtl> dtllist = p.getMsgPushSettingDtlList();
-        if(dtllist!=null&&dtllist.size()>0){
-            for(MsgPushSettingDtl d : dtllist){
-                sb.append(d.getMsgProcessClass().getName()+", ");
+        if (dtllist != null && dtllist.size() > 0) {
+            for (MsgPushSettingDtl d : dtllist) {
+                sb.append(d.getMsgProcessClass().getName() + ", ");
             }
         }
         String pushclassstr = sb.toString();
-        return pushclassstr.contains(", ")==true?pushclassstr.substring(0,pushclassstr.lastIndexOf(", ")):pushclassstr;
+        return pushclassstr.contains(", ") == true ? pushclassstr.substring(0, pushclassstr.lastIndexOf(", ")) : pushclassstr;
     }
+
     @Transactional
     public void deletePushSettings(String[] ids) {
-        if(ids!=null&&ids.length>0){
-            for(String id:ids){
+        if (ids != null && ids.length > 0) {
+            for (String id : ids) {
                 MsgPushSetting byMsgpushsettingid = msgPushSettingDao.findByMsgpushsettingid(Integer.parseInt(id));
                 byMsgpushsettingid.getMsgPushSettingDtlList().clear();
                 byMsgpushsettingid.getMsgEventGroup().setMsgPushSetting(null);
@@ -135,15 +155,15 @@ public class MsgPushSettingService {
         pushsettingvo.setPushtargetclass(String.valueOf(pushsetting.getMsgPushTargetDecision().getMsgprocessclassid()));
         pushsettingvo.setPushmethodclass(String.valueOf(pushsetting.getMsgPushMethod().getMsgprocessclassid()));
         List<MsgPushSettingDtl> dtllist = pushsetting.getMsgPushSettingDtlList();
-        if(dtllist!=null&&dtllist.size()>0){
-            for(MsgPushSettingDtl d: dtllist){
-                if(d.getType()==4&&d.getSubtype()<3){
+        if (dtllist != null && dtllist.size() > 0) {
+            for (MsgPushSettingDtl d : dtllist) {
+                if (d.getType() == 4 && d.getSubtype() < 3) {
                     pushsettingvo.setApppushclass(String.valueOf(d.getMsgProcessClass().getMsgprocessclassid()));
                 }
-                if(d.getType()==4&&d.getSubtype()==3){
+                if (d.getType() == 4 && d.getSubtype() == 3) {
                     pushsettingvo.setSmspushclass(String.valueOf(d.getMsgProcessClass().getMsgprocessclassid()));
                 }
-                if(d.getType()==4&&d.getSubtype()==4){
+                if (d.getType() == 4 && d.getSubtype() == 4) {
                     pushsettingvo.setEmailpushclass(String.valueOf(d.getMsgProcessClass().getMsgprocessclassid()));
                 }
             }
@@ -166,7 +186,7 @@ public class MsgPushSettingService {
         String smspushclassid = pushsettingvo.getSmspushclass();
         String emailpushclassid = pushsettingvo.getEmailpushclass();
 
-        if(!"0".equals(apppushclassid)){
+        if (!"0".equals(apppushclassid)) {
             MsgProcessClass appclass = msgProcessClassDao.findByMsgprocessclassid(Integer.parseInt(apppushclassid));
             MsgPushSettingDtl appdtl = new MsgPushSettingDtl();
             appdtl.setMsgProcessClass(appclass);
@@ -175,7 +195,7 @@ public class MsgPushSettingService {
             appdtl.setType(appclass.getType());
             dtllist.add(appdtl);
         }
-        if(!"0".equals(smspushclassid)){
+        if (!"0".equals(smspushclassid)) {
             MsgProcessClass smsclass = msgProcessClassDao.findByMsgprocessclassid(Integer.parseInt(smspushclassid));
             MsgPushSettingDtl smsdtl = new MsgPushSettingDtl();
             smsdtl.setMsgProcessClass(smsclass);
@@ -184,7 +204,7 @@ public class MsgPushSettingService {
             smsdtl.setType(smsclass.getType());
             dtllist.add(smsdtl);
         }
-        if(!"0".equals(emailpushclassid)){
+        if (!"0".equals(emailpushclassid)) {
             MsgProcessClass emailclass = msgProcessClassDao.findByMsgprocessclassid(Integer.parseInt(emailpushclassid));
             MsgPushSettingDtl emaildtl = new MsgPushSettingDtl();
             emaildtl.setMsgProcessClass(emailclass);
@@ -199,8 +219,8 @@ public class MsgPushSettingService {
         pushsetting.setMsgPushTargetDecision(targetclass);
         pushsetting.setMsgPushMethod(methodclass);
         pushsetting.setMsgPushSettingDtlList(dtllist);
-        MsgPushSetting dbps = msgPushSettingDao.findByPlatformAndMsgEventGroup(pushsettingvo.getPlatform(),eventgroup);
-        if(dbps!=null){
+        MsgPushSetting dbps = msgPushSettingDao.findByPlatformAndMsgEventGroup(pushsettingvo.getPlatform(), eventgroup);
+        if (dbps != null) {
             return false;
         }
         msgPushSettingDao.save(pushsetting);
@@ -215,8 +235,8 @@ public class MsgPushSettingService {
         String methodid = pushsettingvo.getPushmethodclass();
 
         MsgEventGroup eventgroup = eventgroupdao.findByMsgeventgroupid(Integer.parseInt(eventgroupid));
-        MsgPushSetting dbps = msgPushSettingDao.findByPlatformAndMsgEventGroup(pushsettingvo.getPlatform(),eventgroup);
-        if(dbps!=null&&dbps!=pushsetting){
+        MsgPushSetting dbps = msgPushSettingDao.findByPlatformAndMsgEventGroup(pushsettingvo.getPlatform(), eventgroup);
+        if (dbps != null && dbps != pushsetting) {
             return false;
         }
         MsgProcessClass targetclass = msgProcessClassDao.findByMsgprocessclassid(Integer.parseInt(targetid));
@@ -227,7 +247,7 @@ public class MsgPushSettingService {
         String smspushclassid = pushsettingvo.getSmspushclass();
         String emailpushclassid = pushsettingvo.getEmailpushclass();
 
-        if(!"0".equals(apppushclassid)){
+        if (!"0".equals(apppushclassid)) {
             MsgProcessClass appclass = msgProcessClassDao.findByMsgprocessclassid(Integer.parseInt(apppushclassid));
             MsgPushSettingDtl appdtl = new MsgPushSettingDtl();
             appdtl.setMsgProcessClass(appclass);
@@ -236,7 +256,7 @@ public class MsgPushSettingService {
             appdtl.setType(appclass.getType());
             dtllist.add(appdtl);
         }
-        if(!"0".equals(smspushclassid)){
+        if (!"0".equals(smspushclassid)) {
             MsgProcessClass smsclass = msgProcessClassDao.findByMsgprocessclassid(Integer.parseInt(smspushclassid));
             MsgPushSettingDtl smsdtl = new MsgPushSettingDtl();
             smsdtl.setMsgProcessClass(smsclass);
@@ -245,7 +265,7 @@ public class MsgPushSettingService {
             smsdtl.setType(smsclass.getType());
             dtllist.add(smsdtl);
         }
-        if(!"0".equals(emailpushclassid)){
+        if (!"0".equals(emailpushclassid)) {
             MsgProcessClass emailclass = msgProcessClassDao.findByMsgprocessclassid(Integer.parseInt(emailpushclassid));
             MsgPushSettingDtl emaildtl = new MsgPushSettingDtl();
             emaildtl.setMsgProcessClass(emailclass);
