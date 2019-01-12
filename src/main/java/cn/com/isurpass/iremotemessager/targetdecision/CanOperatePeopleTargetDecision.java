@@ -24,7 +24,7 @@ public class CanOperatePeopleTargetDecision extends FamilyandFriendsTargetDecisi
     {
         List<User> lst = super.descision();
 
-        if (eventparameters.containsKey("phoneuserid")) {
+        if (eventparameters.containsKey("phoneuserid") && eventparameters.getIntValue("phoneuserid") != 0) {
             return lst;
         }
         if (eventparameters.containsKey("deviceid")) {
