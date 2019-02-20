@@ -62,7 +62,7 @@ function formatter_language(value, row, index) {
     if (value == "zh_CN") {
         return "中文(zh_CN)";
     }
-    else if (value == "ch_HK") {
+    else if (value == "zh_HK") {
         return "繁体(zh_HK)";
     }
     else if (value == "en_US") {
